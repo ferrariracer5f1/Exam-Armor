@@ -1,7 +1,46 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three/build/three.module.js"
+      }
+    }
+  </script>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Exam Armour</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutoring Prototype</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+<body>
+  <section class="logoSect">
+  <div id="three-container"></div>
+  <img src="placeholder-logo.png" alt="Logo" class="logo">
+  <div class="circle-container">
+    <svg viewBox="0 0 100 50" preserveAspectRatio="xMidYMax meet">
+      <path d="M0,50 A51,50 0 0,1 100,50" fill="black" stroke="#00FF66" stroke-width="1" />
+    </svg>
+  </div>
+</section>
+  <section class="info">
+    <div class="info-content">
+      <h1>Our Tutoring Services</h1>
+      <p>
+        This section will contain information about your tutoring business —
+        subjects, testimonials, and contact details.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    if (!window.THREE) {
+      console.error('THREE failed to load.');
+    } else {
+      console.log('THREE loaded');
+    }
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
