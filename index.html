@@ -1,19 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three/build/three.module.js"
-      }
-    }
-  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutoring Prototype</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <script type="module" src="script.js"></script>
   <section class="logoSect">
   <div id="three-container"></div>
   <img src="placeholder-logo.png" alt="Logo" class="logo">
@@ -32,14 +26,5 @@
     </div>
   </section>
 
-  <script>
-    if (!window.THREE) {
-      console.error('THREE failed to load.');
-    } else {
-      console.log('THREE loaded');
-    }
-  </script>
-
-  <script src="script.js"></script>
 </body>
 </html>
