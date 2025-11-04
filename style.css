@@ -33,6 +33,7 @@ body {
 .logo {
   z-index: 2;
   position: relative;
+  opacity: 0;
 }
 
 

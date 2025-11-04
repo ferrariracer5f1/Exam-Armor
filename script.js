@@ -21,40 +21,87 @@ document.addEventListener("DOMContentLoaded", () => {
   renderer.setPixelRatio(window.devicePixelRatio);
   container.appendChild(renderer.domElement);
 
-  // Lighting
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-  const pointLight = new THREE.PointLight(0xffffff, 1);
-  pointLight.position.set(10, 10, 10);
-  scene.add(ambientLight, pointLight);
+  const particleLight = new THREE.Mesh(
+    new THREE.SphereGeometry(0.1, 0.1, 0.1),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  );
+
+	scene.add( particleLight );
+	scene.add( new THREE.AmbientLight( 0xc1c1c1, 3 ) );
+
+	const pointLight = new THREE.PointLight( 0xffffff, 2, 800, 0 );
+	particleLight.add( pointLight );
+
+  // Create a 4-shade gradient map for cel shading
+  const gradArray = new Uint8Array([0, 0, 0, 255]);
+  const gradientMap = new THREE.DataTexture(gradArray, 4, 1, THREE.RedFormat);
+  gradientMap.colorSpace = THREE.SRGBColorSpace;
+  gradientMap.needsUpdate = true;
+  gradientMap.minFilter = THREE.NearestFilter;
+  gradientMap.magFilter = THREE.NearestFilter;
+  gradientMap.generateMipmaps = false;
+  gradientMap.needsUpdate = true;
+
+  // Shared material for all symbols
+  const toonMaterial = new THREE.MeshToonMaterial({
+    color: 0x8B9386,
+    gradientMap: gradientMap,
+  });
 
   // Font loader
   const loader = new FontLoader();
-  loader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", (font) => {
-    const symbols = ["×", "÷", "+", "−", "√", "π", "Σ"];
-    const material = new THREE.MeshPhongMaterial({ color: 0x00ff66 });
+  loader.load("https://threejs.org/examples/fonts/gentilis_bold.typeface.json", (font) => {
+    const symbols = ["♕", "÷", "+", "−", "√", "π"];
 
     symbols.forEach((sym) => {
       const textGeo = new TextGeometry(sym, {
         font,
-        size: 0.6,
+        size: 1.5,
         height: 0.1,
+        depth: 0.1,
+        bevelEnabled: true,
+        bevelThickness: 0.03,
+        bevelSize: 0.01,
       });
 
-      const mesh = new THREE.Mesh(textGeo, material);
+      // Center the text geometry
+      textGeo.computeBoundingBox();
+      if (textGeo.boundingBox) {
+        const offset = -0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
+        textGeo.translate(offset, 0, 0);
+      }
+
+      const offset = -0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
+      textGeo.translate(offset, 0, 0);
+
+      // Create mesh
+      const mesh = new THREE.Mesh(textGeo, toonMaterial);
       mesh.position.set(
         Math.random() * 6 - 3,
         Math.random() * 3 - 1.5,
         Math.random() * 2 - 1
       );
+      mesh.scale.set(0.6, 1, 1);
       mesh.rotation.x = Math.random() * Math.PI;
       mesh.rotation.y = Math.random() * Math.PI;
       scene.add(mesh);
 
+      // Create outline mesh
+      const outlineMat = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
+      const outline = new THREE.Mesh(textGeo.clone(), outlineMat);
+      outline.position.copy(mesh.position);
+      outline.rotation.copy(mesh.rotation);
+      outline.scale.copy(mesh.scale).multiplyScalar(1.05);
+      scene.add(outline);
+
+      // Animation metadata
       mesh.userData = {
-        speedX: 0.005 + Math.random() * 0.01,
-        speedY: 0.005 + Math.random() * 0.01,
+        speedX: 0.005 + Math.random() * 0.005,
+        speedY: 0.005 + Math.random() * 0.005,
         baseY: mesh.position.y,
       };
+
+      outline.userData = mesh.userData; // sync animation
     });
 
     animate();
