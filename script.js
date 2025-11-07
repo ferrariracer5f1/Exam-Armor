@@ -51,19 +51,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // Font loader
   const loader = new FontLoader();
 
-  loader.load("https://threejs.org/examples/fonts/gentilis_bold.typeface.json", (font) => {
-    const symbols = ["X", "÷", "+", "−", "√", "π", "∑", "∞", "≈", "≠"];
+  loader.load('manrope.json', (font) => {
+    const symbols = ["*", "÷", "+", "−", "√", "π", "∑", "∞", "=", "≈", "≠", "<", ">", "≤", "≥", "∫", "%", "λ", "∅", "µ", "±", "‰", "[]", "½", "Ω"];
 
     const chosenSymbols = [];
     while (chosenSymbols.length < 3) {
       const sym = symbols[Math.floor(Math.random() * symbols.length)];
       if (!chosenSymbols.includes(sym)) chosenSymbols.push(sym);
     }
+    console.log(chosenSymbols);
 
     const presetPositions = [
       new THREE.Vector3(-6.0, 1, 0),
       new THREE.Vector3(1.0, -0.5, 0),
-      new THREE.Vector3(5.0, 3.0, 0)
+      new THREE.Vector3(5.0, 2.0, 0)
     ];
 
     chosenSymbols.forEach((sym, i) => {
@@ -83,11 +84,24 @@ document.addEventListener("DOMContentLoaded", () => {
         textGeo.translate(offset, 0, 0);
       }
 
+      // Compute geometry bounds
+      textGeo.computeBoundingBox();
+      const box = textGeo.boundingBox;
+      const height = box.max.y - box.min.y;
+      const width = box.max.x - box.min.x;
+
+      // Define target visual height (adjust to taste)
+      const targetSize = 1.5;
+      const scaleFactor = targetSize / Math.max(height, width);
+
+      // Create and scale mesh
       const mesh = new THREE.Mesh(textGeo, toonMaterial);
+      mesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
       mesh.position.copy(presetPositions[i]);
       mesh.rotation.x = Math.random() * Math.PI;
       mesh.rotation.y = Math.random() * Math.PI;
       scene.add(mesh);
+
 
       const outlineMat = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
       const outline = new THREE.Mesh(textGeo.clone(), outlineMat);
