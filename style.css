@@ -79,3 +79,79 @@ body {
   line-height: 1.6;
   z-index: 3;
 }
+
+.tutor-section {
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  padding: 2rem;
+  position: relative;
+  bottom: 40vw;
+}
+
+.tutor-section h2 {
+  color: #00FF66;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.tutor-profiles {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 1rem 0;
+  gap: 1rem;
+}
+
+.tutor-profile {
+  flex: 0 0 auto;
+  width: 200px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.tutor-profile:hover {
+  transform: scale(1.05);
+}
+
+.tutor-profile:nth-child(even) {
+  flex-direction: column-reverse;
+}
+
+.tutor-profile img.profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #00FF66;
+  margin-bottom: 0.5rem;
+}
+
+.tutor-profile .tutor-info h3 {
+  margin: 0.5rem 0 0.25rem;
+  color: #ffffff;
+}
+.tutor-profile .tutor-info p.subject {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #BBBBBB;
+}
+
+.tutor-profile .bio {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+  color: #FFFFFF;
+  border-top: 1px solid #00FF66;
+  padding-top: 0;
+}
+
+.tutor-profile.open .bio {
+  padding-top: 0.5rem;
+}
