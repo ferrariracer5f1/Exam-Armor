@@ -1,12 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Manrope", sans-serif;
 }
 
 body {
   font-family: Arial, sans-serif;
   overflow-x: hidden;
+  background-color: black;
 }
 
 .logoSect {
@@ -38,19 +41,13 @@ body {
   height: auto;
 }
 
-<<<<<<< HEAD
 /* Circle container */
-=======
->>>>>>> 150067566088ee4f54cd5aa020f5a679aff25cd8
 .circle-container {
   position: absolute;
   top: 10vw;
   left: 0%;
-<<<<<<< HEAD
   width: 200vw; /* let left+right define width */
-=======
   width: 200vw;
->>>>>>> 150067566088ee4f54cd5aa020f5a679aff25cd8
   max-width: none;
   transform: translateX(-25%);
 }
@@ -61,11 +58,7 @@ body {
 }
 
 .info {
-<<<<<<< HEAD
-  position: relative; /* <-- add this line */
-=======
   position: relative;
->>>>>>> 150067566088ee4f54cd5aa020f5a679aff25cd8
   background-color: rgba(0, 0, 0, 0);
   color: white;
   min-height: 100vh;
@@ -98,7 +91,6 @@ body {
   margin-top: -90vh;
   z-index: 5;
 }
-
 
 .tutor-section h2 {
   color: #00ff66;
@@ -166,4 +158,120 @@ body {
 
 .tutor-profile.open .bio {
   padding-top: 0.5rem;
+}
+
+/*carousel stuff*/
+/*everything in the tutor section*/
+.flexContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0 40px;
+  background-color: black;
+}
+
+.wrapper {
+  max-width: 1500px;
+  width: 100%;
+  position: relative;
+}
+
+/*the left and right clickers*/
+.wrapper i {
+  height: 30px;
+  width: 30px;
+  background: white;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 20%; /*might change this one to 50% later depending if Andrew want's a circle or not*/
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+/*need to add card fitting into allocated space so we can have these 2 arrows in the same position*/
+.wrapper i:first-child {
+  left: -15px;
+}
+
+.wrapper i:last-child {
+  right: -11px;
+}
+
+/*How many tutor cards and how big*/
+.wrapper .carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% / 6) - 12px);
+  gap: 15px;
+  overflow-x: hidden;
+}
+
+/*tutor cards*/
+.carousel .tutorCard {
+  height: 250px;
+  list-style: none;
+  background: green;
+  border-radius: 10px;
+  display: flex;
+  cursor: pointer;
+  padding-bottom: 50px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/*affects only the images inside the cards*/
+.tutorCard .img {
+  border: 2px solid #00ff66; /* Thin green outline */
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  background-color: transparent; /* Remove green fill */
+}
+
+.tutorCard .img img {
+  width: 117px; /* Slightly smaller to fit inside the border idk why it has to be 3 smaller tho*/
+  height: 117px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/*at the moment this does nothing, stay tuned*/
+.card h2 {
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin: 30px 0 5px;
+}
+.card span {
+  color: red;
+  font-size: 1.3rem;
+}
+
+/*responses for different screen sizes, in the future we should change it to automatic so we save space*/
+@media screen and (max-width: 1200px) {
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 4) - 9px);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 3) - 6px);
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 2) - 4px);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wrapper .carousel {
+    grid-auto-columns: calc(100% - 2px);
+  }
 }

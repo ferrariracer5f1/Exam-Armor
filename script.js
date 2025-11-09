@@ -1,6 +1,6 @@
-import * as THREE from 'three';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import * as THREE from "three";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("three-container");
@@ -38,13 +38,39 @@ document.addEventListener("DOMContentLoaded", () => {
   gradientMap.magFilter = THREE.NearestFilter;
 
   const toonMaterial = new THREE.MeshToonMaterial({
-    color: 0x8B9386,
+    color: 0x8b9386,
     gradientMap: gradientMap,
   });
 
   const loader = new FontLoader();
-  loader.load('manrope.json', (font) => {
-    const symbols = ["*", "÷", "+", "−", "√", "π", "∑", "∞", "=", "≈", "≠", "<", ">", "≤", "≥", "∫", "%", "λ", "∅", "µ", "±", "‰", "[]", "½", "Ω"];
+  loader.load("manrope.json", (font) => {
+    const symbols = [
+      "*",
+      "÷",
+      "+",
+      "−",
+      "√",
+      "π",
+      "∑",
+      "∞",
+      "=",
+      "≈",
+      "≠",
+      "<",
+      ">",
+      "≤",
+      "≥",
+      "∫",
+      "%",
+      "λ",
+      "∅",
+      "µ",
+      "±",
+      "‰",
+      "[]",
+      "½",
+      "Ω",
+    ];
 
     const chosenSymbols = [];
     while (chosenSymbols.length < 3) {
@@ -55,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const presetPositions = [
       new THREE.Vector3(-6.0, 1, 0),
       new THREE.Vector3(1.0, -0.5, 0),
-      new THREE.Vector3(5.0, 2.0, 0)
+      new THREE.Vector3(5.0, 2.0, 0),
     ];
 
     const rotatingMeshes = [];
@@ -73,7 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       textGeo.computeBoundingBox();
       if (textGeo.boundingBox) {
-        const offset = -0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
+        const offset =
+          -0.5 * (textGeo.boundingBox.max.x - textGeo.boundingBox.min.x);
         textGeo.translate(offset, 0, 0);
       }
 
@@ -90,7 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
       mesh.rotation.y = Math.random() * Math.PI;
       scene.add(mesh);
 
-      const outlineMat = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
+      const outlineMat = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        side: THREE.BackSide,
+      });
       const outline = new THREE.Mesh(textGeo.clone(), outlineMat);
       outline.position.copy(mesh.position);
       outline.rotation.copy(mesh.rotation);
@@ -138,90 +168,90 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const tutors = [
     {
-      name: 'Adam',
-      subject: 'Adam Subject',
-      image: '/tutors/Adam.jpg',
-      bio: 'Adam Description'
+      name: "Adam",
+      subject: "Adam Subject",
+      image: "/tutors/Adam.jpg",
+      bio: "Adam Description",
     },
     {
-      name: 'Ashe',
-      subject: 'Subject',
-      image: '/tutors/Ashe.jpg',
-      bio: 'Ashe Description'
+      name: "Ashe",
+      subject: "Subject",
+      image: "/tutors/Ashe.jpg",
+      bio: "Ashe Description",
     },
     {
-      name: 'brainiac duo',
-      subject: 'Subject',
-      image: '/tutors/brainiac duo.jpg',
-      bio: 'The menacing Brainiac Duo'
+      name: "brainiac duo",
+      subject: "Subject",
+      image: "/tutors/brainiac duo.jpg",
+      bio: "The menacing Brainiac Duo",
     },
     {
-      name: 'Cassie',
-      subject: 'Subject',
-      image: '/tutors/Cassie.jpg',
-      bio: 'Cassie Description'
+      name: "Cassie",
+      subject: "Subject",
+      image: "/tutors/Cassie.jpg",
+      bio: "Cassie Description",
     },
     {
-      name: 'Ellie',
-      subject: 'Subject',
-      image: '/tutors/Ellie.jpg',
-      bio: 'Ellie Description'
+      name: "Ellie",
+      subject: "Subject",
+      image: "/tutors/Ellie.jpg",
+      bio: "Ellie Description",
     },
     {
-      name: 'Hailey',
-      subject: 'Subject',
-      image: '/tutors/Hailey.jpg',
-      bio: 'Hailey Description'
+      name: "Hailey",
+      subject: "Subject",
+      image: "/tutors/Hailey.jpg",
+      bio: "Hailey Description",
     },
     {
-      name: 'Jamie',
-      subject: 'Subject',
-      image: '/tutors/Jam.jpg',
-      bio: 'Jamie Description'
+      name: "Jamie",
+      subject: "Subject",
+      image: "/tutors/Jam.jpg",
+      bio: "Jamie Description",
     },
     {
-      name: 'Louise',
-      subject: 'Subject',
-      image: '/tutors/Louise.jpg',
-      bio: 'Louise Description'
+      name: "Louise",
+      subject: "Subject",
+      image: "/tutors/Louise.jpg",
+      bio: "Louise Description",
     },
     {
-      name: 'Max Ip',
-      subject: 'Subject',
-      image: '/tutors/Max Ip.jpg',
-      bio: 'Max Ip Description'
+      name: "Max Ip",
+      subject: "Subject",
+      image: "/tutors/Max Ip.jpg",
+      bio: "Max Ip Description",
     },
     {
-      name: 'Max Wilde',
-      subject: 'Subject',
-      image: '/tutors/Max Wilde.jpg',
-      bio: 'Max Wilde Description'
+      name: "Max Wilde",
+      subject: "Subject",
+      image: "/tutors/Max Wilde.jpg",
+      bio: "Max Wilde Description",
     },
     {
-      name: 'Michael',
-      subject: 'Subject',
-      image: '/tutors/Michael.jpg',
-      bio: 'Michael Description'
+      name: "Michael",
+      subject: "Subject",
+      image: "/tutors/Michael.jpg",
+      bio: "Michael Description",
     },
     {
-      name: 'Molly',
-      subject: 'Subject',
-      image: '/tutors/Molly.jpg',
-      bio: 'Molly Description'
+      name: "Molly",
+      subject: "Subject",
+      image: "/tutors/Molly.jpg",
+      bio: "Molly Description",
     },
     {
-      name: 'Uma',
-      subject: 'Subject',
-      image: '/tutors/Uma.jpg',
-      bio: 'Uma Description'
-    }
+      name: "Uma",
+      subject: "Subject",
+      image: "/tutors/Uma.jpg",
+      bio: "Uma Description",
+    },
     // Add more tutors by Ctrl C, Ctrl V
   ];
 
-  const tutorContainer = document.querySelector('.tutor-profiles');
+  const tutorContainer = document.querySelector(".tutor-profiles");
   tutors.forEach((tutor) => {
-    const card = document.createElement('div');
-    card.classList.add('tutor-profile');
+    const card = document.createElement("div");
+    card.classList.add("tutor-profile");
 
     card.innerHTML = `
       <img src="${tutor.image}" alt="${tutor.name}" class="profile-pic">
@@ -234,13 +264,13 @@ document.addEventListener("DOMContentLoaded", () => {
     tutorContainer.appendChild(card);
 
     // Click to toggle bio panel
-    card.addEventListener('click', () => {
-      const bio = card.querySelector('.bio');
-      const isOpen = card.classList.toggle('open');
+    card.addEventListener("click", () => {
+      const bio = card.querySelector(".bio");
+      const isOpen = card.classList.toggle("open");
       if (isOpen) {
-        bio.style.maxHeight = bio.scrollHeight + 'px';
+        bio.style.maxHeight = bio.scrollHeight + "px";
       } else {
-        bio.style.maxHeight = '0';
+        bio.style.maxHeight = "0";
       }
     });
   });
