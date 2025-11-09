@@ -38,15 +38,13 @@ body {
   height: auto;
 }
 
-
-/* Circle container */
 .circle-container {
   position: absolute;
   top: 10vw;
   left: 0%;
-  width: 200vw;     /* let left+right define width */
+  width: 200vw;
   max-width: none;
-  transform: translateX(-25%); /* remove centering translate */
+  transform: translateX(-25%);
 }
 
 .circle-container svg {
@@ -55,7 +53,7 @@ body {
 }
 
 .info {
-  position: relative;  /* <-- add this line */
+  position: relative;
   background-color: rgba(0, 0, 0, 0);
   color: white;
   min-height: 100vh;
@@ -81,12 +79,14 @@ body {
 }
 
 .tutor-section {
-  background-color: rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
+  background-color: #00000000;
+  color: #fff;
   padding: 2rem;
   position: relative;
-  bottom: 40vw;
+  margin-top: -90vh;
+  z-index: 5;
 }
+
 
 .tutor-section h2 {
   color: #00FF66;
