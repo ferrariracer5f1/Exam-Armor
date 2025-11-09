@@ -47,7 +47,9 @@ body {
   top: 10vw;
   left: 0%;
   width: 200vw; /* let left+right define width */
+=======
   width: 200vw;
+>>>>>>> 150067566088ee4f54cd5aa020f5a679aff25cd8
   max-width: none;
   transform: translateX(-25%);
 }
@@ -58,7 +60,11 @@ body {
 }
 
 .info {
+<<<<<<< HEAD
+  position: relative; /* <-- add this line */
+=======
   position: relative;
+>>>>>>> 150067566088ee4f54cd5aa020f5a679aff25cd8
   background-color: rgba(0, 0, 0, 0);
   color: white;
   min-height: 100vh;
