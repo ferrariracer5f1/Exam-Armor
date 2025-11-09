@@ -33,10 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const pointLight = new THREE.PointLight(0xffffff, 2, 800, 0);
   particleLight.add(pointLight);
 
-  // Create a 4-shade gradient map for cel shading
   const gradArray = new Uint8Array([0, 85, 170, 255]);
   const gradientMap = new THREE.DataTexture(gradArray, 4, 1, THREE.RedFormat);
-  gradientMap.colorSpace = THREE.SRGBColorSpace;
+  gradientMap.colorSpace = THREE.NoColorSpace;
   gradientMap.needsUpdate = true;
   gradientMap.minFilter = THREE.NearestFilter;
   gradientMap.magFilter = THREE.NearestFilter;
@@ -84,17 +83,14 @@ document.addEventListener("DOMContentLoaded", () => {
         textGeo.translate(offset, 0, 0);
       }
 
-      // Compute geometry bounds
       textGeo.computeBoundingBox();
       const box = textGeo.boundingBox;
       const height = box.max.y - box.min.y;
       const width = box.max.x - box.min.x;
 
-      // Define target visual height (adjust to taste)
       const targetSize = 1.5;
       const scaleFactor = targetSize / Math.max(height, width);
 
-      // Create and scale mesh
       const mesh = new THREE.Mesh(textGeo, toonMaterial);
       mesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
       mesh.position.copy(presetPositions[i]);
@@ -135,10 +131,118 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
   });
 
-  // Handle window resize
   window.addEventListener("resize", () => {
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+
+  const tutors = [
+    {
+      name: 'Adam',
+      subject: 'Adam Subject',
+      image: '/tutors/Adam.jpg',
+      bio: 'Adam Description'
+    },
+    {
+      name: 'Ashe',
+      subject: 'Subject',
+      image: '/tutors/Ashe.jpg',
+      bio: 'Ashe Description'
+    },
+    {
+      name: 'brainiac duo',
+      subject: 'Subject',
+      image: '/tutors/brainiac duo.jpg',
+      bio: 'The menacing Brainiac Duo'
+    },
+    {
+      name: 'Cassie',
+      subject: 'Subject',
+      image: '/tutors/Cassie.jpg',
+      bio: 'Cassie Description'
+    },
+    {
+      name: 'Ellie',
+      subject: 'Subject',
+      image: '/tutors/Ellie.jpg',
+      bio: 'Ellie Description'
+    },
+    {
+      name: 'Hailey',
+      subject: 'Subject',
+      image: '/tutors/Hailey.jpg',
+      bio: 'Hailey Description'
+    },
+    {
+      name: 'Jamie',
+      subject: 'Subject',
+      image: '/tutors/Jam.jpg',
+      bio: 'Jamie Description'
+    },
+    {
+      name: 'Louise',
+      subject: 'Subject',
+      image: '/tutors/Louise.jpg',
+      bio: 'Louise Description'
+    },
+    {
+      name: 'Max Ip',
+      subject: 'Subject',
+      image: '/tutors/Max Ip.jpg',
+      bio: 'Max Ip Description'
+    },
+    {
+      name: 'Max Wilde',
+      subject: 'Subject',
+      image: '/tutors/Max Wilde.jpg',
+      bio: 'Max Wilde Description'
+    },
+    {
+      name: 'Michael',
+      subject: 'Subject',
+      image: '/tutors/Michael.jpg',
+      bio: 'Michael Description'
+    },
+    {
+      name: 'Molly',
+      subject: 'Subject',
+      image: '/tutors/Molly.jpg',
+      bio: 'Molly Description'
+    },
+    {
+      name: 'Uma',
+      subject: 'Subject',
+      image: '/tutors/Uma.jpg',
+      bio: 'Uma Description'
+    }
+    // Add more tutors
+  ];
+
+  const tutorContainer = document.querySelector('.tutor-profiles');
+  tutors.forEach((tutor) => {
+    const card = document.createElement('div');
+    card.classList.add('tutor-profile');
+
+    card.innerHTML = `
+      <img src="${tutor.image}" alt="${tutor.name}" class="profile-pic">
+      <div class="tutor-info">
+        <h3>${tutor.name}</h3>
+        <p class="subject">${tutor.subject}</p>
+        <div class="bio">${tutor.bio}</div>
+      </div>
+    `;
+    tutorContainer.appendChild(card);
+
+    // Click to toggle bio panel
+    card.addEventListener('click', () => {
+      const bio = card.querySelector('.bio');
+      const isOpen = card.classList.toggle('open');
+      if (isOpen) {
+        bio.style.maxHeight = bio.scrollHeight + 'px';
+      } else {
+        bio.style.maxHeight = '0';
+      }
+    });
   });
 });
