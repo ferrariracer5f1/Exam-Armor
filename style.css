@@ -38,13 +38,12 @@ body {
   height: auto;
 }
 
-
 /* Circle container */
 .circle-container {
   position: absolute;
   top: 10vw;
   left: 0%;
-  width: 200vw;     /* let left+right define width */
+  width: 200vw; /* let left+right define width */
   max-width: none;
   transform: translateX(-25%); /* remove centering translate */
 }
@@ -55,7 +54,7 @@ body {
 }
 
 .info {
-  position: relative;  /* <-- add this line */
+  position: relative; /* <-- add this line */
   background-color: rgba(0, 0, 0, 0);
   color: white;
   min-height: 100vh;
@@ -67,9 +66,8 @@ body {
   bottom: 20vw;
 }
 
-
 .info h1 {
-  color: #00FF66;
+  color: #00ff66;
   margin-bottom: 1rem;
   z-index: 3;
 }
@@ -80,6 +78,7 @@ body {
   z-index: 3;
 }
 
+/*Not what I need*/
 .tutor-section {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
@@ -89,7 +88,7 @@ body {
 }
 
 .tutor-section h2 {
-  color: #00FF66;
+  color: #00ff66;
   text-align: center;
   margin-bottom: 1rem;
 }
@@ -104,7 +103,7 @@ body {
 
 .tutor-profile {
   flex: 0 0 auto;
-  width: 200px; 
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,7 +125,7 @@ body {
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #00FF66;
+  border: 2px solid #00ff66;
   margin-bottom: 0.5rem;
 }
 
@@ -137,7 +136,7 @@ body {
 .tutor-profile .tutor-info p.subject {
   margin: 0;
   font-size: 0.9rem;
-  color: #BBBBBB;
+  color: #bbbbbb;
 }
 
 .tutor-profile .bio {
@@ -147,8 +146,8 @@ body {
   font-size: 0.9rem;
   line-height: 1.4;
   margin-top: 0.5rem;
-  color: #FFFFFF;
-  border-top: 1px solid #00FF66;
+  color: #ffffff;
+  border-top: 1px solid #00ff66;
   padding-top: 0;
 }
 
