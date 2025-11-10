@@ -18,14 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // capped for performance :)
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   container.appendChild(renderer.domElement);
 
   // === Lights ===
   const particleLight = new THREE.Object3D();
   scene.add(particleLight);
   scene.add(new THREE.AmbientLight(0xc1c1c1, 3));
-
   const pointLight = new THREE.PointLight(0xffffff, 2, 800, 0);
   particleLight.add(pointLight);
 
@@ -42,36 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
     gradientMap: gradientMap,
   });
 
+  // === 3D Text ===
   const loader = new FontLoader();
   loader.load("manrope.json", (font) => {
-    const symbols = [
-      "*",
-      "÷",
-      "+",
-      "−",
-      "√",
-      "π",
-      "∑",
-      "∞",
-      "=",
-      "≈",
-      "≠",
-      "<",
-      ">",
-      "≤",
-      "≥",
-      "∫",
-      "%",
-      "λ",
-      "∅",
-      "µ",
-      "±",
-      "‰",
-      "[]",
-      "½",
-      "Ω",
-    ];
-
+    const symbols = ["+", "÷", "∑", "π", "∞", "=", "√", "≥", "≤", "∫", "%", "Ω"];
     const chosenSymbols = [];
     while (chosenSymbols.length < 3) {
       const sym = symbols[Math.floor(Math.random() * symbols.length)];
@@ -91,10 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
         font,
         size: 1.5,
         height: 0.1,
-        depth: 0.2,
         bevelEnabled: true,
         bevelThickness: 0.2,
         bevelSize: 0.05,
+        depth: 0.3
       });
 
       textGeo.computeBoundingBox();
@@ -104,14 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
         textGeo.translate(offset, 0, 0);
       }
 
-      const box = textGeo.boundingBox;
-      const height = box.max.y - box.min.y;
-      const width = box.max.x - box.min.x;
-      const targetSize = 1.5;
-      const scaleFactor = targetSize / Math.max(height, width);
-
       const mesh = new THREE.Mesh(textGeo, toonMaterial);
-      mesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
       mesh.position.copy(presetPositions[i]);
       mesh.rotation.x = Math.random() * Math.PI;
       mesh.rotation.y = Math.random() * Math.PI;
@@ -136,14 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
       rotatingMeshes.push(mesh, outline);
     });
 
-    // === Intersection Observer: Pause animation when off-screen ===
     let isVisible = true;
     const observer = new IntersectionObserver(([entry]) => {
       isVisible = entry.isIntersecting;
     });
     observer.observe(container);
 
-    // === Animation Loop ===
     function animate() {
       requestAnimationFrame(animate);
       if (!isVisible) return;
@@ -159,119 +123,68 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
   });
 
-  // === Handle window resizing ===
   window.addEventListener("resize", () => {
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
   });
 
+  // === Tutor Data ===
   const tutors = [
-    {
-      name: "Adam",
-      subject: "Adam Subject",
-      image: "/tutors/Adam.jpg",
-      bio: "Adam Description",
-    },
-    {
-      name: "Ashe",
-      subject: "Subject",
-      image: "/tutors/Ashe.jpg",
-      bio: "Ashe Description",
-    },
-    {
-      name: "brainiac duo",
-      subject: "Subject",
-      image: "/tutors/brainiac duo.jpg",
-      bio: "The menacing Brainiac Duo",
-    },
-    {
-      name: "Cassie",
-      subject: "Subject",
-      image: "/tutors/Cassie.jpg",
-      bio: "Cassie Description",
-    },
-    {
-      name: "Ellie",
-      subject: "Subject",
-      image: "/tutors/Ellie.jpg",
-      bio: "Ellie Description",
-    },
-    {
-      name: "Hailey",
-      subject: "Subject",
-      image: "/tutors/Hailey.jpg",
-      bio: "Hailey Description",
-    },
-    {
-      name: "Jamie",
-      subject: "Subject",
-      image: "/tutors/Jam.jpg",
-      bio: "Jamie Description",
-    },
-    {
-      name: "Louise",
-      subject: "Subject",
-      image: "/tutors/Louise.jpg",
-      bio: "Louise Description",
-    },
-    {
-      name: "Max Ip",
-      subject: "Subject",
-      image: "/tutors/Max Ip.jpg",
-      bio: "Max Ip Description",
-    },
-    {
-      name: "Max Wilde",
-      subject: "Subject",
-      image: "/tutors/Max Wilde.jpg",
-      bio: "Max Wilde Description",
-    },
-    {
-      name: "Michael",
-      subject: "Subject",
-      image: "/tutors/Michael.jpg",
-      bio: "Michael Description",
-    },
-    {
-      name: "Molly",
-      subject: "Subject",
-      image: "/tutors/Molly.jpg",
-      bio: "Molly Description",
-    },
-    {
-      name: "Uma",
-      subject: "Subject",
-      image: "/tutors/Uma.jpg",
-      bio: "Uma Description",
-    },
-    // Add more tutors by Ctrl C, Ctrl V
+    { name: "Adam C.", subject: "Subject", image: "tutors/Adam.jpg", bio: "Adam Description" },
+    { name: "Ashe V.", subject: "Subject", image: "tutors/Ashe.jpg", bio: "Ashe Description" },
+    { name: "Cassie M.", subject: "Subject", image: "tutors/Cassie.jpg", bio: "Cassie Description" },
+    { name: "Ellie L.", subject: "Subject", image: "tutors/Ellie.jpg", bio: "Ellie Description" },
+    { name: "Jamie W.", subject: "Subject", image: "tutors/Jam.jpg", bio: "Jamie Description" },
+    { name: "Louise P.", subject: "Subject", image: "tutors/Louise.jpg", bio: "Louise Description" },
+    { name: "Max I.", subject: "Subject", image: "tutors/Max Ip.jpg", bio: "Max Description" },
+    { name: "Max W.", subject: "Subject", image: "tutors/Max Wilde.jpg", bio: "Max Description" },
+    { name: "Michael A.", subject: "Subject", image: "tutors/Michael.jpg", bio: "Michael Description" },
+    { name: "Molly W.", subject: "Subject", image: "tutors/Molly.jpg", bio: "Molly Description" },
   ];
 
-  const tutorContainer = document.querySelector(".tutor-profiles");
+  // === Generate Tutor Cards Dynamically ===
+  const carousel = document.querySelector(".carousel");
+  carousel.innerHTML = ""; // clear old HTML
+
   tutors.forEach((tutor) => {
-    const card = document.createElement("div");
-    card.classList.add("tutor-profile");
+    const li = document.createElement("li");
+    li.classList.add("tutorCard");
 
-    card.innerHTML = `
-      <img src="${tutor.image}" alt="${tutor.name}" class="profile-pic">
-      <div class="tutor-info">
-        <h3>${tutor.name}</h3>
-        <p class="subject">${tutor.subject}</p>
-        <div class="bio">${tutor.bio}</div>
+    li.innerHTML = `
+      <div class="img">
+        <img src="${tutor.image}" alt="${tutor.name}">
       </div>
+      <h2>${tutor.name}</h2>
+      <span>${tutor.subject}</span>
+      <p class="bio">${tutor.bio}</p>
     `;
-    tutorContainer.appendChild(card);
 
-    // Click to toggle bio panel
-    card.addEventListener("click", () => {
-      const bio = card.querySelector(".bio");
-      const isOpen = card.classList.toggle("open");
-      if (isOpen) {
-        bio.style.maxHeight = bio.scrollHeight + "px";
+    carousel.appendChild(li);
+
+    // Click to toggle bio visibility
+    li.addEventListener("click", () => {
+      const bio = li.querySelector(".bio");
+      if (bio.style.maxHeight) {
+        bio.style.maxHeight = null;
       } else {
-        bio.style.maxHeight = "0";
+        bio.style.maxHeight = bio.scrollHeight + "px";
       }
+    });
+  });
+
+  // === Carousel Controls ===
+  const wrapper = document.querySelector(".wrapper");
+  const arrowBtns = wrapper.querySelectorAll("i");
+  const carouselStyle = getComputedStyle(carousel);
+  const cardGap = parseFloat(carouselStyle.gap); // '2vw' converted to px automatically
+  const firstCardWidth = carousel.querySelector(".tutorCard").offsetWidth + cardGap;
+
+
+  arrowBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      carousel.scrollLeft +=
+        btn.classList.contains("fa-angle-left") ? -firstCardWidth : firstCardWidth;
     });
   });
 });
