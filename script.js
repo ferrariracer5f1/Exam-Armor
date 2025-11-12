@@ -187,4 +187,26 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.classList.contains("fa-angle-left") ? -firstCardWidth : firstCardWidth;
     });
   });
+
+  function updateButtonState() {
+    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+
+    // Grey out left if we're at the start
+    if (carousel.scrollLeft <= 0) {
+      arrowBtns[0].classList.add("disabled");
+    } else {
+      arrowBtns[0].classList.remove("disabled");
+    }
+
+    // Grey out right if we're at the end
+    if (carousel.scrollLeft >= maxScrollLeft - 1) {
+      arrowBtns[1].classList.add("disabled");
+    } else {
+      arrowBtns[1].classList.remove("disabled");
+    }
+  }
+
+  carousel.addEventListener("scroll", updateButtonState);
+  updateButtonState(); // initialize on load
+
 });

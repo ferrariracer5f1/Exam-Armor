@@ -115,6 +115,12 @@ body {
   z-index: 10;
 }
 
+.wrapper i.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
 /*need to add card fitting into allocated space so we can have these 2 arrows in the same position*/
 .wrapper i:first-child {
   left: -15px;
