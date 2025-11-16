@@ -56,6 +56,14 @@ body {
   height: auto;
 }
 
+.bottom-curve {
+  position: absolute;
+  bottom: -165vw;
+  left: 0;
+  width: 200vw;
+  transform: translateX(-25%) rotate(180deg);
+}
+
 .info {
   position: relative;
   background-color: rgba(0, 0, 0, 0);
@@ -266,3 +274,50 @@ body {
     grid-auto-columns: calc(100% - 2px);
   }
 }
+
+.infoGrid {
+  width: 100%;
+  padding: 5vw;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2vw;
+  background: black;
+  margin-top: -30vw;
+  z-index: 2;
+}
+
+.infoGrid .gridBox {
+  background: rgba(0, 0, 0, 0);
+  border: 1vw solid;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  color: white;
+  font-size: 1rem;
+  line-height: 1.4;
+  text-align: center;
+  z-index: 2;
+}
+
+.infoGrid .gridBox:nth-child(1) { height: 20vw; border-color:  #00ff66;}
+.infoGrid .gridBox:nth-child(2) { height: 30vw; border-color:  #FD914A; }
+.infoGrid .gridBox:nth-child(3) { height: 20vw; border-color:  #ECF753; }
+.infoGrid .gridBox:nth-child(4) { height: 30vw; border-color:  #37C1F8; margin-top: -10vw;}
+.infoGrid .gridBox:nth-child(5) { height: 20vw; border-color:  #FF9999; }
+.infoGrid .gridBox:nth-child(6) { height: 30vw; border-color:  #CF90FC; margin-top: -10vw;}
+
+.foreword {
+  width: 100%;
+  height: 100vh;
+  background: white;
+  position: relative;
+  z-index: -1; 
+}
+
+.foreword .forewordContent {
+  position: relative;
+  margin: 0 auto;
+  color: black;
+  top: 50vh;
+  text-align: center;
+}
+
