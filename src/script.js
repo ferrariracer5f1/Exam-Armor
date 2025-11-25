@@ -131,16 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Tutor Data ===
   const tutors = [
-    { name: "Adam C.", subject: "Subject", image: "/public/tutors/Adam.jpg", bio: "Adam Description" },
-    { name: "Ashe V.", subject: "Subject", image: "/public/tutors/Ashe.jpg", bio: "Ashe Description" },
-    { name: "Cassie M.", subject: "Subject", image: "/public/tutors/Cassie.jpg", bio: "Cassie Description" },
-    { name: "Ellie L.", subject: "Subject", image: "/public/tutors/Ellie.jpg", bio: "Ellie Description" },
-    { name: "Jamie W.", subject: "Subject", image: "/public/tutors/Jam.jpg", bio: "Jamie Description" },
-    { name: "Louise P.", subject: "Subject", image: "/public/tutors/Louise.jpg", bio: "Louise Description" },
-    { name: "Max I.", subject: "Subject", image: "/public/tutors/Max Ip.jpg", bio: "Max Description" },
-    { name: "Max W.", subject: "Subject", image: "/public/tutors/Max Wilde.jpg", bio: "Max Description" },
-    { name: "Michael A.", subject: "Subject", image: "/public/tutors/Michael.jpg", bio: "Michael Description" },
-    { name: "Molly W.", subject: "Subject", image: "/public/tutors/Molly.jpg", bio: "Molly Description" },
+    { name: "Adam C.", subject: "Subject", image: "/tutors/Adam.jpg", bio: "Adam Description" },
+    { name: "Ashe V.", subject: "Subject", image: "/tutors/Ashe.jpg", bio: "Ashe Description" },
+    { name: "Cassie M.", subject: "Subject", image: "/tutors/Cassie.jpg", bio: "Cassie Description" },
+    { name: "Ellie L.", subject: "Subject", image: "/tutors/Ellie.jpg", bio: "Ellie Description" },
+    { name: "Jamie W.", subject: "Subject", image: "/tutors/Jam.jpg", bio: "Jamie Description" },
+    { name: "Louise P.", subject: "Subject", image: "/tutors/Louise.jpg", bio: "Louise Description" },
+    { name: "Max I.", subject: "Subject", image: "/tutors/Max Ip.jpg", bio: "Max Description" },
+    { name: "Max W.", subject: "Subject", image: "/tutors/Max Wilde.jpg", bio: "Max Description" },
+    { name: "Michael A.", subject: "Subject", image: "/tutors/Michael.jpg", bio: "Michael Description" },
+    { name: "Molly W.", subject: "Subject", image: "/tutors/Molly.jpg", bio: "Molly Description" },
   ];
 
   // === Generate Tutor Cards Dynamically ===
