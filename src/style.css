@@ -74,23 +74,40 @@ body {
   align-items: center;
   text-align: center;
   z-index: 3;
-  bottom: 20vw;
+  bottom: 10vw;
 }
 
-.info h1 {
-  color: #00ff66;
-  margin-bottom: 1rem;
+.subtext {
+  font-size: 4vw;
+  font-weight: 900;
   z-index: 3;
-}
+  text-align: center;
 
-.info p {
-  max-width: 600px;
-  line-height: 1.6;
+
+
+
+}.shadow {
+  font-size: 16vw;
+  font-weight: 900;
   z-index: 3;
+  text-align: center;
+  line-height: 0.75;
+
+  /* Two-tone fill */
+  background: 
+    linear-gradient(to bottom, white 50%, #c7ffd9 50%);
+  -webkit-background-clip: text;
+  color: transparent;
+
 }
 
 /*carousel stuff*/
 /*everything in the tutor section*/
+
+.tutorCarousel {
+  margin-top: -10vh;
+}
+
 .flexContainer {
   display: flex;
   align-items: center;
