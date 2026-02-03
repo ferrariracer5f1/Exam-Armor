@@ -148,10 +148,12 @@ body {
 /*need to add card fitting into allocated space so we can have these 2 arrows in the same position*/
 .wrapper i:first-child {
   left: -15px;
+  z-index: 20;
 }
 
 .wrapper i:last-child {
   right: -11px;
+  z-index: 20;
 }
 
 /*How many tutor cards and how big*/
@@ -171,8 +173,14 @@ body {
   justify-content: flex-start;
   gap: 5%;
   overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge (legacy) */
   padding-top: 150px;
   padding-bottom: 150px;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .carousel .tutorCard {
