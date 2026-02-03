@@ -131,16 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Tutor Data ===
   const tutors = [
-    { name: "Adam C.", subject: "Subject", image: "tutors/Adam.jpg", bio: "Adam Description" },
-    { name: "Ashe V.", subject: "Subject", image: "tutors/Ashe.jpg", bio: "Ashe Description" },
-    { name: "Cassie M.", subject: "Subject", image: "tutors/Cassie.jpg", bio: "Cassie Description" },
-    { name: "Ellie L.", subject: "Subject", image: "tutors/Ellie.jpg", bio: "Ellie Description" },
-    { name: "Jamie W.", subject: "Subject", image: "tutors/Jam.jpg", bio: "Jamie Description" },
-    { name: "Louise P.", subject: "Subject", image: "tutors/Louise.jpg", bio: "Louise Description" },
-    { name: "Max I.", subject: "Subject", image: "tutors/Max%20Ip.jpg", bio: "Max Description" },
-    { name: "Max W.", subject: "Subject", image: "tutors/Max%20Wilde.jpg", bio: "Max Description" },
-    { name: "Michael A.", subject: "Subject", image: "tutors/Michael.jpg", bio: "Michael Description" },
-    { name: "Molly W.", subject: "Subject", image: "tutors/Molly.jpg", bio: "Molly Description" },
+    { name: "Adam C.", subject: "Subject", image: "tutors/Adam.jpg"},
+    { name: "Ashe V.", subject: "Subject", image: "tutors/Ashe.png"},
+    { name: "Cassie M.", subject: "Subject", image: "tutors/Cassie.jpg"},
+    { name: "Ellie L.", subject: "Subject", image: "tutors/Ellie.jpg"},
+    { name: "Jamie W.", subject: "Subject", image: "tutors/Jam.jpg"},
+    { name: "Louise P.", subject: "Subject", image: "tutors/Louise.png"},
+    { name: "Max I.", subject: "Subject", image: "tutors/Max%20Ip.jpg"},
+    { name: "Max W.", subject: "Subject", image: "tutors/Max%20Wilde.jpg"},
+    { name: "Michael A.", subject: "Subject", image: "tutors/Michael.png"},
+    { name: "Molly W.", subject: "Subject", image: "tutors/Molly.jpg"},
   ];
 
   // === Generate Tutor Cards Dynamically ===
@@ -149,28 +149,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   tutors.forEach((tutor) => {
     const li = document.createElement("li");
-    li.classList.add("tutorCard");
+      li.classList.add("tutorItem");
 
-    li.innerHTML = `
-      <div class="img">
-        <img src="${tutor.image}" alt="${tutor.name}" onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22200%22%20height%3D%22150%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23cccccc%22/%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2255%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20font-size%3D%2220%22%20fill%3D%22%23666%22%3ENo%20Image%3C/text%3E%3C/svg%3E';">
-      </div>
-      <h2>${tutor.name}</h2>
-      <span>${tutor.subject}</span>
-      <p class="bio">${tutor.bio}</p>
-    `;
+      li.innerHTML = `
+        <div class="tutorCard">
+          <div class="img">
+            <img src="${tutor.image}" alt="${tutor.name}" />
+          </div>
+        </div>
+
+        <div class="bio">
+          <span>${tutor.name}</span>
+          <h2>${tutor.subject}</h2>
+        </div>
+      `;
 
     carousel.appendChild(li);
 
     // Click to toggle bio visibility
     li.addEventListener("click", () => {
-      const bio = li.querySelector(".bio");
-      if (bio.style.maxHeight) {
-        bio.style.maxHeight = null;
-      } else {
-        bio.style.maxHeight = bio.scrollHeight + "px";
-      }
+      li.classList.toggle("open");
     });
+
   });
 
   // === Carousel Controls ===
