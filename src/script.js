@@ -132,15 +132,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // === Tutor Data ===
   const tutors = [
     { name: "Adam C.", subject: "Subject", image: "tutors/Adam.jpg"},
-    { name: "Ashe V.", subject: "Subject", image: "tutors/Ashe.png"},
+    { name: "Ash V.", subject: "Subject", image: "tutors/Ash.webp"},
     { name: "Cassie M.", subject: "Subject", image: "tutors/Cassie.jpg"},
     { name: "Ellie L.", subject: "Subject", image: "tutors/Ellie.jpg"},
     { name: "Jamie W.", subject: "Subject", image: "tutors/Jam.jpg"},
-    { name: "Louise P.", subject: "Subject", image: "tutors/Louise.png"},
-    { name: "Max I.", subject: "Subject", image: "tutors/Max%20Ip.jpg"},
+    { name: "Louise P.", subject: "Subject", image: "tutors/Louise.webp"},
+    { name: "Max I.", subject: "Subject", image: "tutors/Max_Ip.webp"},
     { name: "Max W.", subject: "Subject", image: "tutors/Max%20Wilde.jpg"},
-    { name: "Michael A.", subject: "Subject", image: "tutors/Michael.png"},
-    { name: "Molly W.", subject: "Subject", image: "tutors/Molly.jpg"},
+    { name: "Michael A.", subject: "Subject", image: "tutors/Michael.webp"},
+    { name: "Molly W.", subject: "Subject", image: "tutors/Molly.webp"},
   ];
 
   // === Generate Tutor Cards Dynamically ===
