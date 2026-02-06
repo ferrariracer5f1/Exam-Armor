@@ -131,9 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // === Tutor Data ===
   const tutors = [
-    { name: "Adam C.", subject: "Subject", image: "tutors/Adam.jpg"},
+    { name: "Adam C.", subject: "Subject", image: "tutors/Adam.webp"},
     { name: "Ash V.", subject: "Subject", image: "tutors/Ash.webp"},
-    { name: "Cassie M.", subject: "Subject", image: "tutors/Cassie.jpg"},
+    { name: "Cassie M.", subject: "Subject", image: "tutors/Cassie.webp"},
     { name: "Ellie L.", subject: "Subject", image: "tutors/Ellie.jpg"},
     { name: "Jamie W.", subject: "Subject", image: "tutors/Jam.jpg"},
     { name: "Louise P.", subject: "Subject", image: "tutors/Louise.webp"},
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Molly W.", subject: "Subject", image: "tutors/Molly.webp"},
   ];
 
-  // === Generate Tutor Cards Dynamically ===
+  // Generate tutor cards
   const carousel = document.querySelector(".carousel");
   carousel.innerHTML = ""; // clear old HTML
 
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const wrapper = document.querySelector(".wrapper");
   const arrowBtns = wrapper.querySelectorAll("i");
   const carouselStyle = getComputedStyle(carousel);
-  const cardGap = parseFloat(carouselStyle.gap); // '2vw' converted to px automatically
+  const cardGap = parseFloat(carouselStyle.gap);
   const firstCardWidth = carousel.querySelector(".tutorCard").offsetWidth + cardGap;
 
 
