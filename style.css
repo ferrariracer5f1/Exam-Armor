@@ -47,9 +47,7 @@ body {
   top: 10vw;
   left: 0%;
   width: 200vw; /* let left+right define width */
-=======
   width: 200vw;
->>>>>>> 150067566088ee4f54cd5aa020f5a679aff25cd8
   max-width: none;
   transform: translateX(-25%);
 }
