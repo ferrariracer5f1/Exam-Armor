@@ -1,0 +1,565 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@font-face {
+  font-family: "Moderniz";
+  src: url("/moderniz/Moderniz.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Manrope", sans-serif;
+}
+
+:root {
+  --green-strong: #77f868;
+  --green-bright: #00f5b4;
+  --ink: #0c0c0c;
+  --ink-soft: #121212;
+  --mist: #e8e8e8;
+  --font-heading: "Moderniz", "Manrope", sans-serif;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  background-color: black;
+}
+
+/* Headings use Moderniz */
+h1,
+h2,
+h3,
+.shadow,
+.subtext,
+.locationsHeading {
+  font-family: var(--font-heading);
+}
+
+.logoSect {
+  background-color: white;
+  height: 864px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  padding-top: 69px;
+}
+
+#three-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  overflow: hidden;
+}
+
+.logo {
+  z-index: 2;
+  position: relative;
+  bottom: 77px;
+  width: 1229px;
+  height: auto;
+}
+
+.circle-container {
+  position: absolute;
+  top: 154px;
+  left: 0%;
+  width: 3072px;
+  max-width: none;
+  transform: translateX(-25%);
+}
+
+.circle-container svg {
+  width: 100%;
+  height: auto;
+}
+
+.bottom-curve {
+  position: absolute;
+  bottom: -2534px;
+  left: 0;
+  width: 3072px;
+  transform: translateX(-25%) rotate(180deg);
+}
+
+.info {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  min-height: 864px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 3;
+  bottom: 440px;
+}
+
+.subtext {
+  font-size: 45px;
+  font-weight: 900;
+  z-index: 3;
+  text-align: center;
+
+}.shadow {
+  font-size: 175px;
+  font-weight: 900;
+  z-index: 3;
+  text-align: center;
+  line-height: 1.07;
+
+  /* Two-tone fill */
+  background: 
+    linear-gradient(to bottom, white 47%, #c7ffd9 0%);
+  -webkit-background-clip: text;
+  color: transparent;
+
+}
+
+/*carousel stuff*/
+.tutorCarousel{
+  position: relative;
+  bottom: 300px;
+}
+
+.flexContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 864px;
+  padding: 0 40px;
+  background-color: black;
+}
+
+.wrapper {
+  max-width: 1500px;
+  width: 100%;
+  position: relative;
+  margin-top: -1037px;
+}
+
+/*the left and right clickers*/
+.wrapper i {
+  height: 30px;
+  width: 30px;
+  background: white;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 20%; /*might change this one to 50% later depending if Andrew want's a circle or not*/
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  z-index: 10;
+}
+
+.wrapper i.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
+/*need to add card fitting into allocated space so we can have these 2 arrows in the same position*/
+.wrapper i:first-child {
+  left: -15px;
+  z-index: 20;
+}
+
+.wrapper i:last-child {
+  right: -11px;
+  z-index: 20;
+}
+
+/*How many tutor cards and how big*/
+.wrapper .carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% / 5) -12px);
+  gap: 40px;
+  overflow-x: scroll;
+  overflow-y: visible;
+}
+
+/*tutor cards*/
+.carousel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5%;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge (legacy) */
+  padding-top: 150px;
+  padding-bottom: 150px;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.carousel .tutorCard {
+  flex: 0 0 auto;
+  width: 450px;
+  height: 450px;
+  background: linear-gradient(to bottom, #77F868, #01F5B4);
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 1rem;
+  transition: transform 0.2s;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.carousel .tutorCard .img {
+  width: auto;
+  height: 490px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: -55px;
+  overflow: visible;
+}
+
+.tutorItem {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bio {
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  z-index: 9;
+  width: 80%;
+  height: 30%;
+
+  overflow: hidden;
+  max-height: 1000px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: max-height 0.4s ease, transform 0.2s ease;
+
+  background: rgb(255, 255, 255);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  color: #000000;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.tutorItem.open .bio {
+  max-height: 330px; /* or larger than expected content */
+  transform: scaleY(1);
+}
+
+.tutorItem:hover .tutorCard .img img {
+  transform: scale(1.05);
+}
+
+.tutorItem.open:hover .bio {
+  transform: scaleY(1) scale(1.05);
+}
+
+
+.carousel .tutorCard h2 {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0.2rem;
+}
+
+.carousel .tutorCard span {
+  color: #00ff66;
+  font-size: 0.9rem;
+}
+
+.tutorCard .img img {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  transform-origin: center bottom;
+  transition: transform 0.2s;
+}
+
+.locations {
+  position: relative;
+  bottom: 450px;
+  width: 100%;
+  padding: 80px 80px 120px;
+  background: black;
+  margin-top: -461px;
+  z-index: 2;
+}
+
+.locations .shadow {
+  color: white;
+  background: none;
+  -webkit-background-clip: initial;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  margin-bottom: 48px;
+}
+
+.locationsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  align-items: start;
+}
+
+.locationImg {
+  width: 100%;
+  height: 300px;
+  border-radius: 18px;
+  color: var(--ink);
+  min-height: 260px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.locationImg img {
+  border-radius: 18px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.locationsText {
+  text-align: center;
+  color: var(--mist);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 12px;
+}
+
+.locationsText p {
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.locationsHeading {
+  width: 100%;
+  display: inline-block;
+  background: linear-gradient(to bottom, #77F868, #01F5B4);
+  color: var(--ink-soft);
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border-radius: 18px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+}
+
+/*responses for different screen sizes, in the future we should change it to automatic so we save space*/
+@media screen and (max-width: 1200px) {
+  .logoSect {
+    height: 760px;
+    padding-top: 60px;
+  }
+
+  .logo {
+    width: 980px;
+    bottom: 60px;
+  }
+
+  .circle-container {
+    top: 120px;
+    width: 2500px;
+  }
+
+  .bottom-curve {
+    bottom: -2050px;
+    width: 2500px;
+  }
+
+  .info {
+    min-height: 760px;
+    bottom: 120px;
+  }
+
+  .subtext {
+    font-size: 48px;
+  }
+
+  .shadow {
+    font-size: 192px;
+  }
+
+  .flexContainer {
+    min-height: 760px;
+  }
+
+  .wrapper {
+    margin-top: -900px;
+  }
+
+  .carousel .tutorCard .img {
+    width: 200px;
+    height: 230px;
+  }
+
+  .locations {
+    margin-top: -6600px;
+    position: relative;
+    bottom: 600px;
+    padding: 64px 64px 96px;
+  }
+
+  .locations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .foreword {
+    height: 760px;
+  }
+
+  .foreword .forewordContent {
+    top: 380px;
+  }
+
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 4) - 9px);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .logoSect {
+    height: 640px;
+    padding-top: 50px;
+  }
+
+  .logo {
+    width: 800px;
+    bottom: 50px;
+  }
+
+  .circle-container {
+    top: 100px;
+    width: 2000px;
+  }
+
+  .bottom-curve {
+    bottom: -1650px;
+    width: 2000px;
+  }
+
+  .info {
+    min-height: 640px;
+    bottom: 100px;
+  }
+
+  .subtext {
+    font-size: 36px;
+  }
+
+  .shadow {
+    font-size: 150px;
+  }
+
+  .flexContainer {
+    min-height: 640px;
+  }
+
+  .wrapper {
+    margin-top: -700px;
+  }
+
+  .carousel .tutorCard .img {
+    width: 170px;
+    height: 200px;
+  }
+
+  .locations {
+    padding: 48px;
+    margin-top: -300px;
+  }
+
+  .locations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .loc-card,
+  .loc-card--image {
+    min-height: 240px;
+  }
+
+  .loc-card--text,
+  .loc-text p,
+  .locationsHeading {
+    font-size: 20px;
+  }
+
+  .foreword {
+    height: 640px;
+  }
+
+  .foreword .forewordContent {
+    top: 320px;
+  }
+
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 3) - 6px);
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 2) - 4px);
+  }
+
+  .locations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .loc-card--image {
+    aspect-ratio: auto;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .wrapper .carousel {
+    grid-auto-columns: calc(100% - 2px);
+  }
+}
+
+.foreword {
+  width: 100%;
+  height: 864px;
+  background: white;
+  position: relative;
+  z-index: -1; 
+}
+
+.foreword .forewordContent {
+  position: relative;
+  margin: 0 auto;
+  color: black;
+  top: 432px;
+  text-align: center;
+}
