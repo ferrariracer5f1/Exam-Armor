@@ -25,7 +25,6 @@
 body {
   font-family: Arial, sans-serif;
   overflow-x: hidden;
-  background-color: black;
 }
 
 /* Headings use Moderniz */
@@ -33,6 +32,7 @@ h1,
 h2,
 h3,
 .shadow,
+.heading,
 .subtext,
 .locationsHeading {
   font-family: var(--font-heading);
@@ -83,7 +83,7 @@ h3,
 
 .bottom-curve {
   position: absolute;
-  bottom: -2534px;
+  bottom: -2400px;
   left: 0;
   width: 3072px;
   transform: translateX(-25%) rotate(180deg);
@@ -311,7 +311,7 @@ h3,
   z-index: 2;
 }
 
-.locations .shadow {
+.locations .heading {
   color: white;
   background: none;
   -webkit-background-clip: initial;
