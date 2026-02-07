@@ -1,9 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+@font-face {
+  font-family: "Moderniz";
+  src: url("/moderniz/Moderniz.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Manrope", sans-serif;
+}
+
+:root {
+  --green-strong: #77f868;
+  --green-bright: #00f5b4;
+  --ink: #0c0c0c;
+  --ink-soft: #121212;
+  --mist: #e8e8e8;
+  --font-heading: "Moderniz", "Manrope", sans-serif;
 }
 
 body {
@@ -12,7 +28,16 @@ body {
   background-color: black;
 }
 
-/* Baseline layout: 1536x864 (vw/vh converted to px) */
+/* Headings use Moderniz */
+h1,
+h2,
+h3,
+.shadow,
+.subtext,
+.locationsHeading {
+  font-family: var(--font-heading);
+}
+
 .logoSect {
   background-color: white;
   height: 864px;
@@ -42,7 +67,6 @@ body {
   height: auto;
 }
 
-/* Circle container */
 .circle-container {
   position: absolute;
   top: 154px;
@@ -75,25 +99,25 @@ body {
   align-items: center;
   text-align: center;
   z-index: 3;
-  bottom: 450px;
+  bottom: 440px;
 }
 
 .subtext {
-  font-size: 61px;
+  font-size: 45px;
   font-weight: 900;
   z-index: 3;
   text-align: center;
 
 }.shadow {
-  font-size: 246px;
+  font-size: 175px;
   font-weight: 900;
   z-index: 3;
   text-align: center;
-  line-height: 0.85;
+  line-height: 1.07;
 
   /* Two-tone fill */
   background: 
-    linear-gradient(to bottom, white 50%, #c7ffd9 50%);
+    linear-gradient(to bottom, white 47%, #c7ffd9 0%);
   -webkit-background-clip: text;
   color: transparent;
 
@@ -280,6 +304,74 @@ body {
 .locations {
   position: relative;
   bottom: 450px;
+  width: 100%;
+  padding: 80px 80px 120px;
+  background: black;
+  margin-top: -461px;
+  z-index: 2;
+}
+
+.locations .shadow {
+  color: white;
+  background: none;
+  -webkit-background-clip: initial;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  margin-bottom: 48px;
+}
+
+.locationsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  align-items: start;
+}
+
+.locationImg {
+  width: 100%;
+  height: 300px;
+  border-radius: 18px;
+  color: var(--ink);
+  min-height: 260px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.locationImg img {
+  border-radius: 18px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.locationsText {
+  text-align: center;
+  color: var(--mist);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 12px;
+}
+
+.locationsText p {
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.locationsHeading {
+  width: 100%;
+  display: inline-block;
+  background: linear-gradient(to bottom, #77F868, #01F5B4);
+  color: var(--ink-soft);
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  border-radius: 18px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
 }
 
 /*responses for different screen sizes, in the future we should change it to automatic so we save space*/
@@ -334,6 +426,12 @@ body {
     margin-top: -6600px;
     position: relative;
     bottom: 600px;
+    padding: 64px 64px 96px;
+  }
+
+  .locations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
   }
 
   .foreword {
@@ -398,8 +496,23 @@ body {
 
   .locations {
     padding: 48px;
-    gap: 20px;
     margin-top: -300px;
+  }
+
+  .locations-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .loc-card,
+  .loc-card--image {
+    min-height: 240px;
+  }
+
+  .loc-card--text,
+  .loc-text p,
+  .locationsHeading {
+    font-size: 20px;
   }
 
   .foreword {
@@ -419,23 +532,20 @@ body {
   .wrapper .carousel {
     grid-auto-columns: calc((100% / 2) - 4px);
   }
+
+  .locations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .loc-card--image {
+    aspect-ratio: auto;
+  }
 }
 
 @media screen and (max-width: 400px) {
   .wrapper .carousel {
     grid-auto-columns: calc(100% - 2px);
   }
-}
-
-.locations {
-  width: 100%;
-  padding: 77px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 31px;
-  background: black;
-  margin-top: -461px;
-  z-index: 2;
 }
 
 .foreword {
