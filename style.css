@@ -1,4 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+.manrope-customiser {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight(200 800);
+  font-style: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,7 +15,7 @@
 body {
   font-family: Arial, sans-serif;
   overflow-x: hidden;
-  background-color: black;
+  background-color: white;
 }
 
 .logoSect {
@@ -275,4 +281,36 @@ body {
   .wrapper .carousel {
     grid-auto-columns: calc(100% - 2px);
   }
+}
+
+/*menu bar stuff*/
+.container {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+/*centering menu bar, creating the line underneath*/
+.menu {
+  text-align: center;
+  border-bottom: 2px solid black;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/*menu button properties*/
+.menu ul {
+  display: inline-flex;
+  padding: 40px 0 10px 0; /*NESW*/
+  font-family: "Manrope", sans-serif;
+  font-size: 30px;
+  gap: 30px;
+}
+
+.menu ul li {
+  list-style: none;
+  margin: 0 50px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
 }
