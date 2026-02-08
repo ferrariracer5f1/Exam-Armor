@@ -14,12 +14,24 @@
 }
 
 :root {
-  --green-strong: #77f868;
-  --green-bright: #00f5b4;
-  --ink: #0c0c0c;
-  --ink-soft: #121212;
-  --mist: #e8e8e8;
+  --green-gradientA: #77f868;
+  --green-gradientB: #00f5b4;
+  --green: #00FF8C;
   --font-heading: "Moderniz", "Manrope", sans-serif;
+}
+
+/* Hide Scrollbars */
+html,
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 body {
@@ -58,7 +70,7 @@ h3,
 /*menu button properties*/
 .menu ul {
   display: inline-flex;
-  padding: 40px 0 10px 0; /*NESW*/
+  padding: 40px 0 10px 0;
   font-family: "Manrope", sans-serif;
   font-size: 30px;
   gap: 30px;
@@ -153,6 +165,7 @@ h3,
   background: 
     linear-gradient(to bottom, white 47%, #c7ffd9 0%);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 
 }
@@ -229,21 +242,15 @@ h3,
   justify-content: flex-start;
   gap: 5%;
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge (legacy) */
   padding-top: 150px;
   padding-bottom: 150px;
-}
-
-.carousel::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
 }
 
 .carousel .tutorCard {
   flex: 0 0 auto;
   width: 450px;
   height: 450px;
-  background: linear-gradient(to bottom, #77F868, #01F5B4);
+  background: linear-gradient(to bottom, var(--green-gradientA), var(--green-gradientB));
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   position: relative;
@@ -261,11 +268,11 @@ h3,
 
 .carousel .tutorCard .img {
   width: auto;
-  height: 490px;
+  height: 600px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-top: -55px;
+  margin-top: -166px;
   overflow: visible;
 }
 
@@ -349,6 +356,7 @@ h3,
   color: white;
   background: none;
   -webkit-background-clip: initial;
+  background-clip: initial;
   line-height: 0.9;
   letter-spacing: 0.01em;
   margin-bottom: 48px;
@@ -383,7 +391,7 @@ h3,
 
 .locationsText {
   text-align: center;
-  color: var(--mist);
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -399,15 +407,69 @@ h3,
 .locationsHeading {
   width: 100%;
   display: inline-block;
-  background: linear-gradient(to bottom, #77F868, #01F5B4);
-  color: var(--ink-soft);
+  background: linear-gradient(to bottom, var(--green-gradientA), var(--green-gradientB));
+  color: black;
   font-weight: 900;
   font-size: 22px;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   padding: 12px 22px;
   border-radius: 18px;
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+}
+
+.foreword {
+  width: 100%;
+  height: 864px;
+  background: white;
+  z-index: -1; 
+  position: relative;
+  bottom: 120px;
+}
+
+.foreword .heading {
+  color: black;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  margin-bottom: 48px;
+  font-size: 100px;
+  text-align: center;
+}
+
+.foreword .forewordContent {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  position: relative;
+  color: black;
+  text-align: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.foreword .forewordContent img {
+  border-radius: 18px;
+  width: 50%;
+  height: auto;
+  background: linear-gradient(to bottom, var(--green-gradientA), var(--green-gradientB));
+  position: relative;
+}
+
+.foreword .forewordText {
+  margin-left: -150px;
+  padding-inline: 10%;
+}
+
+.forewordText h1 {
+  font-size: 40px;
+  line-height: 1.5;
+}
+
+.forewordText p {
+  font-size: 30px;
+  line-height: 1.5;
+  font-style: italic;
 }
 
 /*responses for different screen sizes, in the future we should change it to automatic so we save space*/
@@ -582,20 +644,4 @@ h3,
   .wrapper .carousel {
     grid-auto-columns: calc(100% - 2px);
   }
-}
-
-.foreword {
-  width: 100%;
-  height: 864px;
-  background: white;
-  position: relative;
-  z-index: -1; 
-}
-
-.foreword .forewordContent {
-  position: relative;
-  margin: 0 auto;
-  color: black;
-  top: 432px;
-  text-align: center;
 }
