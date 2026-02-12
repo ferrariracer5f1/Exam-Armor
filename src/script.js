@@ -185,10 +185,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   arrowBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      carousel.scrollLeft +=
-        btn.classList.contains("fa-angle-left") ? -firstCardWidth : firstCardWidth;
+      const direction = btn.classList.contains("fa-angle-left") ? -1 : 1;
+      carousel.scrollBy({ left: direction * firstCardWidth, behavior: "smooth" });
     });
   });
+
 
   function updateButtonState() {
     const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;

@@ -250,6 +250,7 @@ h3,
   overflow-x: auto;
   padding-top: 150px;
   padding-bottom: 150px;
+  scroll-behavior: smooth;
 }
 
 .carousel .tutorCard {
