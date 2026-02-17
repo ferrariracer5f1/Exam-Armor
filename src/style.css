@@ -690,6 +690,12 @@ h3,
 }
 
 /*footer stuff*/
+.footer-top-bar {
+  background-color: #00ff8c;
+  height: 15px;
+  width: 100%;
+}
+
 .footer-section {
   margin-top: -100px;
 }
