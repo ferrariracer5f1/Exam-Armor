@@ -1,141 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutoring Prototype</title>
-  <link rel="stylesheet" href="/src/style.css" />
-  <!--manrope-->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-  <!--The arrow for the tutor selection I think-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-  <link rel="icon" type="image/png" sizes="48x48" href="/eaFavicon48.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/eaFavicon96.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/eaFavicon180.png">
-  <link rel="icon" type="image/png" sizes="2048x2048" href="/eaFavicon2048.png">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutoring Prototype</title>
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link rel="icon" type="image/png" sizes="48x48" href="/eaFavicon48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/eaFavicon96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/eaFavicon180.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="2048x2048"
+      href="/eaFavicon2048.png"
+    />
+  </head>
 
-<html#>
-<body>
-  <!-- Menu bar + buttons-->
-  <div class = "aContainer">
-    <div class = "menu">
-      <ul>
-        <li class="ExamArmourLogo"> <img src = "/logo.png" alt = "Exam Armour Logo"></li>
-        <li>OUR TUTORS</li>
-        <li>OUR LOCATION</li>
-        <li>REVIEWS</li>
-        <li>ABOUT US</li>
-      <ul> 
-    </div>
-  </div>
-
-  <script type="module" src="/src/script.js" defer></script>
-  <section class="logoSect">
-    <div id="three-container"></div>
-    <img src="/logo.png" alt="Logo" class="logo">
-    <div class="circle-container">
-      <svg viewBox="0 0 100 50" preserveAspectRatio="xMidYMax meet">
-        <path d="M0,50 A51,50 0 0,1 100,50" fill="black" stroke="#00FF8C" stroke-width="1" />
-      </svg>
-    </div>
-    <div class="circle-container bottom-curve">
-      <svg viewBox="0 0 100 50" preserveAspectRatio="xMidYMax meet">
-        <path d="M0,50 A51,50 0 0,1 100,50" fill="black" stroke="#00FF8C" stroke-width="1" />
-      </svg>
-    </div>
-  </section>
-
-  
-  <section class="info">
-    <div class="info-content">
-      <p class="subtext">
-        OUR TUTORS, YOUR CHOICE
-      </p>
-      <h1 class="shadow">TUTORING</h1>
-    </div>
-  </section>
-
-  <section class ="tutorCarousel">
-    <div class="flexContainer">
-    <div class="wrapper">
-      <i class="fa-solid fa-angle-left"> </i>
-      <ul class="carousel">
-
-      </ul>
-      <i class="fa-solid fa-angle-right"> </i>
-    </div>
-    </div>
-  </section>
-
-  <section class="locations">
-    <h1 class="heading">LOCATION</h1>
-    <div class="locationsGrid">
-      <div class="locationImg">
-        <img src="/debug.webp" alt="The Harpenden Collective" />
-      </div>
-
-      <div class="locationsText">
-        <div class="locationsHeading">THE HARPENDEN COLLECTIVE</div>
-        <p>
-          wowie zowie
-        </p>
-      </div>
-
-      <div class="locationImg">
-        <img src="/debug.webp" alt="The Harpenden Collective" />
-      </div>
-
-      <div class="locationsText">
-        <div class="locationsHeading">SAFEGUARDING</div>
-        <p>golly gee this sure is a lot of text right here in this area. man it sure would be a shame if any of this text were to be purely used for debug purposes instead of in a museum or something that would be similar to a modern tragedy of the sorts.</p>
-      </div>
-
-      <div class="locationImg">
-        <img src="/debug.webp" alt="The Harpenden Collective" />
-      </div>
-
-      <div class="locationsText">
-        <div class="locationsHeading">OTHER STUFF?</div>
-        <p>
-          Yeah yeah I don’t know what goes here yet but another text
-          box is the point
-        </p>
+  <body>
+    <div class="aContainer">
+      <div class="menu">
+        <ul>
+          <li class="ExamArmourLogo">
+            <img src="/logo.png" alt="Exam Armour Logo" />
+          </li>
+          <li>OUR TUTORS</li>
+          <li>OUR LOCATION</li>
+          <li>REVIEWS</li>
+          <li>ABOUT US</li>
+        </ul>
       </div>
     </div>
-  </section>
 
-  <section class="foreword">
-    <h1 class="heading">A WORD FROM US</h1>
-    <div class="forewordContent">
-      <img src="/tutors/Andrew_H.webp" alt="Andrew He" />
-      <div class="forewordText">
-        <p>in this world nothing can be said for certain, except death, taxes and the foreword being unwritten.</p>
-        <h1>- Andrew He, CEO</h1>
+    <script type="module" src="/src/script.js" defer></script>
+
+    <section class="logoSect">
+      <div id="three-container"></div>
+      <img src="/logo.png" alt="Logo" class="logo" />
+      <div class="circle-container">
+        <svg viewBox="0 0 100 50" preserveAspectRatio="xMidYMax meet">
+          <path
+            d="M0,50 A51,50 0 0,1 100,50"
+            fill="black"
+            stroke="#00FF8C"
+            stroke-width="1"
+          />
+        </svg>
       </div>
-    </div>
-  </section>
+      <div class="circle-container bottom-curve">
+        <svg viewBox="0 0 100 50" preserveAspectRatio="xMidYMax meet">
+          <path
+            d="M0,50 A51,50 0 0,1 100,50"
+            fill="black"
+            stroke="#00FF8C"
+            stroke-width="1"
+          />
+        </svg>
+      </div>
+    </section>
 
-  <section class="footer-section">
-    <div class="footer-top-bar"></div>
-    <footer class="site-footer">
-      <div class="footer-content">
-        <div class="footer-left">
-          <p>The thing at the bottom of websites where they have a bunch of stuff ykwim<br><br><br>I don't exactly know what they put but I guess just make this box for now and we'll</p>
-        </div>
-      
-        <div class="footer-center">
-          <p>add the text later...<br>Links to our socials n what not</p>
-        </div>
+    <section class="info">
+      <div class="info-content">
+        <p class="subtext">OUR TUTORS, YOUR CHOICE</p>
+        <h1 class="shadow">TUTORING</h1>
+      </div>
+    </section>
 
-        <div class="footer-right">
-          <img src="eaFavicon2048.png" alt="A+ Logo">
+    <section class="tutorCarousel">
+      <div class="flexContainer">
+        <div class="wrapper">
+          <i class="fa-solid fa-angle-left"></i>
+          <ul class="carousel"></ul>
+          <i class="fa-solid fa-angle-right"></i>
         </div>
       </div>
-    </footer>
-  </section>
+    </section>
 
-</body>
+    <section class="locations">
+      <h1 class="heading">LOCATION</h1>
+      <div class="locationsGrid">
+        <div class="locationItem">
+          <div class="locationImg">
+            <img src="/debug.webp" alt="The Harpenden Collective" />
+          </div>
+          <div class="locationsText">
+            <div class="locationsHeading">THE HARPENDEN COLLECTIVE</div>
+            <p>wowie zowie</p>
+          </div>
+        </div>
+
+        <div class="locationItem">
+          <div class="locationImg">
+            <img src="/debug.webp" alt="Safeguarding" />
+          </div>
+          <div class="locationsText">
+            <div class="locationsHeading">SAFEGUARDING</div>
+            <p>
+              golly gee this sure is a lot of text right here in this area. man
+              it sure would be a shame if any of this text were to be purely
+              used for debug purposes instead of in a museum or something that
+              would be similar to a modern tragedy of the sorts.
+            </p>
+          </div>
+        </div>
+
+        <div class="locationItem">
+          <div class="locationImg">
+            <img src="/debug.webp" alt="Other Stuff" />
+          </div>
+          <div class="locationsText">
+            <div class="locationsHeading">OTHER STUFF?</div>
+            <p>
+              Yeah yeah I don’t know what goes here yet but another text box is
+              the point
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="foreword">
+      <h1 class="heading">A WORD FROM US</h1>
+      <div class="forewordContent">
+        <img src="/tutors/Andrew_H.webp" alt="Andrew He" />
+        <div class="forewordText">
+          <p>
+            in this world nothing can be said for certain, except death, taxes
+            and the foreword being unwritten.
+          </p>
+          <h1>- Andrew He, CEO</h1>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-section">
+      <div class="footer-top-bar"></div>
+      <footer class="site-footer">
+        <div class="footer-content">
+          <div class="footer-left">
+            <p>
+              The thing at the bottom of websites where they have a bunch of
+              stuff ykwim<br /><br /><br />I don't exactly know what they put
+              but I guess just make this box for now and we'll
+            </p>
+          </div>
+
+          <div class="footer-center">
+            <p>add the text later...<br />Links to our socials n what not</p>
+          </div>
+
+          <div class="footer-right">
+            <img src="eaFavicon2048.png" alt="A+ Logo" />
+          </div>
+        </div>
+      </footer>
+    </section>
+  </body>
 </html>
