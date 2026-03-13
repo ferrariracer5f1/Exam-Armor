@@ -515,224 +515,275 @@ h3,
   font-style: italic;
 }
 
-/*responses for different screen sizes, in the future we should change it to automatic so we save space*/
-@media screen and (max-width: 1200px) {
-  .logoSect {
-    height: 760px;
-    padding-top: 60px;
+
+@media screen and (max-width: 1100px) {
+  .menu ul {
+    gap: 28px;
+    font-size: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ExamArmourLogo img {
+    height: 70px;
+    margin-right: 0;
   }
 
   .logo {
-    width: 980px;
-    bottom: 60px;
+    width: min(85vw, 980px);
+    bottom: 40px;
   }
 
   .circle-container {
     top: 120px;
-    width: 2500px;
+    width: 2400px;
+    transform: translateX(-30%);
   }
 
   .bottom-curve {
-    bottom: -2050px;
-    width: 2500px;
-  }
-
-  .info {
-    min-height: 760px;
-    bottom: 120px;
+    bottom: -1700px;
+    width: 2400px;
   }
 
   .subtext {
-    font-size: 48px;
+    font-size: clamp(28px, 3.5vw, 40px);
   }
 
   .shadow {
-    font-size: 192px;
-  }
-
-  .flexContainer {
-    min-height: 760px;
-  }
-
-  .wrapper {
-    margin-top: -900px;
-  }
-
-  .carousel .tutorCard .img {
-    width: 200px;
-    height: 230px;
-  }
-
-  .locations {
-    margin-top: -6600px;
-    position: relative;
-    bottom: 600px;
-    padding: 64px 64px 96px;
-  }
-
-  .locations-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px;
-  }
-
-  .foreword {
-    height: 760px;
-  }
-
-  .foreword .forewordContent {
-    top: 380px;
-  }
-
-  .wrapper .carousel {
-    grid-auto-columns: calc((100% / 4) - 9px);
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .logoSect {
-    height: 640px;
-    padding-top: 50px;
-  }
-
-  .logo {
-    width: 800px;
-    bottom: 50px;
-  }
-
-  .circle-container {
-    top: 100px;
-    width: 2000px;
-  }
-
-  .bottom-curve {
-    bottom: -1650px;
-    width: 2000px;
-  }
-
-  .info {
-    min-height: 640px;
-    bottom: 100px;
-  }
-
-  .subtext {
-    font-size: 36px;
-  }
-
-  .shadow {
-    font-size: 150px;
-  }
-
-  .flexContainer {
-    min-height: 640px;
+    font-size: clamp(100px, 12vw, 170px);
   }
 
   .wrapper {
     margin-top: -700px;
   }
 
-  .carousel .tutorCard .img {
-    width: 170px;
-    height: 200px;
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 4) - 12px);
   }
 
   .locations {
-    padding: 48px;
-    margin-top: -300px;
+    margin-top: -260px;
+    bottom: 260px;
+    padding: 64px 48px 96px;
   }
 
-  .locations-grid {
+  .locationsGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
   }
 
-  .loc-card,
-  .loc-card--image {
-    min-height: 240px;
+  .locations .heading {
+    font-size: clamp(80px, 10vw, 150px);
   }
 
-  .loc-card--text,
-  .loc-text p,
+  .foreword {
+    height: auto;
+    padding-bottom: 64px;
+  }
+
+  .foreword .heading {
+    font-size: clamp(56px, 8vw, 96px);
+  }
+
+  .foreword .forewordContent img {
+    width: 60%;
+    transform: scale(1.2);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .logoSect {
+    height: auto;
+    min-height: 560px;
+    padding-top: 40px;
+  }
+
+  .logo {
+    width: min(90vw, 720px);
+    bottom: 0;
+  }
+
+  .circle-container {
+    top: 90px;
+    width: 200vw;
+    transform: translateX(-35%);
+  }
+
+  .bottom-curve {
+    bottom: -900px;
+    width: 200vw;
+  }
+
+  .info {
+    min-height: auto;
+    bottom: 0;
+    padding: 24px;
+  }
+
+  .tutorCarousel {
+    bottom: 0;
+  }
+
+  .flexContainer {
+    min-height: auto;
+    padding: 24px;
+  }
+
+  .wrapper {
+    margin-top: 0;
+  }
+
+  .carousel {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    gap: 32px;
+  }
+
+  .carousel .tutorCard {
+    width: min(70vw, 360px);
+    height: min(70vw, 360px);
+  }
+
+  .carousel .tutorCard .img {
+    height: min(80vw, 420px);
+    margin-top: -120px;
+  }
+
+  .bio {
+    font-size: 20px;
+  }
+
+  .locations {
+    margin-top: 0;
+    bottom: 0;
+    padding: 56px 24px 80px;
+  }
+
+  .locationsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .locationsText p {
+    font-size: 20px;
+  }
+
   .locationsHeading {
     font-size: 20px;
   }
 
   .foreword {
-    height: 640px;
+    bottom: 0;
+    height: auto;
+    padding: 64px 0 80px;
+  }
+
+  .foreword::before {
+    left: 24px;
+    right: 24px;
+    top: -120px;
+    bottom: 24px;
+    border-width: 6px;
   }
 
   .foreword .forewordContent {
-    top: 320px;
-  }
-
-  .wrapper .carousel {
-    grid-auto-columns: calc((100% / 3) - 6px);
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .wrapper .carousel {
-    grid-auto-columns: calc((100% / 2) - 4px);
-  }
-
-  .locations-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .loc-card--image {
-    aspect-ratio: auto;
+  .foreword .forewordContent img {
+    width: min(70vw, 320px);
+    transform: none;
+    margin-top: 0;
+  }
+
+  .foreword .forewordText {
+    margin-left: 0;
+    padding-inline: 8%;
+  }
+
+  .forewordText p {
+    font-size: 22px;
+  }
+
+  .forewordText h1 {
+    font-size: 28px;
   }
 }
 
-@media screen and (max-width: 400px) {
-  .wrapper .carousel {
-    grid-auto-columns: calc(100% - 2px);
+@media screen and (max-width: 700px) {
+  .menu {
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .menu ul {
+    gap: 14px;
+    font-size: 16px;
+  }
+
+  .logoSect {
+    min-height: 500px;
+  }
+
+  .subtext {
+    font-size: clamp(20px, 6vw, 32px);
+  }
+
+  .shadow {
+    font-size: clamp(64px, 18vw, 120px);
+  }
+
+  .wrapper i {
+    top: 35%;
+  }
+
+  .carousel .tutorCard {
+    width: min(84vw, 300px);
+    height: min(84vw, 300px);
+  }
+
+  .carousel .tutorCard .img {
+    height: min(90vw, 360px);
+    margin-top: -90px;
   }
 }
 
-/*footer stuff*/
-.footer-top-bar {
-  background-color: #00ff8c;
-  height: 15px;
-  width: 100%;
-}
-
-.footer-section {
-  margin-top: -100px;
-}
-
-.site-footer {
-  background-color: black;
-  color: white;
-  padding: 40px 20px;
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
-}
-
-.footer-left,
-.footer-center {
-  flex: 1;
-}
-
-.footer-right img {
-  width: 80px;
-  height: auto;
-}
-
-@media (max-width: 700px) {
-  .footer-content {
-    flex-direction: column;
-    text-align: center;
+@media screen and (max-width: 520px) {
+  .menu ul {
+    gap: 10px;
+    font-size: 14px;
   }
 
-  .footer-right img {
-    margin-top: 20px;
+  .ExamArmourLogo img {
+    height: 54px;
+  }
+
+  .locations .heading {
+    font-size: clamp(56px, 14vw, 110px);
+  }
+
+  .foreword::before {
+    top: -80px;
+  }
+
+  .wrapper i {
+    display: none;
   }
 }
+
+@media screen and (max-aspect-ratio: 4/3) {
+  .info,
+  .tutorCarousel,
+  .locations,
+  .foreword {
+    bottom: 0;
+  }
+
+  .locations {
+    margin-top: 0;
+  }
+
+  .wrapper {
+    margin-top: 0;
+  }
+}
+
