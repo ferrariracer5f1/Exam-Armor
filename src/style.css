@@ -2,7 +2,7 @@
 @font-face {
   font-family: "Moderniz";
   src: url("/moderniz/Moderniz.otf") format("opentype");
-  font-weight: 400;
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -67,7 +67,6 @@ h3,
   text-align: center;
   border-bottom: 2px solid black;
   width: 90%;
-  
   margin: 0 auto;
   bottom: 30px;
 }
@@ -113,7 +112,7 @@ h3,
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  padding-top: 69px;
+  padding-top: 120px;
 }
 
 #three-container {
@@ -126,12 +125,22 @@ h3,
   overflow: hidden;
 }
 
-.logo {
-  z-index: 2;
-  position: relative;
-  bottom: 77px;
-  width: 1229px;
-  height: auto;
+.SEOSauce {
+  font-size: clamp(48px, 3.5vw, 60px);
+  font-weight: 900;
+  z-index: 5;
+  text-align: center;
+  margin: 0;
+  line-height: 1.2;
+  width: 100%;
+  padding: 0 20px; /* stops it touching the edges */
+}
+
+.SEOSauce span {
+  font-size: inherit;
+  font-weight: inherit;
+  font-family: var(--font-heading);
+  background-color: #00ff8c;
 }
 
 .circle-container {
@@ -558,9 +567,7 @@ h3,
   height: auto;
 }
 
-
 @media screen and (max-width: 1100px) {
-
   .menu ul {
     gap: 21px;
   }
@@ -827,4 +834,3 @@ h3,
     margin-top: 0;
   }
 }
-
