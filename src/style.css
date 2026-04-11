@@ -22,7 +22,7 @@
 }
 
 /* Custom Scrollbars */
-::-webkit-scrollbar { width: ; background: transparent; }
+::-webkit-scrollbar { width: 10px; background: transparent; }
 ::-webkit-scrollbar-track { background-color: rgb(0, 0, 0); }
 ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #00a75c; }
@@ -220,8 +220,7 @@ h3,
 .wrapper .carousel {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: calc((100% / 5) - 12px);
-  gap: 40px;
+  gap: 1vw;
   overflow-x: scroll;
   overflow-y: visible;
 }
