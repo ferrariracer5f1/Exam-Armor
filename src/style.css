@@ -21,7 +21,7 @@
   --font-heading: "Moderniz", "Manrope", sans-serif;
 }
 
-/* Custom Scrollbars */
+/* Custom Scrollbar */
 ::-webkit-scrollbar { width: 10px; background: transparent; }
 ::-webkit-scrollbar-track { background-color: rgb(0, 0, 0); }
 ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 10px; }
@@ -46,46 +46,96 @@ h3,
   font-family: var(--font-heading);
 }
 
-/* ── Nav ── */
+/* ── nav bar ── */
 .aContainer {
   width: 100%;
   background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
 }
 
-/*centering nav bar, creating the line underneath*/
 .menu {
-  text-align: center;
-  border-bottom: 2px solid black;
   width: 90%;
+  max-width: 1400px;
+  border-bottom: 2px solid black;
   margin: 0 auto;
-  bottom: 30px;
 }
 
 .menu ul {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 50px;
-  height: clamp(50px, 8vw, 110px);
+  justify-content: space-between; 
+  height: clamp(60px, 10vw, 110px);
   list-style: none;
   padding: 0;
   margin: 0;
-  font-family: "Manrope", sans-serif;
-  font-size: clamp(10px, 2vw, 26px);
+}
+
+.nav-links {
+  display: flex;
+  gap: clamp(15px, 3vw, 50px);
+  list-style: none;
+  align-items: center;
 }
 
 .menu ul li {
-  list-style: none;
-  margin: 0 10px;
   font-weight: bold;
   color: black;
   cursor: pointer;
+  white-space: nowrap;
+  font-size: clamp(12px, 1.5vw, 22px);
 }
 
-.ExamArmourLogo { padding-right: calc(var(--logo-size) * 0.8); }
-.ExamArmourLogo img { height: var(--logo-size); width: auto; }
+.ExamArmourLogo img {
+  height: var(--logo-size);
+  width: auto;
+  display: block;
+}
+
+/* ── Mobile Optimization (Tablets & Phones) ── */
+@media screen and (max-width: 768px) {
+  .menu ul {
+    flex-direction: column; /* Stack logo above the links */
+    justify-content: center;
+    height: auto;
+    padding: 15px 0;
+    gap: 10px;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: center; /* Center the buttons on mobile */
+    gap: 15px; /* Tighten space so they don't wrap */
+    padding-bottom: 5px;
+  }
+
+  .menu ul li {
+    font-size: 14px; /* Fixed readable size for small screens */
+  }
 
 
+  .logoSect {
+    padding-top: 160px; 
+  }
+}
+
+
+@media screen and (max-width: 440px) {
+  .nav-links {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .menu ul li {
+    font-size: 12px;
+  }
+}
+
+/*------------ main bit of top part ----------*/
 .logoSect {
   background-color: white;
   height: 864px;
@@ -113,7 +163,7 @@ h3,
   margin: 0;
   line-height: 1.2;
   width: 100%;
-  padding: 0 20px;
+  padding: 5vh 20px;
 }
 
 .SEOSauce span {
@@ -267,7 +317,7 @@ h3,
 
 .tutorItem {
   position: relative;
-  width: 450px; height: 450px;
+  width: 100%; height: 100%;
   display: flex;
   flex-direction: column;
 }
