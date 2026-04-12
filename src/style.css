@@ -6,6 +6,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -36,9 +37,7 @@ html, body {
 }
 
 /* Headings that use Moderniz */
-h1,
-h2,
-h3,
+h1, h2, h3,
 .shadow,
 .heading,
 .subtext,
@@ -46,7 +45,9 @@ h3,
   font-family: var(--font-heading);
 }
 
-/* ── nav bar ── */
+/* ══════════════════════════════════════════════════════════════
+   NAVIGATION BAR - ORIGINAL DESKTOP, RESPONSIVE MOBILE
+   ══════════════════════════════════════════════════════════════ */
 .aContainer {
   width: 100%;
   background-color: white;
@@ -96,46 +97,9 @@ h3,
   display: block;
 }
 
-/* ── Mobile Optimization (Tablets & Phones) ── */
-@media screen and (max-width: 768px) {
-  .menu ul {
-    flex-direction: column; /* Stack logo above the links */
-    justify-content: center;
-    height: auto;
-    padding: 15px 0;
-    gap: 10px;
-  }
-
-  .nav-links {
-    width: 100%;
-    justify-content: center; /* Center the buttons on mobile */
-    gap: 15px; /* Tighten space so they don't wrap */
-    padding-bottom: 5px;
-  }
-
-  .menu ul li {
-    font-size: 14px; /* Fixed readable size for small screens */
-  }
-
-
-  .logoSect {
-    padding-top: 160px; 
-  }
-}
-
-
-@media screen and (max-width: 440px) {
-  .nav-links {
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  
-  .menu ul li {
-    font-size: 12px;
-  }
-}
-
-/*------------ main bit of top part ----------*/
+/* ══════════════════════════════════════════════════════════════
+   HERO SECTION - ORIGINAL DESKTOP VALUES
+   ══════════════════════════════════════════════════════════════ */
 .logoSect {
   background-color: white;
   height: 864px;
@@ -149,8 +113,10 @@ h3,
 
 #three-container {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
   z-index: 4;
   overflow: hidden;
 }
@@ -173,7 +139,7 @@ h3,
   background-color: #00ff8c;
 }
 
-/* ── Circle decorations ── */
+/* Circle decorations - ORIGINAL DESKTOP */
 .circle-container {
   position: absolute;
   top: 154px;
@@ -183,7 +149,10 @@ h3,
   max-width: none;
 }
 
-.circle-container svg { width: 100%; height: auto; }
+.circle-container svg { 
+  width: 100%; 
+  height: auto; 
+}
 
 .bottom-curve {
   position: absolute;
@@ -194,7 +163,9 @@ h3,
   z-index: 2;
 }
 
-/* ── Info section ── */
+/* ══════════════════════════════════════════════════════════════
+   INFO SECTION - ORIGINAL DESKTOP VALUES
+   ══════════════════════════════════════════════════════════════ */
 .info {
   position: relative;
   background-color: rgba(0, 0, 0, 0);
@@ -227,7 +198,9 @@ h3,
   color: transparent;
 }
 
-/* ── Carousel ── */
+/* ══════════════════════════════════════════════════════════════
+   TUTOR CAROUSEL - ORIGINAL DESKTOP VALUES
+   ══════════════════════════════════════════════════════════════ */
 .tutorCarousel {
   position: relative;
   bottom: 300px;
@@ -250,7 +223,8 @@ h3,
 }
 
 .wrapper i {
-  height: 30px; width: 30px;
+  height: 30px; 
+  width: 30px;
   background: white;
   text-align: center;
   line-height: 30px;
@@ -263,9 +237,21 @@ h3,
   z-index: 10;
 }
 
-.wrapper i.disabled { opacity: 0.4; pointer-events: none; cursor: default; }
-.wrapper i:first-child { left: -15px; z-index: 20; }
-.wrapper i:last-child  { right: -11px; z-index: 20; }
+.wrapper i.disabled { 
+  opacity: 0.4; 
+  pointer-events: none; 
+  cursor: default; 
+}
+
+.wrapper i:first-child { 
+  left: -15px; 
+  z-index: 20; 
+}
+
+.wrapper i:last-child { 
+  right: -11px; 
+  z-index: 20; 
+}
 
 .wrapper .carousel {
   display: grid;
@@ -284,11 +270,17 @@ h3,
   padding-top: 150px;
   padding-bottom: 150px;
   scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .carousel .tutorCard {
   flex: 0 0 auto;
-  width: 450px; height: 450px;
+  width: 450px; 
+  height: 450px;
   background: linear-gradient(to bottom, var(--green-gradientA), var(--green-gradientB));
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
@@ -317,16 +309,19 @@ h3,
 
 .tutorItem {
   position: relative;
-  width: 100%; height: 100%;
+  width: 100%; 
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .bio {
   position: absolute;
-  top: 100%; left: 10%;
+  top: 100%; 
+  left: 10%;
   z-index: 9;
-  width: 80%; height: 30%;
+  width: 80%; 
+  height: 30%;
   overflow: hidden;
   max-height: 1000px;
   transform: scaleY(0);
@@ -341,15 +336,33 @@ h3,
   padding-top: 20px;
 }
 
-.tutorItem.open .bio { max-height: 330px; transform: scaleY(1); }
-.tutorItem:hover .tutorCard .img img { transform: scale(1.05); }
-.tutorItem.open:hover .bio { transform: scaleY(1) scale(1.05); }
+.tutorItem.open .bio { 
+  max-height: 330px; 
+  transform: scaleY(1); 
+}
 
-.carousel .tutorCard h2 { color: white; font-size: 1.2rem; margin: 0.5rem 0 0.2rem; }
-.carousel .tutorCard span { color: #00ff66; font-size: 0.9rem; }
+.tutorItem:hover .tutorCard .img img { 
+  transform: scale(1.05); 
+}
+
+.tutorItem.open:hover .bio { 
+  transform: scaleY(1) scale(1.05); 
+}
+
+.carousel .tutorCard h2 { 
+  color: white; 
+  font-size: 1.2rem; 
+  margin: 0.5rem 0 0.2rem; 
+}
+
+.carousel .tutorCard span { 
+  color: #00ff66; 
+  font-size: 0.9rem; 
+}
 
 .tutorCard .img img {
-  width: auto; height: 100%;
+  width: auto; 
+  height: 100%;
   max-width: 100%;
   object-fit: contain;
   object-position: bottom center;
@@ -357,7 +370,9 @@ h3,
   transition: transform 0.2s;
 }
 
-/* ── Locations ── */
+/* ══════════════════════════════════════════════════════════════
+   LOCATIONS SECTION - ORIGINAL DESKTOP VALUES
+   ══════════════════════════════════════════════════════════════ */
 .locations {
   position: relative;
   bottom: 450px;
@@ -398,14 +413,16 @@ h3,
 
 .locationImg img {
   border-radius: 18px;
-  width: 100%; height: 100%;
+  width: 100%; 
+  height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
 }
 
 .locationImg iframe {
-  width: 100%; height: 100%;
+  width: 100%; 
+  height: 100%;
   border-radius: 18px;
   display: block;
   border: 0;
@@ -421,7 +438,10 @@ h3,
   padding: 8px 12px;
 }
 
-.locationsText p { font-size: 22px; line-height: 1.5; }
+.locationsText p { 
+  font-size: 22px; 
+  line-height: 1.5; 
+}
 
 .locationsHeading {
   width: 100%;
@@ -436,7 +456,9 @@ h3,
   box-shadow: 0 12px 26px rgba(0,0,0,0.3);
 }
 
-/* ── Foreword ── */
+/* ══════════════════════════════════════════════════════════════
+   FOREWORD SECTION - ORIGINAL DESKTOP VALUES
+   ══════════════════════════════════════════════════════════════ */
 .foreword {
   width: 100%;
   height: 864px;
@@ -450,14 +472,19 @@ h3,
 .foreword::before {
   content: "";
   position: absolute;
-  left: 60px; right: 60px;
-  top: -300px; bottom: 50px;
+  left: 60px; 
+  right: 60px;
+  top: -300px; 
+  bottom: 50px;
   border: 10px solid #000;
   z-index: 6;
   pointer-events: none;
 }
 
-.foreword > * { position: relative; z-index: 1; }
+.foreword > * { 
+  position: relative; 
+  z-index: 1; 
+}
 
 .foreword .heading {
   color: black;
@@ -490,13 +517,34 @@ h3,
   z-index: -1;
 }
 
-.foreword .forewordText { margin-left: -150px; padding-inline: 10%; }
-.forewordText h1 { font-size: 40px; line-height: 1.5; }
-.forewordText p  { font-size: 30px; line-height: 1.5; font-style: italic; }
+.foreword .forewordText { 
+  margin-left: -150px; 
+  padding-inline: 10%; 
+}
 
-/* ── Footer ── */
-.footer-top-bar { background-color: #00ff8c; height: 1vh; width: 100%; }
-.footer-section  { margin-top: -100px; }
+.forewordText h1 { 
+  font-size: 40px; 
+  line-height: 1.5; 
+}
+
+.forewordText p { 
+  font-size: 30px; 
+  line-height: 1.5; 
+  font-style: italic; 
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER - ORIGINAL DESKTOP
+   ══════════════════════════════════════════════════════════════ */
+.footer-top-bar { 
+  background-color: #00ff8c; 
+  height: 1vh; 
+  width: 100%; 
+}
+
+.footer-section { 
+  margin-top: -100px; 
+}
 
 .site-footer {
   background-color: black;
@@ -513,11 +561,20 @@ h3,
   gap: 40px;
 }
 
-.footer-left, .footer-center { flex: 1; }
-.footer-right img { width: 160px; height: auto; }
+.footer-left, .footer-center { 
+  flex: 1; 
+}
 
+.footer-right img { 
+  width: 160px; 
+  height: auto; 
+}
 
-/*-------------------------scaling and stuff----------------------------------------*/
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS - MOBILE ONLY
+   ══════════════════════════════════════════════════════════════ */
+
+/* Tablet Landscape */
 @media screen and (max-width: 1100px) {
   .menu ul { gap: 21px; }
   .ExamArmourLogo img { margin-right: 0; }
@@ -526,7 +583,7 @@ h3,
   .bottom-curve { bottom: -1700px; width: 2400px; }
 
   .subtext { font-size: clamp(28px, 3.5vw, 40px); }
-  .shadow  { font-size: clamp(100px, 12vw, 170px); }
+  .shadow { font-size: clamp(100px, 12vw, 170px); }
 
   .wrapper { margin-top: -700px; }
   .wrapper .carousel { grid-auto-columns: calc((100% / 4) - 12px); }
@@ -540,10 +597,11 @@ h3,
   .foreword .forewordContent img { width: 60%; transform: scale(1.2); }
 }
 
+/* Tablet Portrait */
 @media screen and (max-width: 900px) {
   .menu ul { gap: 21px; }
 
-  .logoSect { height: auto; min-height: 560px; padding-top: 40px; }
+  .logoSect { height: auto; min-height: 560px; padding-top: 80px; }
 
   .circle-container { top: 90px; width: 200vw; }
   .bottom-curve { bottom: -900px; width: 200vw; }
@@ -551,17 +609,17 @@ h3,
   .info { min-height: auto; bottom: 0; padding: 24px; }
 
   .tutorCarousel { bottom: 0; }
-  .flexContainer  { min-height: auto; padding: 24px; }
-  .wrapper        { margin-top: 0; }
+  .flexContainer { min-height: auto; padding: 24px; }
+  .wrapper { margin-top: 0; }
 
   .carousel { padding-top: 80px; padding-bottom: 80px; gap: 32px; }
-  .carousel .tutorCard      { width: min(70vw, 360px); height: min(70vw, 360px); }
+  .carousel .tutorCard { width: min(70vw, 360px); height: min(70vw, 360px); }
   .carousel .tutorCard .img { height: min(80vw, 420px); margin-top: -120px; }
   .bio { font-size: 20px; }
 
   .locations { margin-top: 0; bottom: 0; padding: 56px 24px 80px; }
   .locationsGrid { grid-template-columns: 1fr; }
-  .locationsText p  { font-size: 20px; }
+  .locationsText p { font-size: 20px; }
   .locationsHeading { font-size: 20px; }
 
   .foreword { bottom: 0; height: auto; padding: 64px 0 80px; }
@@ -569,29 +627,48 @@ h3,
   .foreword .forewordContent { grid-template-columns: 1fr; gap: 24px; }
   .foreword .forewordContent img { width: min(70vw, 320px); transform: none; margin-top: 0; }
   .foreword .forewordText { margin-left: 0; padding-inline: 8%; }
-  .forewordText p  { font-size: 22px; }
+  .forewordText p { font-size: 22px; }
   .forewordText h1 { font-size: 28px; }
 
   .footer-content { flex-wrap: wrap; justify-content: center; text-align: center; }
 }
 
+/* Mobile */
 @media screen and (max-width: 700px) {
   .menu { width: 100%; padding: 0 16px; }
   .menu ul { gap: 14px; justify-content: flex-start; }
 
-  .logoSect { min-height: 500px; }
+  .logoSect { min-height: 500px; padding-top: 80px; }
   .SEOSauce { font-size: clamp(24px, 8vw, 40px); }
 
   .subtext { font-size: clamp(20px, 6vw, 32px); }
-  .shadow  { font-size: clamp(64px, 18vw, 120px); }
+  .shadow { font-size: clamp(64px, 18vw, 120px); }
 
   .wrapper i { top: 35%; }
-  .carousel .tutorCard      { width: min(84vw, 300px); height: min(84vw, 300px); }
+  .carousel .tutorCard { width: min(84vw, 300px); height: min(84vw, 300px); }
   .carousel .tutorCard .img { height: min(90vw, 360px); margin-top: -90px; }
 }
 
+/* Small Mobile */
 @media screen and (max-width: 520px) {
-  .menu ul { gap: 10px; }
+  .menu ul { 
+    flex-direction: column;
+    height: auto;
+    padding: 15px 0;
+    gap: 10px;
+  }
+
+  .nav-links {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+    padding-bottom: 5px;
+  }
+
+  .menu ul li { font-size: 14px; }
+
+  .logoSect { padding-top: 160px; }
+
   .ExamArmourLogo img { margin-right: auto; }
 
   .locations .heading { font-size: clamp(56px, 14vw, 110px); }
@@ -601,8 +678,29 @@ h3,
   .footer-content { flex-direction: column; align-items: center; }
 }
 
+/* Very Small Mobile */
+@media screen and (max-width: 440px) {
+  .nav-links {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .menu ul li { font-size: 12px; }
+
+  .carousel .tutorCard { width: min(85vw, 280px); height: min(85vw, 280px); }
+  .carousel .tutorCard .img { height: min(95vw, 340px); margin-top: -80px; }
+  .bio { font-size: 18px; }
+}
+
+/* Portrait Orientation Override */
 @media screen and (max-aspect-ratio: 4/3) {
-  .info, .tutorCarousel, .locations, .foreword { bottom: 0; }
+  .info, 
+  .tutorCarousel, 
+  .locations, 
+  .foreword {
+    bottom: 0;
+  }
+  
   .locations { margin-top: 0; }
-  .wrapper   { margin-top: 0; }
-} 
+  .wrapper { margin-top: 0; }
+}

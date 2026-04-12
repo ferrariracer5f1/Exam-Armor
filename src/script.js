@@ -121,6 +121,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     animate();
+  }, undefined, (error) => {
+    console.error("Error loading font:", error);
+    console.log("Make sure manrope.json exists in your public folder");
   });
 
   window.addEventListener("resize", () => {
