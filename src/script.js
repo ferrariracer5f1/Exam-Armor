@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("three-container");
   if (!container) return console.error("Container not found!");
 
-  // === Scene Setup ===
+  // === Scene ===
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pointLight = new THREE.PointLight(0xffffff, 2, 800, 0);
   particleLight.add(pointLight);
 
-  // === Gradient map for cel shading ===
+  // === Gradient map for cell shading ===
   const gradArray = new Uint8Array([0, 85, 170, 255]);
   const gradientMap = new THREE.DataTexture(gradArray, 4, 1, THREE.RedFormat);
   gradientMap.colorSpace = THREE.NoColorSpace;
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Generate tutor cards
   const carousel = document.querySelector(".carousel");
-  carousel.innerHTML = ""; // clear old HTML
+  carousel.innerHTML = ""; 
 
   tutors.forEach((tutor) => {
     const li = document.createElement("li");
@@ -171,7 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     carousel.appendChild(li);
 
-    // Click to toggle bio visibility
     li.addEventListener("click", () => {
       li.classList.toggle("open");
     });
@@ -213,6 +212,26 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   carousel.addEventListener("scroll", updateButtonState);
-  updateButtonState(); // initialize on load
+  updateButtonState(); 
+  // === NAV FUNC ===
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      
+      if (targetElement) {
+        const headerHeight = 110; // Height of fixed header
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
 
 });
