@@ -15,11 +15,12 @@
 }
 
 :root {
-  --logo-size: clamp(40px, 8vw, 100px);
   --green-gradientA: #77f868;
   --green-gradientB: #00f5b4;
   --green: #00ff8c;
   --font-heading: "Moderniz", "Manrope", sans-serif;
+  --menu-debug-bg: white;
+  --scale-16-9: min(calc(100vw / 1920), calc(100svh / 1080), 1px);
 }
 
 /* Custom Scrollbar */
@@ -60,7 +61,8 @@ h1, h2, h3,
 
 .menu {
   width: 90%;
-  max-width: 1400px;
+  max-width: calc(1400 * var(--scale-16-9));
+  background-color: var(--menu-debug-bg);
   border-bottom: 2px solid black;
   margin: 0 auto;
 }
@@ -69,7 +71,7 @@ h1, h2, h3,
   display: flex;
   align-items: center;
   justify-content: space-between; 
-  height: clamp(60px, 10vw, 110px);
+  height: calc(110 * var(--scale-16-9));
   list-style: none;
   padding: 0;
   margin: 0;
@@ -77,7 +79,7 @@ h1, h2, h3,
 
 .nav-links {
   display: flex;
-  gap: clamp(15px, 3vw, 50px);
+  gap: calc(50 * var(--scale-16-9));
   list-style: none;
   align-items: center;
 }
@@ -87,7 +89,7 @@ h1, h2, h3,
   color: black;
   cursor: pointer;
   white-space: nowrap;
-  font-size: clamp(12px, 1.5vw, 22px);
+  font-size: calc(22 * var(--scale-16-9));
 }
 
 .menu ul li a {
@@ -95,7 +97,7 @@ h1, h2, h3,
   text-decoration: none;
   transition: color 0.3s ease;
   display: inline-block;
-  padding: 8px 0;
+  padding: calc(8 * var(--scale-16-9)) 0;
 }
 
 .menu ul li a:hover {
@@ -110,7 +112,7 @@ h1, h2, h3,
 }
 
 .ExamArmourLogo img {
-  height: var(--logo-size);
+  height: calc(100 * var(--scale-16-9));
   width: auto;
   display: block;
 }
@@ -118,13 +120,13 @@ h1, h2, h3,
 /* HERO SECTION */
 .logoSect {
   background-color: white;
-  height: 864px;
+  height: calc(864 * var(--scale-16-9));
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   position: relative;
-  padding-top: 120px;
+  padding-top: calc(120 * var(--scale-16-9));
 }
 
 #three-container {
@@ -138,14 +140,14 @@ h1, h2, h3,
 }
 
 .SEOSauce {
-  font-size: clamp(28px, 5vw, 60px);
+  font-size: calc(60 * var(--scale-16-9));
   font-weight: 900;
   z-index: 5;
   text-align: center;
   margin: 0;
   line-height: 1.2;
   width: 100%;
-  padding: 5vh 20px;
+  padding: 5vh calc(20 * var(--scale-16-9));
 }
 
 .SEOSauce span {
@@ -158,10 +160,10 @@ h1, h2, h3,
 /* Circle decorations */
 .circle-container {
   position: absolute;
-  top: 154px;
+  top: calc(154 * var(--scale-16-9));
   left: 50%;
   transform: translateX(-50%);
-  width: 3072px;
+  width: calc(3072 * var(--scale-16-9));
   max-width: none;
 }
 
@@ -172,9 +174,9 @@ h1, h2, h3,
 
 .bottom-curve {
   position: absolute;
-  bottom: -2400px;
+  bottom: calc(-2400 * var(--scale-16-9));
   left: 50%;
-  width: 3072px;
+  width: calc(3072 * var(--scale-16-9));
   transform: translateX(-50%) rotate(180deg);
   z-index: 2;
 }
@@ -184,24 +186,24 @@ h1, h2, h3,
   position: relative;
   background-color: rgba(0, 0, 0, 0);
   color: white;
-  min-height: 864px;
+  min-height: calc(864 * var(--scale-16-9));
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   z-index: 3;
-  bottom: 440px;
+  bottom: calc(440 * var(--scale-16-9));
 }
 
 .subtext {
-  font-size: 45px;
+  font-size: calc(45 * var(--scale-16-9));
   font-weight: 900;
   z-index: 3;
   text-align: center;
 }
 
 .shadow {
-  font-size: 175px;
+  font-size: calc(175 * var(--scale-16-9));
   font-weight: 900;
   z-index: 3;
   text-align: center;
@@ -215,31 +217,30 @@ h1, h2, h3,
 /* TUTOR CAROUSEL */
 .tutorCarousel {
   position: relative;
-  bottom: 300px;
+  bottom: calc(300 * var(--scale-16-9));
 }
 
 .flexContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 864px;
-  padding: 0 40px;
+  min-height: calc(864 * var(--scale-16-9));
+  padding: 0 calc(40 * var(--scale-16-9));
   background-color: black;
 }
 
 .wrapper {
-  max-width: 1500px;
   width: 100%;
   position: relative;
-  margin-top: -1037px;
+  margin-top: calc(-1037 * var(--scale-16-9));
 }
 
 .wrapper i {
-  height: 30px; 
-  width: 30px;
+  height: calc(30 * var(--scale-16-9)); 
+  width: calc(30 * var(--scale-16-9));
   background: white;
   text-align: center;
-  line-height: 30px;
+  line-height: calc(30 * var(--scale-16-9));
   border-radius: 20%;
   cursor: pointer;
   position: absolute;
@@ -256,20 +257,20 @@ h1, h2, h3,
 }
 
 .wrapper i:first-child { 
-  left: -15px; 
+  left: calc(-15 * var(--scale-16-9)); 
   z-index: 20; 
 }
 
 .wrapper i:last-child { 
-  right: -11px; 
+  right: calc(-11 * var(--scale-16-9)); 
   z-index: 20; 
 }
 
 .wrapper .carousel {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: 450px;
-  gap: 1vw;
+  grid-auto-columns: calc((100% - 2 * 1.2vw) / 3);
+  gap: 1.2vw;
   overflow-x: scroll;
   overflow-y: visible;
   scroll-behavior: smooth;
@@ -282,20 +283,23 @@ h1, h2, h3,
 }
 
 .carousel {
-  display: flex;
+  display: grid;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 5%;
+  gap: 1.2vw;
   overflow-x: auto;
-  padding-top: 150px;
-  padding-bottom: 150px;
+  padding-top: calc(150 * var(--scale-16-9));
+  padding-bottom: calc(150 * var(--scale-16-9));
   scroll-behavior: smooth;
 }
 
+.carousel .tutorItem {
+  width: 100%;
+}
+
 .carousel .tutorCard {
-  flex: 0 0 auto;
-  width: 450px; 
-  height: 450px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   background: linear-gradient(to bottom, var(--green-gradientA), var(--green-gradientB));
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
@@ -306,20 +310,29 @@ h1, h2, h3,
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  padding: 1rem;
   transition: transform 0.2s;
   z-index: 10;
   cursor: pointer;
 }
 
 .carousel .tutorCard .img {
-  width: auto;
-  height: 600px;
+  position: absolute;
+  inset: 0;
+  bottom: 0;
+  width: 100%;
+  height: 120%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  margin-top: -166px;
+  transform: translateY(-16.6%);
+  margin-top: 0;
   overflow: visible;
+}
+
+.tutorCard .img img {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
 }
 
 .tutorItem {
@@ -338,21 +351,21 @@ h1, h2, h3,
   width: 80%; 
   height: 30%;
   overflow: hidden;
-  max-height: 1000px;
+  max-height: 60svh;
   transform: scaleY(0);
   transform-origin: top;
   transition: max-height 0.4s ease, transform 0.2s ease;
   background: rgb(255,255,255);
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: calc(20 * var(--scale-16-9));
+  border-bottom-right-radius: calc(20 * var(--scale-16-9));
   color: #000;
-  font-size: 30px;
+  font-size: calc(30 * var(--scale-16-9));
   text-align: center;
-  padding-top: 20px;
+  padding-top: calc(20 * var(--scale-16-9));
 }
 
 .tutorItem.open .bio { 
-  max-height: 330px; 
+  max-height: calc(330 * var(--scale-16-9)); 
   transform: scaleY(1); 
 }
 
@@ -378,7 +391,6 @@ h1, h2, h3,
 .tutorCard .img img {
   width: auto; 
   height: 100%;
-  max-width: 100%;
   object-fit: contain;
   object-position: bottom center;
   transform-origin: center bottom;
@@ -388,12 +400,12 @@ h1, h2, h3,
 /* LOCATIONS SECTION */
 .locations {
   position: relative;
-  bottom: 450px;
+  bottom: calc(450 * var(--scale-16-9));
   width: 100%;
-  padding: 80px 80px 120px;
+  padding: calc(80 * var(--scale-16-9)) calc(80 * var(--scale-16-9)) calc(120 * var(--scale-16-9));
   background: rgb(0,0,0);
   background-color: black;
-  margin-top: -461px;
+  margin-top: calc(-461 * var(--scale-16-9));
   z-index: 2;
 }
 
@@ -404,29 +416,29 @@ h1, h2, h3,
   background-clip: initial;
   line-height: 0.9;
   letter-spacing: 0.01em;
-  margin-bottom: 48px;
-  font-size: 175px;
+  margin-bottom: calc(48 * var(--scale-16-9));
+  font-size: calc(175 * var(--scale-16-9));
   text-align: center;
 }
 
 .locationsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 32px;
+  gap: calc(32 * var(--scale-16-9));
   align-items: start;
 }
 
 .locationImg {
   width: 100%;
-  height: 300px;
-  border-radius: 18px;
-  min-height: 260px;
+  height: calc(300 * var(--scale-16-9));
+  border-radius: calc(18 * var(--scale-16-9));
+  min-height: calc(260 * var(--scale-16-9));
   box-shadow: 0 18px 40px rgba(0,0,0,0.35);
   overflow: hidden;
 }
 
 .locationImg img {
-  border-radius: 18px;
+  border-radius: calc(18 * var(--scale-16-9));
   width: 100%; 
   height: 100%;
   object-fit: cover;
@@ -437,7 +449,7 @@ h1, h2, h3,
 .locationImg iframe {
   width: 100%; 
   height: 100%;
-  border-radius: 18px;
+  border-radius: calc(18 * var(--scale-16-9));
   display: block;
   border: 0;
 }
@@ -448,12 +460,12 @@ h1, h2, h3,
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
-  padding: 8px 12px;
+  gap: calc(18 * var(--scale-16-9));
+  padding: calc(8 * var(--scale-16-9)) calc(12 * var(--scale-16-9));
 }
 
 .locationsText p { 
-  font-size: 22px; 
+  font-size: calc(22 * var(--scale-16-9)); 
   line-height: 1.5; 
 }
 
@@ -463,20 +475,20 @@ h1, h2, h3,
   background: linear-gradient(to bottom, var(--green-gradientA), var(--green-gradientB));
   color: black;
   font-weight: 900;
-  font-size: 22px;
+  font-size: calc(22 * var(--scale-16-9));
   letter-spacing: 0.04em;
-  padding: 12px 22px;
-  border-radius: 18px;
+  padding: calc(12 * var(--scale-16-9)) calc(22 * var(--scale-16-9));
+  border-radius: calc(18 * var(--scale-16-9));
   box-shadow: 0 12px 26px rgba(0,0,0,0.3);
 }
 
 /* FOREWORD SECTION */
 .foreword {
   width: 100%;
-  height: 864px;
+  height: calc(864 * var(--scale-16-9));
   background: white;
   position: relative;
-  bottom: 120px;
+  bottom: calc(120 * var(--scale-16-9));
   z-index: 1;
   overflow: visible;
 }
@@ -484,11 +496,11 @@ h1, h2, h3,
 .foreword::before {
   content: "";
   position: absolute;
-  left: 60px; 
-  right: 60px;
-  top: -300px; 
-  bottom: 50px;
-  border: 10px solid #000;
+  left: calc(60 * var(--scale-16-9)); 
+  right: calc(60 * var(--scale-16-9));
+  top: calc(-300 * var(--scale-16-9)); 
+  bottom: calc(50 * var(--scale-16-9));
+  border: calc(10 * var(--scale-16-9)) solid #000;
   z-index: 6;
   pointer-events: none;
 }
@@ -505,8 +517,8 @@ h1, h2, h3,
   background-clip: initial;
   line-height: 0.9;
   letter-spacing: 0.01em;
-  margin-bottom: 48px;
-  font-size: 100px;
+  margin-bottom: calc(48 * var(--scale-16-9));
+  font-size: calc(100 * var(--scale-16-9));
   text-align: center; 
 }
 
@@ -525,22 +537,22 @@ h1, h2, h3,
   height: auto;
   position: relative;
   transform: scale(1.5);
-  margin-top: 72px;
+  margin-top: calc(72 * var(--scale-16-9));
   z-index: -1;
 }
 
 .foreword .forewordText { 
-  margin-left: -150px; 
+  margin-left: calc(-150 * var(--scale-16-9)); 
   padding-inline: 10%; 
 }
 
 .forewordText h1 { 
-  font-size: 40px; 
+  font-size: calc(40 * var(--scale-16-9)); 
   line-height: 1.5; 
 }
 
 .forewordText p { 
-  font-size: 30px; 
+  font-size: calc(30 * var(--scale-16-9)); 
   line-height: 1.5; 
   font-style: italic; 
 }
@@ -553,22 +565,22 @@ h1, h2, h3,
 }
 
 .footer-section { 
-  margin-top: -100px; 
+  margin-top: calc(-100 * var(--scale-16-9)); 
 }
 
 .site-footer {
   background-color: black;
   color: white;
-  padding: 40px 20px;
+  padding: calc(40 * var(--scale-16-9)) calc(20 * var(--scale-16-9));
 }
 
 .footer-content {
-  max-width: 1200px;
+  max-width: calc(1200 * var(--scale-16-9));
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: calc(40 * var(--scale-16-9));
 }
 
 .footer-left, .footer-center { 
@@ -576,51 +588,58 @@ h1, h2, h3,
 }
 
 .footer-right img { 
-  width: 160px; 
+  width: calc(160 * var(--scale-16-9)); 
   height: auto; 
 }
 
-/* MOBILE */
+/* Responsive Aspect Ratios */
 
-/* Tablet Landscape */
-@media screen and (max-width: 1100px) {
-  .menu ul { gap: 21px; }
+@media screen and (max-aspect-ratio: 16/10) and (min-aspect-ratio: 4/3) {
+  .menu {
+    background-color: #ffe082;
+  }
+
+  .menu ul { gap: 1.4vw; }
   .ExamArmourLogo img { margin-right: 0; }
 
-  .circle-container { top: 120px; width: 2400px; }
-  .bottom-curve { bottom: -1700px; width: 2400px; }
+  .circle-container { top: 11svh; width: 125vw; }
+  .bottom-curve { bottom: -157svh; width: 125vw; }
 
-  .subtext { font-size: clamp(28px, 3.5vw, 40px); }
-  .shadow { font-size: clamp(100px, 12vw, 170px); }
+  .subtext { font-size: min(3.5vw, 3.75svh); }
+  .shadow { font-size: min(12vw, 15.75svh); }
 
-  .wrapper { margin-top: -700px; }
+  .wrapper { margin-top: -65svh; }
 
-  .locations { margin-top: -260px; bottom: 260px; padding: 64px 48px 96px; }
+  .locations { margin-top: -24svh; bottom: 24svh; padding: 6svh 2.5vw 9svh; }
   .locationsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .locations .heading { font-size: clamp(80px, 10vw, 150px); }
+  .locations .heading { font-size: min(10vw, 13.9svh); }
 
-  .foreword { height: auto; padding-bottom: 64px; }
-  .foreword .heading { font-size: clamp(56px, 8vw, 96px); }
+  .foreword { height: auto; padding-bottom: 6svh; }
+  .foreword .heading { font-size: min(8vw, 8.9svh); }
   .foreword .forewordContent img { width: 60%; transform: scale(1.2); }
 }
 
-@media screen and (max-width: 900px) {
-  .logoSect { 
-    height: auto; 
-    min-height: 650px; 
-    padding-top: 80px;
-    padding-bottom: 60px;
+@media screen and (max-aspect-ratio: 4/3) and (min-aspect-ratio: 1/1) {
+  .menu {
+    background-color: #80deea;
   }
 
-  .circle-container { top: 120px; width: 200vw; }
-  .bottom-curve { bottom: -600px; width: 200vw; }
+  .logoSect { 
+    height: auto; 
+    min-height: 60svh; 
+    padding-top: 7.5svh;
+    padding-bottom: 5.5svh;
+  }
+
+  .circle-container { top: 11svh; width: 200vw; }
+  .bottom-curve { bottom: -56svh; width: 200vw; }
 
   /* Removes overlapping sections */
   .info { 
     min-height: auto; 
     bottom: 0 !important; 
-    padding: 60px 20px; 
-    margin-top: -150px;  
+    padding: 5.5svh 2vw; 
+    margin-top: -14svh;  
     background-color: transparent;
     position: relative;
     z-index: 5;
@@ -633,48 +652,28 @@ h1, h2, h3,
   
   .flexContainer { 
     min-height: auto; 
-    padding: 40px 20px; 
+    padding: 4svh 2vw; 
   }
   
   .wrapper { 
     margin-top: 0 !important; 
   }
 
-  /* Fixes carousel horizontal scrolling */
-  .wrapper .carousel {
-    grid-auto-columns: 70vw;
-    gap: 12px;
-  }
 
-  .carousel { 
-    padding-top: 60px; 
-    padding-bottom: 60px; 
-    gap: 12px; 
-  }
-  
-  .carousel .tutorCard { 
-    width: 70vw; 
-    max-width: 360px;
-    height: 70vw; 
-    max-height: 360px;
-  }
-  
   .carousel .tutorCard .img { 
-    height: 80vw; 
-    max-height: 420px;
-    margin-top: -120px; 
+    height: min(31vw, 39svh);
   }
   
   .bio { 
-    font-size: 18px; 
-    padding: 15px 10px;
+    font-size: max(1rem, 1.7svh); 
+    padding: 1.4svh 1vw;
   }
 
   /* Removes location overlapping */
   .locations { 
     margin-top: 0 !important; 
     bottom: 0 !important; 
-    padding: 60px 24px 80px; 
+    padding: 5.5svh 2.5vw 7.5svh; 
   }
   
   .locationsGrid { 
@@ -682,17 +681,17 @@ h1, h2, h3,
   }
   
   .locations .heading { 
-    font-size: clamp(50px, 12vw, 100px); 
+    font-size: min(12vw, 6.25rem); 
     word-break: break-word;
     overflow-wrap: break-word;
   }
   
   .locationsText p { 
-    font-size: 18px; 
+    font-size: max(1rem, 1.7svh); 
   }
   
   .locationsHeading { 
-    font-size: 18px; 
+    font-size: max(1rem, 1.7svh); 
     word-break: break-word;
   }
 
@@ -700,31 +699,31 @@ h1, h2, h3,
   .foreword { 
     bottom: 0 !important;  /* Remove negative positioning */
     height: auto; 
-    padding: 60px 20px 80px; 
+    padding: 5.5svh 2vw 7.5svh; 
     margin-top: 0;
   }
   
   .foreword::before { 
-    left: 20px; 
-    right: 20px; 
-    top: -80px; 
-    bottom: 20px; 
-    border-width: 6px; 
+    left: 2vw; 
+    right: 2vw; 
+    top: -7.5svh; 
+    bottom: 2svh; 
+    border-width: 0.55svh; 
   }
   
   .foreword .heading {
-    font-size: clamp(40px, 10vw, 80px);
+    font-size: min(10vw, 5rem);
     word-break: break-word;
   }
   
   .foreword .forewordContent { 
     grid-template-columns: 1fr; 
-    gap: 30px; 
+    gap: 2.8svh; 
   }
   
   .foreword .forewordContent img { 
     width: 70vw; 
-    max-width: 320px;
+    max-width: 30svh;
     transform: scale(1); 
     margin-top: 0; 
   }
@@ -735,12 +734,12 @@ h1, h2, h3,
   }
   
   .forewordText p { 
-    font-size: 18px; 
+    font-size: max(1rem, 1.7svh); 
     word-break: break-word;
   }
   
   .forewordText h1 { 
-    font-size: 24px; 
+    font-size: max(1.25rem, 2.25svh); 
   }
 
   .footer-content { 
@@ -750,34 +749,37 @@ h1, h2, h3,
   }
 }
 
-/* Mobile */
-@media screen and (max-width: 700px) {
+@media screen and (max-aspect-ratio: 1/1) and (min-aspect-ratio: 4/5) {
+  .menu {
+    background-color: #a5d6a7;
+  }
+
   .menu { 
     width: 100%; 
-    padding: 0 16px; 
+    padding: 0 2vw; 
   }
 
   .logoSect { 
-    min-height: 600px; 
-    padding-top: 90px;
-    padding-bottom: 40px;
+    min-height: 56svh; 
+    padding-top: 8.5svh;
+    padding-bottom: 4svh;
   }
   
   .SEOSauce { 
-    font-size: clamp(20px, 6vw, 32px);
-    padding: 30px 15px;
+    font-size: min(6vw, 2rem);
+    padding: 3svh 1.5vw;
     line-height: 1.3;
   }
 
-  .circle-container { top: 140px; }
-  .bottom-curve { bottom: -500px; }
+  .circle-container { top: 13svh; }
+  .bottom-curve { bottom: -46svh; }
 
   .subtext { 
-    font-size: clamp(18px, 5vw, 28px); 
+    font-size: min(5vw, 1.75rem); 
   }
   
   .shadow { 
-    font-size: clamp(50px, 14vw, 100px);
+    font-size: min(14vw, 6.25rem);
     word-break: break-word;
   }
 
@@ -785,188 +787,140 @@ h1, h2, h3,
     top: 35%; 
   }
   
-  .wrapper .carousel {
-    grid-auto-columns: 75vw;
-  }
-  
-  .carousel .tutorCard { 
-    width: 75vw; 
-    max-width: 300px;
-    height: 75vw; 
-    max-height: 300px;
-  }
-  
   .carousel .tutorCard .img { 
-    height: 85vw; 
-    max-height: 360px;
-    margin-top: -90px; 
+    height: min(85vw, 33svh); 
   }
 
   .locations .heading {
-    font-size: clamp(40px, 12vw, 80px);
+    font-size: min(12vw, 5rem);
   }
 }
 
-/* Small Mobile */
-@media screen and (max-width: 520px) {
+@media screen and (max-aspect-ratio: 4/5) and (min-aspect-ratio: 9/16) {
+  .menu {
+    background-color: #ffab91;
+  }
+
   .menu ul { 
     flex-direction: column;
     height: auto;
-    padding: 15px 0;
-    gap: 10px;
+    padding: 1.5svh 0;
+    gap: 1svh;
   }
 
   .nav-links {
     width: 100%;
     justify-content: center;
-    gap: 12px;
-    padding-bottom: 5px;
+    gap: 2.5vw;
+    padding-bottom: 0.5svh;
     flex-wrap: wrap;
   }
 
   .menu ul li { 
-    font-size: 13px; 
+    font-size: max(0.8125rem, 1.6vw); 
   }
 
   .logoSect { 
-    padding-top: 160px;
-    min-height: 550px;
-    padding-bottom: 30px;
+    padding-top: 15svh;
+    min-height: 51svh;
+    padding-bottom: 3svh;
   }
 
-  .circle-container { top: 160px; }
-  .bottom-curve { bottom: -450px; }
+  .circle-container { top: 15svh; }
+  .bottom-curve { bottom: -42svh; }
 
   .SEOSauce {
-    font-size: clamp(18px, 5.5vw, 26px);
-    padding: 25px 10px;
+    font-size: min(5.5vw, 1.625rem);
+    padding: 2.5svh 1vw;
   }
 
   .subtext {
-    font-size: clamp(16px, 4.5vw, 24px);
+    font-size: min(4.5vw, 1.5rem);
   }
 
   .shadow {
-    font-size: clamp(40px, 12vw, 70px);
+    font-size: min(12vw, 4.375rem);
   }
 
   .info {
-    margin-top: -120px;
-    padding: 50px 15px;
+    margin-top: -11svh;
+    padding: 4.5svh 1.5vw;
   }
 
   .wrapper i { 
     display: none; 
   }
 
-  .wrapper .carousel {
-    grid-auto-columns: 80vw;
-  }
-
-  .carousel .tutorCard {
-    width: 80vw;
-    max-width: 280px;
-    height: 80vw;
-    max-height: 280px;
-  }
-
   .carousel .tutorCard .img {
-    height: 90vw;
-    max-height: 340px;
-    margin-top: -80px;
+    height: min(90vw, 31.5svh);
   }
 
   .locations .heading { 
-    font-size: clamp(35px, 11vw, 70px); 
+    font-size: min(11vw, 4.375rem); 
   }
 
   .foreword::before { 
-    top: -60px; 
+    top: -5.5svh; 
   }
 
   .foreword .heading {
-    font-size: clamp(32px, 9vw, 60px);
+    font-size: min(9vw, 3.75rem);
   }
 
   .forewordText p {
-    font-size: 16px;
+    font-size: max(1rem, 1.6svh);
   }
 
   .forewordText h1 {
-    font-size: 20px;
+    font-size: max(1.125rem, 2svh);
   }
 
   .footer-content { 
     flex-direction: column; 
     align-items: center; 
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .footer-left, .footer-center {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
 
-/* Very Small Mobile */
-@media screen and (max-width: 440px) {
+@media screen and (max-aspect-ratio: 9/16) {
+  .menu {
+    background-color: #ce93d8;
+  }
+
   .nav-links {
-    gap: 8px;
+    gap: 2vw;
   }
   
   .menu ul li { 
-    font-size: 11px; 
+    font-size: 0.6875rem; 
   }
 
   .SEOSauce {
-    font-size: clamp(16px, 5vw, 22px);
+    font-size: min(5vw, 1.375rem);
   }
 
   .info {
-    margin-top: -100px;
-    padding: 40px 12px;
+    margin-top: -9svh;
+    padding: 3.7svh 1.2vw;
   }
 
-  .wrapper .carousel {
-    grid-auto-columns: 85vw;
-  }
-
-  .carousel .tutorCard { 
-    width: 85vw; 
-    max-width: 260px;
-    height: 85vw; 
-    max-height: 260px;
-  }
-  
   .carousel .tutorCard .img { 
-    height: 95vw; 
-    max-height: 320px;
-    margin-top: -70px; 
+    height: min(95vw, 29.5svh); 
   }
   
   .bio { 
-    font-size: 16px; 
+    font-size: max(0.9375rem, 1.5svh); 
   }
 
   .locations .heading {
-    font-size: clamp(30px, 10vw, 60px);
+    font-size: min(10vw, 3.75rem);
   }
 
   .foreword .heading {
-    font-size: clamp(28px, 8vw, 50px);
-  }
-}
-
-/* Landscape Override */
-@media screen and (max-aspect-ratio: 4/3) {
-  .info, 
-  .tutorCarousel, 
-  .locations, 
-  .foreword {
-    bottom: 0 !important;
-    margin-top: 0 !important;
-  }
-  
-  .wrapper {
-    margin-top: 0 !important;
+    font-size: min(8vw, 3.125rem);
   }
 }

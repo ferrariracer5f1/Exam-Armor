@@ -180,15 +180,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // === Carousel Controls ===
   const wrapper = document.querySelector(".wrapper");
   const arrowBtns = wrapper.querySelectorAll("i");
-  const carouselStyle = getComputedStyle(carousel);
-  const cardGap = parseFloat(carouselStyle.gap);
-  const firstCardWidth = carousel.querySelector(".tutorCard").offsetWidth + cardGap;
+
+  function getSlideDistance() {
+    const firstItem = carousel.querySelector(".tutorItem");
+    if (!firstItem) return 0;
+
+    const carouselStyle = getComputedStyle(carousel);
+    const cardGap = parseFloat(carouselStyle.columnGap || carouselStyle.gap || "0");
+    return firstItem.getBoundingClientRect().width + cardGap;
+  }
 
 
   arrowBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       const direction = btn.classList.contains("fa-angle-left") ? -1 : 1;
-      carousel.scrollBy({ left: direction * firstCardWidth, behavior: "smooth" });
+      carousel.scrollBy({ left: direction * getSlideDistance(), behavior: "smooth" });
     });
   });
 
@@ -212,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   carousel.addEventListener("scroll", updateButtonState);
+  window.addEventListener("resize", updateButtonState);
   updateButtonState(); 
   // === NAV FUNC ===
   document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
