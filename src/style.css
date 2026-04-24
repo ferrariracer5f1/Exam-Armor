@@ -161,8 +161,6 @@ h1, h2, h3,
 .circle-container {
   position: absolute;
   top: calc(154 * var(--scale-16-9));
-  left: 50%;
-  transform: translateX(-50%);
   width: calc(3072 * var(--scale-16-9));
   max-width: none;
 }
@@ -172,12 +170,20 @@ h1, h2, h3,
   height: auto; 
 }
 
-.bottom-curve {
+.circle-background {
   position: absolute;
-  bottom: calc(-2400 * var(--scale-16-9));
-  left: 50%;
+  top: calc(1700 * var(--scale-16-9));
+  width: 100%;
+  height: calc(1000 * var(--scale-16-9));
+  background-color: #000000;
+  z-index: 0;
+}
+
+.bottom-curve {
+  position: relative;
+  margin-top: calc(1400 * var(--scale-16-9));
   width: calc(3072 * var(--scale-16-9));
-  transform: translateX(-50%) rotate(180deg);
+  transform: rotate(180deg);
   z-index: 2;
 }
 
@@ -186,13 +192,12 @@ h1, h2, h3,
   position: relative;
   background-color: rgba(0, 0, 0, 0);
   color: white;
-  min-height: calc(864 * var(--scale-16-9));
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   z-index: 3;
-  bottom: calc(440 * var(--scale-16-9));
+  bottom: calc(80 * var(--scale-16-9));
 }
 
 .subtext {
@@ -217,7 +222,7 @@ h1, h2, h3,
 /* TUTOR CAROUSEL */
 .tutorCarousel {
   position: relative;
-  bottom: calc(300 * var(--scale-16-9));
+  bottom: calc(150 * var(--scale-16-9));
 }
 
 .flexContainer {
@@ -232,7 +237,6 @@ h1, h2, h3,
 .wrapper {
   width: 100%;
   position: relative;
-  margin-top: calc(-1037 * var(--scale-16-9));
 }
 
 .wrapper i {
@@ -400,13 +404,10 @@ h1, h2, h3,
 /* LOCATIONS SECTION */
 .locations {
   position: relative;
-  bottom: calc(450 * var(--scale-16-9));
+  bottom: calc(100 * var(--scale-16-9));
   width: 100%;
-  padding: calc(80 * var(--scale-16-9)) calc(80 * var(--scale-16-9)) calc(120 * var(--scale-16-9));
-  background: rgb(0,0,0);
-  background-color: black;
-  margin-top: calc(-461 * var(--scale-16-9));
-  z-index: 2;
+  padding: 0 calc(80 * var(--scale-16-9));
+  z-index: 3;
 }
 
 .locations .heading {
@@ -485,29 +486,28 @@ h1, h2, h3,
 /* FOREWORD SECTION */
 .foreword {
   width: 100%;
-  height: calc(864 * var(--scale-16-9));
+  height: calc(1500 * var(--scale-16-9));
   background: white;
   position: relative;
-  bottom: calc(120 * var(--scale-16-9));
   z-index: 1;
   overflow: visible;
+  padding-inline: calc(60 * var(--scale-16-9));
+  bottom: calc(200 * var(--scale-16-9));
 }
 
-.foreword::before {
+.forewordFrame {
+  position: relative;
+  padding: calc(500 * var(--scale-16-9)) 0 0;
+  z-index: 6;
+}
+
+.forewordFrame::before {
   content: "";
   position: absolute;
-  left: calc(60 * var(--scale-16-9)); 
-  right: calc(60 * var(--scale-16-9));
-  top: calc(-300 * var(--scale-16-9)); 
-  bottom: calc(50 * var(--scale-16-9));
+  inset: 0;
   border: calc(10 * var(--scale-16-9)) solid #000;
-  z-index: 6;
   pointer-events: none;
-}
-
-.foreword > * { 
-  position: relative; 
-  z-index: 1; 
+  bottom: calc(-75 * var(--scale-16-9));
 }
 
 .foreword .heading {
@@ -517,9 +517,10 @@ h1, h2, h3,
   background-clip: initial;
   line-height: 0.9;
   letter-spacing: 0.01em;
-  margin-bottom: calc(48 * var(--scale-16-9));
-  font-size: calc(100 * var(--scale-16-9));
+  font-size: calc(125 * var(--scale-16-9));
   text-align: center; 
+  position: relative;
+  top: calc(100 * var(--scale-16-9));
 }
 
 .foreword .forewordContent {
@@ -530,14 +531,14 @@ h1, h2, h3,
   text-align: center;
   justify-items: center;
   align-items: center;
+  height: auto;
+  bottom: calc(-75 * var(--scale-16-9));
 }
 
 .foreword .forewordContent img {
-  width: 50%;
+  width: 75%;
   height: auto;
-  position: relative;
-  transform: scale(1.5);
-  margin-top: calc(72 * var(--scale-16-9));
+  display: block;
   z-index: -1;
 }
 
@@ -565,7 +566,7 @@ h1, h2, h3,
 }
 
 .footer-section { 
-  margin-top: calc(-100 * var(--scale-16-9)); 
+  margin-top: calc(50 * var(--scale-16-9)); 
 }
 
 .site-footer {
