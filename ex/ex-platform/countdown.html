@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exam Countdown — EX</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBhMGEwYSIvPgogIDx0ZXh0IHg9IjUiIHk9IjIzIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiMwMEU2NzYiPkVYPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --green:#00E676;--green-mid:#00cc70;--green-light:rgba(0,230,118,0.1);
+      --black:#0a0a0a;--white:#fafafa;--off:#f2f3f5;--muted:#6b7280;
+      --light:#adb5bd;--border:rgba(0,0,0,0.08);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Manrope',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;min-height:100vh;}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:200;padding:0 48px;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,250,250,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-size:20px;font-weight:900;letter-spacing:-1px;color:var(--black);text-decoration:none;display:flex;align-items:center;gap:9px;}
+    .nav-logo-icon{width:28px;height:28px;background:var(--black);border-radius:7px;display:flex;align-items:center;justify-content:center;transition:transform 0.3s,background 0.3s;}
+    .nav-logo:hover .nav-logo-icon{transform:rotate(-15deg);background:var(--green);}
+    .nav-logo-icon svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+    .nav-logo:hover .nav-logo-icon svg{stroke:var(--black);}
+    .nav-right{display:flex;align-items:center;gap:8px;}
+    .nav-back{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:5px;padding:7px 14px;border-radius:100px;transition:all 0.2s;}
+    .nav-back:hover{background:var(--off);color:var(--black);}
+    .nav-back svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .nav-open-btn{padding:9px 22px;background:var(--black);color:#fff;border-radius:100px;font-size:13px;font-weight:800;text-decoration:none;transition:all 0.25s;border:none;cursor:pointer;font-family:'Manrope',sans-serif;position:relative;overflow:hidden;}
+    .nav-open-btn::after{content:'';position:absolute;inset:0;background:var(--green);transform:translateY(101%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+    .nav-open-btn:hover::after{transform:translateY(0);}
+    .nav-open-btn span{position:relative;z-index:1;transition:color 0.3s;}
+    .nav-open-btn:hover span{color:var(--black);}
+
+    /* PAGE */
+    .page{max-width:920px;margin:0 auto;padding:56px 24px 120px;}
+
+    /* HERO HEADER */
+    .page-header{margin-bottom:56px;}
+    .page-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:20px;animation:fadeUp 0.6s ease both;}
+    .page-tag-line{width:28px;height:2px;background:var(--green);}
+    .page-h1{font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-3px;line-height:0.95;margin-bottom:14px;overflow:hidden;}
+    .page-h1 .ln{display:block;overflow:hidden;}
+    .page-h1 .ln span{display:block;animation:wordUp 0.9s cubic-bezier(0.16,1,0.3,1) both;}
+    .page-h1 .ln:nth-child(1) span{animation-delay:0.1s;}
+    .page-h1 .ln:nth-child(2) span{animation-delay:0.22s;}
+    .page-h1 .g{background:linear-gradient(130deg,var(--green),#00bcd4);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .page-sub{font-size:16px;color:var(--muted);line-height:1.75;max-width:440px;animation:fadeUp 0.7s ease 0.35s both;}
+    @keyframes wordUp{from{transform:translateY(110%)}to{transform:translateY(0)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* SETUP BOX */
+    .setup{background:#fff;border:1px solid var(--border);border-radius:24px;padding:28px;margin-bottom:40px;animation:fadeUp 0.7s ease 0.45s both;}
+    .level-row{display:flex;gap:6px;margin-bottom:20px;}
+    .level-btn{padding:8px 20px;border-radius:100px;border:1.5px solid var(--border);background:none;font-size:12px;font-weight:800;font-family:'Manrope',sans-serif;cursor:pointer;color:var(--muted);transition:all 0.2s;}
+    .level-btn.active{background:var(--black);color:#fff;border-color:var(--black);}
+    .tab-row{display:flex;gap:4px;background:var(--off);border-radius:12px;padding:4px;margin-bottom:22px;width:fit-content;}
+    .tab-btn{padding:7px 16px;border-radius:9px;border:none;font-size:12px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;background:transparent;color:var(--muted);transition:all 0.2s;}
+    .tab-btn.active{background:#fff;color:var(--black);box-shadow:0 1px 4px rgba(0,0,0,0.08);}
+    .board-chip{padding:5px 14px;border-radius:100px;border:1px solid var(--border);font-size:11px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;background:#fff;color:var(--muted);transition:all 0.2s;}
+    .board-chip:hover{color:var(--black);border-color:rgba(0,0,0,0.18);}
+    .board-chip.active{background:var(--black);color:#fff;border-color:var(--black);}
+    .setup-note{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.65;}
+    .setup-note strong{color:var(--black);}
+    .official-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px;}
+    .off-card{background:var(--off);border:1.5px solid transparent;border-radius:12px;padding:12px 14px;cursor:pointer;transition:all 0.2s;}
+    .off-card:hover{border-color:rgba(0,0,0,0.15);background:#fff;}
+    .off-card.sel{border-color:var(--black);background:var(--black);}
+    .off-board{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--green-mid);margin-bottom:3px;}
+    .off-card.sel .off-board{color:var(--green);}
+    .off-name{font-size:12px;font-weight:700;color:var(--black);}
+    .off-card.sel .off-name{color:#fff;}
+    .off-count{font-size:10px;color:var(--muted);}
+    .off-card.sel .off-count{color:rgba(255,255,255,0.4);}
+    .import-btn{padding:11px 26px;background:var(--black);color:#fff;border:none;border-radius:100px;font-size:13px;font-weight:800;font-family:'Manrope',sans-serif;cursor:pointer;position:relative;overflow:hidden;transition:box-shadow 0.2s;}
+    .import-btn::after{content:'';position:absolute;inset:0;background:var(--green);transform:translateX(-101%);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);}
+    .import-btn:hover::after{transform:translateX(0);}
+    .import-btn span{position:relative;z-index:1;transition:color 0.3s;}
+    .import-btn:hover span{color:var(--black);}
+    .sync-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#fff;border:1.5px solid var(--border);border-radius:100px;font-size:13px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;color:var(--black);transition:all 0.2s;margin-bottom:12px;}
+    .sync-btn:hover{border-color:var(--black);}
+    .sync-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .sync-ok{font-size:11px;color:var(--green-mid);font-weight:700;display:none;}
+    .manual-row{display:grid;grid-template-columns:1.4fr 1fr auto;gap:10px;}
+    .manual-row select,.manual-row input[type=date]{padding:10px 13px;background:var(--off);border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:'Manrope',sans-serif;color:var(--black);appearance:none;transition:border-color 0.2s;}
+    .manual-row select:focus,.manual-row input:focus{outline:none;border-color:var(--green-mid);background:#fff;}
+    .add-btn{padding:10px 22px;background:var(--black);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:800;font-family:'Manrope',sans-serif;cursor:pointer;transition:background 0.2s;white-space:nowrap;}
+    .add-btn:hover{background:var(--green-mid);}
+
+    /* NEXT HERO */
+    #next-hero{display:none;margin-bottom:40px;animation:fadeUp 0.6s ease both;}
+    .next-card{background:var(--black);border-radius:24px;padding:36px 44px;display:flex;align-items:center;justify-content:space-between;gap:24px;position:relative;overflow:hidden;}
+    .next-card::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(0,230,118,0.12) 0%,transparent 65%);pointer-events:none;}
+    .next-card::after{content:'';position:absolute;bottom:-60px;left:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(0,188,212,0.06) 0%,transparent 65%);pointer-events:none;}
+    .next-left{position:relative;z-index:1;}
+    .next-level{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:3px 10px;border-radius:100px;background:rgba(0,230,118,0.15);color:var(--green);margin-bottom:10px;}
+    .next-subject{font-size:26px;font-weight:900;color:#fff;letter-spacing:-0.8px;margin-bottom:5px;}
+    .next-paper{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:3px;}
+    .next-date{font-size:12px;color:rgba(255,255,255,0.25);}
+    .next-right{text-align:right;position:relative;z-index:1;flex-shrink:0;}
+    .next-days{font-size:80px;font-weight:900;color:var(--green);letter-spacing:-5px;line-height:1;}
+    .next-days-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.25);}
+
+    /* LIVE CLOCK */
+    .clock{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:40px;}
+    .clock-unit{background:#fff;border:1px solid var(--border);border-radius:18px;padding:20px 16px;text-align:center;transition:all 0.2s;position:relative;overflow:hidden;}
+    .clock-unit::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--green);transform:scaleX(0);transition:transform 0.15s ease;}
+    .clock-unit.tick::after{transform:scaleX(1);}
+    .clock-num{font-size:40px;font-weight:900;color:var(--black);letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums;}
+    .clock-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--light);margin-top:6px;}
+
+    /* SECTION HEADER */
+    .section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+    .section-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);}
+    .section-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+    .cal-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:100px;font-size:11px;font-weight:700;font-family:'Manrope',sans-serif;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--border);background:#fff;color:var(--black);}
+    .cal-btn:hover{border-color:var(--black);background:var(--off);}
+    .cal-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .clear-btn{font-size:11px;color:var(--light);background:none;border:none;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:600;transition:color 0.2s;padding:7px;}
+    .clear-btn:hover{color:#e53935;}
+
+    /* EXAM CARDS GRID */
+    .exams-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px;}
+    .exams-grid .exam-card:first-child{grid-column:span 2;display:grid;grid-template-columns:1fr auto;align-items:start;gap:16px;}
+    .exams-grid .exam-card:first-child .ec-days{font-size:64px;letter-spacing:-4px;}
+    .exam-card{
+      background:#fff;border:1px solid var(--border);border-radius:20px;padding:24px;
+      position:relative;overflow:hidden;
+      transition:all 0.35s cubic-bezier(0.16,1,0.3,1);
+      animation:cardIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes cardIn{from{opacity:0;transform:translateY(20px) scale(0.97)}to{opacity:1;transform:none}}
+    .exam-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:20px 20px 0 0;transition:opacity 0.3s;}
+    .exam-card.urgent::before{background:#e53935;}
+    .exam-card.soon::before{background:#f57c00;}
+    .exam-card.safe::before{background:var(--green-mid);}
+    .exam-card.done{opacity:0.38;}
+    .exam-card:not(.done):hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,0.09);border-color:rgba(0,0,0,0.12);}
+
+    .ec-level{display:inline-block;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;padding:2px 8px;border-radius:100px;margin-bottom:8px;}
+    .ec-level.gcse{background:var(--green-light);color:#00a855;}
+    .ec-level.alevel{background:rgba(59,130,246,0.1);color:#3b82f6;}
+    .ec-level.custom{background:var(--off);color:var(--muted);}
+    .ec-subject{font-size:15px;font-weight:800;color:var(--black);margin-bottom:2px;}
+    .ec-paper{font-size:11px;color:var(--muted);margin-bottom:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+    .ec-days{font-size:44px;font-weight:900;letter-spacing:-2.5px;line-height:1;margin-bottom:2px;}
+    .ec-days.urgent{color:#e53935;}
+    .ec-days.soon{color:#f57c00;}
+    .ec-days.safe{color:var(--green-mid);}
+    .ec-days.done{color:var(--light);font-size:26px;}
+    .ec-days-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--light);}
+    .ec-date{font-size:11px;color:#ccc;margin-top:10px;}
+
+    .ec-prog{height:3px;background:var(--off);border-radius:2px;margin-top:10px;overflow:hidden;}
+    .ec-prog-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(0.16,1,0.3,1);}
+
+    .ec-actions{position:absolute;top:12px;right:12px;display:flex;gap:4px;opacity:0;transition:opacity 0.2s;}
+    .exam-card:hover .ec-actions{opacity:1;}
+    .ec-btn{width:26px;height:26px;border-radius:8px;background:var(--off);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+    .ec-btn:hover{background:var(--black);color:#fff;border-color:var(--black);}
+    .ec-btn.del:hover{background:#e53935;border-color:#e53935;}
+    .ec-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+    /* EMPTY */
+    #empty-state{text-align:center;padding:64px 24px;}
+    .es-icon{width:64px;height:64px;background:var(--off);border:1px solid var(--border);border-radius:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+    .es-icon svg{width:28px;height:28px;stroke:var(--light);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+    .es-title{font-size:17px;font-weight:800;color:var(--muted);margin-bottom:6px;}
+    .es-sub{font-size:13px;color:var(--light);}
+
+    /* MOTIVATION */
+    .motivation{background:var(--black);border-radius:18px;padding:24px 28px;margin-bottom:24px;}
+    .mot-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.2);margin-bottom:10px;}
+    .mot-text{font-size:16px;color:rgba(255,255,255,0.65);line-height:1.75;font-style:italic;}
+    .mot-author{font-size:12px;color:var(--green);font-weight:700;margin-top:8px;}
+
+    /* TUTOR CTA */
+
+
+    /* TOAST */
+    .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--black);color:#fff;padding:11px 24px;border-radius:100px;font-size:12px;font-weight:700;font-family:'Manrope',sans-serif;z-index:8000;transition:opacity 0.3s;box-shadow:0 4px 24px rgba(0,0,0,0.18);white-space:nowrap;opacity:0;pointer-events:none;}
+    .toast.show{opacity:1;}
+
+    /* WELLBEING */
+    #wb-btn{bottom:28px;right:28px;}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:640px){
+      body{cursor:auto;}#cd,#cr{display:none;}
+      nav{padding:0 16px;}
+      .page{padding:36px 16px 100px;}
+      .official-grid{grid-template-columns:repeat(2,1fr);}
+      .exams-grid{grid-template-columns:repeat(2,1fr);}
+      .manual-row{grid-template-columns:1fr;}
+      .clock{gap:8px;}.clock-num{font-size:28px;}
+      .next-card{flex-direction:column;text-align:center;}.next-right{text-align:center;}
+      .next-days{font-size:56px;}
+    }
+
+    /* SCROLL BG CANVAS */
+    #scroll-canvas{position:fixed;inset:0;z-index:-1;pointer-events:none;}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1);}
+    .reveal.in{opacity:1;transform:none;}
+    .rd1{transition-delay:0.07s}.rd2{transition-delay:0.14s}.rd3{transition-delay:0.21s}.rd4{transition-delay:0.28s}
+  
+/* SHARED DASHBOARD NAV */
+.nav-logo{font-size:17px;font-weight:900;letter-spacing:-1px;color:#0a0a0a;text-decoration:none;}
+.nav-logo .dot{color:#00E676;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-back{font-size:12px;font-weight:700;color:#6b7280;text-decoration:none;padding:7px 16px;border-radius:100px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.7);transition:all .2s;}
+.nav-back:hover{background:#0a0a0a;color:#fff;border-color:#0a0a0a;}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,0,0,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.022) 1px,transparent 1px);
+  background-size:52px 52px;}
+body{opacity:0;animation:pageIn .4s ease .05s forwards;}
+@keyframes pageIn{to{opacity:1}}
+
+/* DEADLINE MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.45);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:420px;
+  box-shadow:0 24px 64px rgba(0,0,0,0.18);
+  transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.16,1,.3,1);
+  overflow:hidden;}
+.modal-overlay.open .modal{transform:none;}
+.modal-bar{height:3px;background:linear-gradient(90deg,#00E676,#00a855);}
+.modal-head{padding:22px 24px 16px;border-bottom:1px solid rgba(0,0,0,0.07);}
+.modal-title{font-size:17px;font-weight:900;letter-spacing:-.3px;color:#0a0a0a;}
+.modal-sub{font-size:12px;color:#6b7280;margin-top:3px;}
+.modal-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:12px;}
+.modal-field label{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(0,0,0,.3);margin-bottom:6px;}
+.modal-field input,.modal-field select{width:100%;padding:11px 14px;
+  border:1px solid rgba(0,0,0,0.08);border-radius:10px;background:#fafaf8;
+  color:#0a0a0a;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;
+  outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
+.modal-field input:focus,.modal-field select:focus{
+  border-color:#00E676;box-shadow:0 0 0 3px rgba(0,230,118,.1);background:#fff;}
+.modal-field input::placeholder{color:rgba(0,0,0,.2);}
+.modal-type-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.modal-type{padding:10px;border:1px solid rgba(0,0,0,0.08);border-radius:10px;
+  background:#fff;cursor:pointer;text-align:center;transition:all .2s;font-family:'Manrope',sans-serif;}
+.modal-type:hover{border-color:rgba(0,230,118,.3);}
+.modal-type.sel{background:rgba(0,230,118,.08);border-color:rgba(0,230,118,.4);}
+.modal-type-icon{font-size:18px;margin-bottom:4px;}
+.modal-type-label{font-size:11px;font-weight:700;color:#0a0a0a;}
+.modal-type-desc{font-size:10px;color:#6b7280;}
+.modal-btns{display:flex;gap:8px;margin-top:4px;}
+.modal-cancel{flex:1;padding:12px;border:1px solid rgba(0,0,0,0.08);border-radius:10px;
+  background:none;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;
+  color:#6b7280;cursor:pointer;transition:all .2s;}
+.modal-cancel:hover{background:rgba(0,0,0,.04);}
+.modal-add{flex:2;padding:12px;background:#0a0a0a;color:#fff;border:none;border-radius:10px;
+  font-family:'Manrope',sans-serif;font-size:13px;font-weight:800;cursor:pointer;
+  position:relative;overflow:hidden;transition:all .3s;}
+.modal-add::after{content:'';position:absolute;inset:0;background:#00E676;
+  transform:translateY(101%);transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.modal-add:hover::after{transform:translateY(0);}
+.modal-add span{position:relative;z-index:1;transition:color .35s;}
+.modal-add:hover span{color:#0a0a0a;}
+
+/* FAB */
+.fab{position:fixed;bottom:28px;right:28px;z-index:200;
+  width:52px;height:52px;border-radius:50%;background:#0a0a0a;border:none;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:all .3s;font-family:'Manrope',sans-serif;}
+.fab:hover{background:#00a855;box-shadow:0 8px 28px rgba(0,200,80,.3);transform:scale(1.08);}
+.fab svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;}
+.fab-label{position:absolute;right:60px;background:#0a0a0a;color:#fff;
+  padding:6px 12px;border-radius:100px;font-size:11px;font-weight:700;
+  white-space:nowrap;opacity:0;transform:translateX(8px);transition:all .2s;pointer-events:none;}
+.fab:hover .fab-label{opacity:1;transform:translateX(0);}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async()=>{
+  const sb=supabase.createClient(
+    "https://ucfavwmylklrnchfsttx.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjZmF2d215bGtscm5jaGZzdHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxOTk5NTIsImV4cCI6MjA4OTc3NTk1Mn0.3Ig9UUfe29LQpUiHImgIaf4qUCcLQSLUBuYvBsPUedI"
+  );
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session) window.location.href='login.html';
+})();
+</script>
+</head>
+<body>
+
+<canvas id="scroll-canvas"></canvas>
+<div class="toast" id="toast"></div>
+
+<nav>
+  <a href="dashboard.html" class="nav-logo">EX<span class="dot">.</span></a>
+  <div class="nav-right">
+    <a href="dashboard.html" class="nav-back">← Dashboard</a>
+  </div>
+</nav>
+<div class="grid-bg"></div>
+
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-tag"><div class="page-tag-line"></div>Exam Countdown</div>
+    <h1 class="page-h1">
+      <span class="ln"><span>The clock</span></span>
+      <span class="ln"><span class="g">is ticking.</span></span>
+    </h1>
+    <p class="page-sub">Real 2026 AQA and Edexcel exam dates. Pick your subjects, add to your calendar and start the countdown.</p>
+  </div>
+
+  <!-- SETUP -->
+  <div class="setup reveal">
+    <div class="level-row">
+      <button class="level-btn active" onclick="setLevel('gcse',this)">GCSE 2026</button>
+      <button class="level-btn" onclick="setLevel('alevel',this)">A-Level 2026</button>
+    </div>
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('auto',this)">Official dates</button>
+      <button class="tab-btn" onclick="switchTab('sync',this)">Sync timetable</button>
+      <button class="tab-btn" onclick="switchTab('manual',this)">Add manually</button>
+    </div>
+
+    <div id="tab-auto">
+      <p class="setup-note">Select your subjects — <strong>real 2026 exam dates</strong> loaded automatically. Every paper added in one click.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+        <button class="board-chip active" id="board-all" onclick="filterBoard('all',this)">All boards</button>
+        <button class="board-chip" id="board-aqa" onclick="filterBoard('AQA',this)">AQA</button>
+        <button class="board-chip" id="board-edexcel" onclick="filterBoard('Edexcel',this)">Edexcel</button>
+        <button class="board-chip" id="board-ocr" onclick="filterBoard('OCR',this)">OCR</button>
+      </div>
+      <div class="official-grid" id="official-grid"></div>
+      <button class="import-btn" onclick="importSelected()"><span>Import selected →</span></button>
+    </div>
+    <div id="tab-sync" style="display:none">
+      <p class="setup-note">Already built your timetable? Your exam dates are saved — sync them here instantly.</p>
+      <button class="sync-btn" onclick="syncTimetable()">
+        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        Sync from my timetable
+        <span class="sync-ok" id="sync-ok">Done!</span>
+      </button>
+      <p style="font-size:12px;color:var(--muted)">No timetable? <a href="timetable.html" style="color:var(--green-mid);font-weight:700;text-decoration:none">Build one →</a></p>
+    </div>
+    <div id="tab-manual" style="display:none">
+      <div class="manual-row">
+        <select id="manual-subj">
+          <option value="">Select subject...</option>
+          <option>Biology</option><option>Chemistry</option><option>Physics</option><option>Maths</option>
+          <option>History</option><option>English Literature</option><option>English Language</option>
+          <option>Geography</option><option>Computer Science</option><option>Psychology</option>
+          <option>Economics</option><option>Sociology</option><option>French</option><option>Spanish</option><option>Other</option>
+        </select>
+        <input type="date" id="manual-date"/>
+        <button class="add-btn" onclick="addManual()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT EXAM HERO -->
+  <div id="next-hero" class="reveal">
+    <div class="next-card">
+      <div class="next-left">
+        <div class="next-level" id="next-level"></div>
+        <div class="next-subject" id="next-subject"></div>
+        <div class="next-paper" id="next-paper"></div>
+        <div class="next-date" id="next-date"></div>
+      </div>
+      <div class="next-right">
+        <div class="next-days" id="next-days"></div>
+        <div class="next-days-lbl">days to go</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIVE CLOCK -->
+  <div class="clock reveal" id="live-clock" style="display:none">
+    <div class="clock-unit"><div class="clock-num" id="cl-d">00</div><div class="clock-lbl">Days</div></div>
+    <div class="clock-unit"><div class="clock-num" id="cl-h">00</div><div class="clock-lbl">Hours</div></div>
+    <div class="clock-unit"><div class="clock-num" id="cl-m">00</div><div class="clock-lbl">Minutes</div></div>
+    <div class="clock-unit" id="cl-s-unit"><div class="clock-num" id="cl-s">00</div><div class="clock-lbl">Seconds</div></div>
+  </div>
+
+  <!-- EXAMS SECTION -->
+  <div id="exams-section" style="display:none">
+    <div class="section-hdr">
+      <div class="section-title">Your exams</div>
+      <div class="section-actions">
+        <button class="cal-btn" onclick="exportGoogle()"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Google Calendar</button>
+        <button class="cal-btn" onclick="exportICS()"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>iCal / Outlook</button>
+        <button class="clear-btn" onclick="clearAll()">Clear all</button>
+      </div>
+    </div>
+    <div class="exams-grid" id="exams-grid"></div>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div id="empty-state">
+    <div class="es-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+    <div class="es-title">No exams added yet</div>
+    <div class="es-sub">Pick your subjects above to start the countdown</div>
+  </div>
+
+  <!-- MOTIVATION -->
+  <div class="motivation reveal" id="motivation" style="display:none">
+    <div class="mot-label">Daily motivation</div>
+    <div class="mot-text" id="mot-text"></div>
+    <div class="mot-author" id="mot-author"></div>
+  </div>
+
+
+
+</div>
+
+<script src="wellbeing-widget.js">
+// DEADLINE MODAL
+let dlType = 'Exam';
+function openModal(){
+  document.getElementById('deadline-modal').classList.add('open');
+  // Set min date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('dl-date').min = today;
+  document.getElementById('dl-subj').focus();
+}
+function closeModal(){
+  document.getElementById('deadline-modal').classList.remove('open');
+  document.getElementById('dl-subj').value='';
+  document.getElementById('dl-date').value='';
+  document.getElementById('dl-notes').value='';
+}
+function selType(el, type){
+  dlType = type;
+  document.querySelectorAll('.modal-type').forEach(t=>t.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function addDeadline(){
+  const subj = document.getElementById('dl-subj').value.trim();
+  const date = document.getElementById('dl-date').value;
+  const notes = document.getElementById('dl-notes').value.trim();
+  if(!subj){showToast('Please enter a subject or title.'); return;}
+  if(!date){showToast('Please pick a date.'); return;}
+  const today = new Date(); today.setHours(0,0,0,0);
+  if(pd(date) < today){showToast('That date is in the past!'); return;}
+  myExams.push({
+    id: eid++,
+    subject: subj,
+    paper: notes || dlType,
+    date,
+    board: dlType,
+    level: currentLevel==='gcse'?'GCSE':'A-Level'
+  });
+  save(); render();
+  closeModal();
+  showToast(dlType + ' added!');
+}
+// Close modal on Escape
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape') closeModal();
+});
+
+</script>
+<script>
+
+// DATA
+const GCSE=[
+  // AQA
+  {subject:'English Literature',level:'GCSE',papers:[{name:'Paper 1: Shakespeare & 19th Century',date:'2026-05-11',board:'AQA'},{name:'Paper 2: Modern Texts & Poetry',date:'2026-05-19',board:'AQA'}]},
+  {subject:'English Language',level:'GCSE',papers:[{name:'Paper 1: Creative Reading & Writing',date:'2026-05-21',board:'AQA'},{name:'Paper 2: Writers\' Viewpoints',date:'2026-06-05',board:'AQA'}]},
+  {subject:'Biology',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-12',board:'AQA'},{name:'Paper 2',date:'2026-06-08',board:'AQA'}]},
+  {subject:'Chemistry',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-18',board:'AQA'},{name:'Paper 2',date:'2026-06-12',board:'AQA'}]},
+  {subject:'Physics',level:'GCSE',papers:[{name:'Paper 1',date:'2026-06-02',board:'AQA'},{name:'Paper 2',date:'2026-06-15',board:'AQA'}]},
+  {subject:'Combined Science',level:'GCSE',papers:[{name:'Biology 1',date:'2026-05-12',board:'AQA'},{name:'Chemistry 1',date:'2026-05-18',board:'AQA'},{name:'Physics 1',date:'2026-06-02',board:'AQA'},{name:'Biology 2',date:'2026-06-08',board:'AQA'},{name:'Chemistry 2',date:'2026-06-12',board:'AQA'},{name:'Physics 2',date:'2026-06-15',board:'AQA'}]},
+  {subject:'Geography',level:'GCSE',papers:[{name:'Paper 1: Physical Environment',date:'2026-05-13',board:'AQA'},{name:'Paper 2: Human Environment',date:'2026-06-03',board:'AQA'},{name:'Paper 3: Applications',date:'2026-06-11',board:'AQA'}]},
+  {subject:'Religious Studies',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-12',board:'AQA'},{name:'Paper 2',date:'2026-05-20',board:'AQA'}]},
+  {subject:'Computer Science',level:'GCSE',papers:[{name:'Paper 1: Computational Thinking',date:'2026-05-13',board:'AQA'},{name:'Paper 2: Computing Concepts',date:'2026-05-19',board:'AQA'}]},
+  {subject:'Sociology',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-14',board:'AQA'},{name:'Paper 2',date:'2026-06-04',board:'AQA'}]},
+  {subject:'Psychology',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-15',board:'AQA'},{name:'Paper 2',date:'2026-06-05',board:'AQA'}]},
+  {subject:'Drama',level:'GCSE',papers:[{name:'Written Exam',date:'2026-05-20',board:'AQA'}]},
+  {subject:'Art & Design',level:'GCSE',papers:[{name:'Written Exam',date:'2026-05-18',board:'AQA'}]},
+  // Edexcel
+  {subject:'Maths',level:'GCSE',papers:[{name:'Paper 1 (Non-Calculator)',date:'2026-05-14',board:'Edexcel'},{name:'Paper 2 (Calculator)',date:'2026-06-03',board:'Edexcel'},{name:'Paper 3 (Calculator)',date:'2026-06-10',board:'Edexcel'}]},
+  {subject:'History',level:'GCSE',papers:[{name:'Paper 1: Thematic Study',date:'2026-05-15',board:'Edexcel'},{name:'Paper 2: Period Study',date:'2026-06-04',board:'Edexcel'},{name:'Paper 3: Modern Depth',date:'2026-06-09',board:'Edexcel'}]},
+  {subject:'French',level:'GCSE',papers:[{name:'Listening',date:'2026-05-20',board:'Edexcel'},{name:'Reading',date:'2026-06-04',board:'Edexcel'},{name:'Writing',date:'2026-06-08',board:'Edexcel'}]},
+  {subject:'Spanish',level:'GCSE',papers:[{name:'Listening',date:'2026-06-09',board:'Edexcel'},{name:'Reading',date:'2026-06-16',board:'Edexcel'},{name:'Writing',date:'2026-06-17',board:'Edexcel'}]},
+  {subject:'German',level:'GCSE',papers:[{name:'Listening',date:'2026-05-21',board:'Edexcel'},{name:'Reading',date:'2026-06-05',board:'Edexcel'},{name:'Writing',date:'2026-06-10',board:'Edexcel'}]},
+  {subject:'Business',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-15',board:'Edexcel'},{name:'Paper 2',date:'2026-06-05',board:'Edexcel'}]},
+  {subject:'Economics',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-13',board:'Edexcel'},{name:'Paper 2',date:'2026-06-03',board:'Edexcel'}]},
+  // OCR
+  {subject:'Maths',level:'GCSE',papers:[{name:'Paper 1 (Non-Calculator)',date:'2026-05-14',board:'OCR'},{name:'Paper 2 (Calculator)',date:'2026-06-04',board:'OCR'},{name:'Paper 3 (Calculator)',date:'2026-06-11',board:'OCR'}]},
+  {subject:'English Literature',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-12',board:'OCR'},{name:'Paper 2',date:'2026-05-20',board:'OCR'}]},
+  {subject:'Geography',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-14',board:'OCR'},{name:'Paper 2',date:'2026-06-04',board:'OCR'},{name:'Paper 3',date:'2026-06-12',board:'OCR'}]},
+  {subject:'History',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-19',board:'OCR'},{name:'Paper 2',date:'2026-06-08',board:'OCR'}]},
+  {subject:'Computer Science',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-15',board:'OCR'},{name:'Paper 2',date:'2026-06-05',board:'OCR'}]},
+  {subject:'Religious Studies',level:'GCSE',papers:[{name:'Paper 1',date:'2026-05-13',board:'OCR'},{name:'Paper 2',date:'2026-06-03',board:'OCR'}]},
+];
+const ALEVEL=[
+  // AQA
+  {subject:'Biology',level:'A-Level',papers:[{name:'Paper 1',date:'2026-06-04',board:'AQA'},{name:'Paper 2',date:'2026-06-12',board:'AQA'},{name:'Paper 3',date:'2026-06-16',board:'AQA'}]},
+  {subject:'Chemistry',level:'A-Level',papers:[{name:'Inorganic & Physical Chemistry',date:'2026-06-02',board:'AQA'},{name:'Organic & Physical Chemistry',date:'2026-06-09',board:'AQA'},{name:'Paper 3',date:'2026-06-15',board:'AQA'}]},
+  {subject:'Physics',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-13',board:'AQA'},{name:'Paper 2',date:'2026-06-01',board:'AQA'},{name:'Paper 3',date:'2026-06-22',board:'AQA'}]},
+  {subject:'Maths',level:'A-Level',papers:[{name:'Paper 1 (Pure)',date:'2026-05-12',board:'AQA'},{name:'Paper 2 (Pure)',date:'2026-06-04',board:'AQA'},{name:'Paper 3 (Stats & Mechanics)',date:'2026-06-15',board:'AQA'}]},
+  {subject:'Further Maths',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-11',board:'AQA'},{name:'Paper 2',date:'2026-05-19',board:'AQA'},{name:'Paper 3',date:'2026-06-08',board:'AQA'},{name:'Paper 4',date:'2026-06-16',board:'AQA'}]},
+  {subject:'English Literature',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-18',board:'AQA'},{name:'Paper 2',date:'2026-06-08',board:'AQA'}]},
+  {subject:'English Language',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-14',board:'AQA'},{name:'Paper 2',date:'2026-06-04',board:'AQA'}]},
+  {subject:'History',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-14',board:'AQA'},{name:'Paper 2',date:'2026-06-03',board:'AQA'},{name:'Paper 3',date:'2026-06-17',board:'AQA'}]},
+  {subject:'Psychology',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-19',board:'AQA'},{name:'Paper 2',date:'2026-06-02',board:'AQA'},{name:'Paper 3',date:'2026-06-16',board:'AQA'}]},
+  {subject:'Geography',level:'A-Level',papers:[{name:'Physical Geography',date:'2026-05-20',board:'AQA'},{name:'Human Geography',date:'2026-06-03',board:'AQA'},{name:'Paper 3',date:'2026-06-11',board:'AQA'}]},
+  {subject:'Economics',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-18',board:'AQA'},{name:'Paper 2',date:'2026-06-01',board:'AQA'},{name:'Paper 3',date:'2026-06-11',board:'AQA'}]},
+  {subject:'Sociology',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-15',board:'AQA'},{name:'Paper 2',date:'2026-06-05',board:'AQA'},{name:'Paper 3',date:'2026-06-19',board:'AQA'}]},
+  {subject:'Business',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-13',board:'AQA'},{name:'Paper 2',date:'2026-05-19',board:'AQA'},{name:'Paper 3',date:'2026-06-09',board:'AQA'}]},
+  {subject:'Computer Science',level:'A-Level',papers:[{name:'Paper 1',date:'2026-06-10',board:'AQA'},{name:'Paper 2',date:'2026-06-17',board:'AQA'}]},
+  {subject:'French',level:'A-Level',papers:[{name:'Listening, Reading & Writing',date:'2026-06-01',board:'AQA'},{name:'Writing',date:'2026-06-09',board:'AQA'}]},
+  {subject:'Spanish',level:'A-Level',papers:[{name:'Listening, Reading & Writing',date:'2026-06-02',board:'AQA'},{name:'Writing',date:'2026-06-10',board:'AQA'}]},
+  {subject:'German',level:'A-Level',papers:[{name:'Listening, Reading & Writing',date:'2026-06-03',board:'AQA'},{name:'Writing',date:'2026-06-11',board:'AQA'}]},
+  {subject:'Religious Studies',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-13',board:'AQA'},{name:'Paper 2',date:'2026-06-03',board:'AQA'},{name:'Paper 3',date:'2026-06-12',board:'AQA'}]},
+  {subject:'Philosophy',level:'A-Level',papers:[{name:'Epistemology & Moral Philosophy',date:'2026-05-15',board:'AQA'},{name:'Metaphysics & Political Philosophy',date:'2026-06-05',board:'AQA'}]},
+  {subject:'Law',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-14',board:'AQA'},{name:'Paper 2',date:'2026-06-04',board:'AQA'},{name:'Paper 3',date:'2026-06-15',board:'AQA'}]},
+  {subject:'Media Studies',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-20',board:'AQA'},{name:'Paper 2',date:'2026-06-10',board:'AQA'}]},
+  // Edexcel
+  {subject:'Maths',level:'A-Level',papers:[{name:'Paper 1 (Pure)',date:'2026-05-12',board:'Edexcel'},{name:'Paper 2 (Pure)',date:'2026-06-03',board:'Edexcel'},{name:'Paper 3 (Stats & Mechanics)',date:'2026-06-15',board:'Edexcel'}]},
+  {subject:'Further Maths',level:'A-Level',papers:[{name:'Core Pure 1',date:'2026-05-11',board:'Edexcel'},{name:'Core Pure 2',date:'2026-05-18',board:'Edexcel'},{name:'Options Paper 3A',date:'2026-06-08',board:'Edexcel'},{name:'Options Paper 4A',date:'2026-06-15',board:'Edexcel'}]},
+  {subject:'Biology',level:'A-Level',papers:[{name:'Paper 1',date:'2026-06-05',board:'Edexcel'},{name:'Paper 2',date:'2026-06-12',board:'Edexcel'},{name:'Paper 3',date:'2026-06-19',board:'Edexcel'}]},
+  {subject:'Chemistry',level:'A-Level',papers:[{name:'Paper 1',date:'2026-06-03',board:'Edexcel'},{name:'Paper 2',date:'2026-06-10',board:'Edexcel'},{name:'Paper 3',date:'2026-06-17',board:'Edexcel'}]},
+  {subject:'Physics',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-14',board:'Edexcel'},{name:'Paper 2',date:'2026-06-02',board:'Edexcel'},{name:'Paper 3',date:'2026-06-18',board:'Edexcel'}]},
+  {subject:'History',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-15',board:'Edexcel'},{name:'Paper 2',date:'2026-06-05',board:'Edexcel'},{name:'Paper 3',date:'2026-06-16',board:'Edexcel'}]},
+  {subject:'Economics',level:'A-Level',papers:[{name:'Markets & Business Behaviour',date:'2026-05-19',board:'Edexcel'},{name:'Macroeconomics',date:'2026-06-02',board:'Edexcel'},{name:'Micro & Macro',date:'2026-06-12',board:'Edexcel'}]},
+  {subject:'Psychology',level:'A-Level',papers:[{name:'Paper 1',date:'2026-05-20',board:'Edexcel'},{name:'Paper 2',date:'2026-06-03',board:'Edexcel'},{name:'Paper 3',date:'2026-06-17',board:'Edexcel'}]},
+  {subject:'Politics',level:'A-Level',papers:[{name:'UK Politics',date:'2026-05-13',board:'Edexcel'},{name:'UK Government',date:'2026-05-21',board:'Edexcel'},{name:'Comparative Politics',date:'2026-06-09',board:'Edexcel'}]},
+  {subject:'Business',level:'A-Level',papers:[{name:'Marketing & People',date:'2026-05-14',board:'Edexcel'},{name:'Business Activities',date:'2026-05-19',board:'Edexcel'},{name:'Investigating Business',date:'2026-06-09',board:'Edexcel'}]},
+  // OCR
+  {subject:'Biology',level:'A-Level',papers:[{name:'Biological Processes',date:'2026-06-04',board:'OCR'},{name:'Biological Diversity',date:'2026-06-11',board:'OCR'},{name:'Unified Biology',date:'2026-06-18',board:'OCR'}]},
+  {subject:'Chemistry',level:'A-Level',papers:[{name:'Breadth in Chemistry',date:'2026-06-02',board:'OCR'},{name:'Depth in Chemistry',date:'2026-06-09',board:'OCR'},{name:'Unified Chemistry',date:'2026-06-16',board:'OCR'}]},
+  {subject:'Physics',level:'A-Level',papers:[{name:'Modelling Physics',date:'2026-05-13',board:'OCR'},{name:'Exploring Physics',date:'2026-06-01',board:'OCR'},{name:'Unified Physics',date:'2026-06-15',board:'OCR'}]},
+  {subject:'Maths',level:'A-Level',papers:[{name:'Pure Maths 1',date:'2026-05-12',board:'OCR'},{name:'Pure Maths 2',date:'2026-06-04',board:'OCR'},{name:'Statistics & Mechanics',date:'2026-06-15',board:'OCR'}]},
+  {subject:'Computer Science',level:'A-Level',papers:[{name:'Computer Systems',date:'2026-06-11',board:'OCR'},{name:'Algorithms & Programming',date:'2026-06-18',board:'OCR'}]},
+  {subject:'Geography',level:'A-Level',papers:[{name:'Physical Systems',date:'2026-05-20',board:'OCR'},{name:'Human Interactions',date:'2026-06-04',board:'OCR'},{name:'Geographical Debates',date:'2026-06-12',board:'OCR'}]},
+  {subject:'History',level:'A-Level',papers:[{name:'British Period Study',date:'2026-05-15',board:'OCR'},{name:'Non-British Study',date:'2026-06-05',board:'OCR'},{name:'Thematic Study',date:'2026-06-17',board:'OCR'}]},
+];
+const MOTIVATIONS=[
+  {text:"Success is the sum of small efforts, repeated day in and day out.",author:"— Robert Collier"},
+  {text:"The secret of getting ahead is getting started.",author:"— Mark Twain"},
+  {text:"It always seems impossible until it's done.",author:"— Nelson Mandela"},
+  {text:"Don't watch the clock; do what it does. Keep going.",author:"— Sam Levenson"},
+  {text:"Hard work beats talent when talent doesn't work hard.",author:"— Tim Notke"},
+  {text:"The pain of discipline is far less than the pain of regret.",author:"— Unknown"},
+  {text:"Believe you can and you're halfway there.",author:"— Theodore Roosevelt"},
+  {text:"Every expert was once a beginner. Keep going.",author:"— Unknown"},
+  {text:"Push yourself, because no one else is going to do it for you.",author:"— Unknown"},
+  {text:"The expert in anything was once a beginner.",author:"— Helen Hayes"},
+];
+
+let myExams=JSON.parse(localStorage.getItem('ea_cd5')||'[]');
+let selected=new Set();
+let currentLevel='gcse';
+let eid=Date.now();
+
+function pd(s){const p=s.split('-');return new Date(parseInt(p[0]),parseInt(p[1])-1,parseInt(p[2]));}
+function diff(d){const t=new Date();t.setHours(0,0,0,0);return Math.ceil((pd(d)-t)/86400000);}
+function status(d){if(d<0)return 'done';if(d<=7)return 'urgent';if(d<=21)return 'soon';return 'safe';}
+function fmtDate(d){return pd(d).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function fmtDateShort(d){return pd(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
+function fmtKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function save(){localStorage.setItem('ea_cd5',JSON.stringify(myExams));}
+function removeExam(id){myExams=myExams.filter(e=>e.id!==id);save();render();}
+function clearAll(){if(confirm('Remove all exams?')){myExams=[];save();render();}}
+
+function setLevel(level,btn){
+  currentLevel=level;selected.clear();
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  buildGrid();
+}
+
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['tab-auto','tab-sync','tab-manual'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('tab-'+tab).style.display='block';
+}
+
+
+let currentBoard = 'all';
+function filterBoard(board, btn) {
+  currentBoard = board;
+  document.querySelectorAll('.board-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildGrid();
+}
+
+function buildGrid(){
+  const allData=currentLevel==='gcse'?GCSE:ALEVEL;
+  const data=currentBoard==='all'?allData:allData.filter(s=>s.papers.some(p=>p.board===currentBoard));
+  document.getElementById('official-grid').innerHTML=data.map(e=>{
+    const key=e.subject+e.level;
+    return `<div class="off-card ${selected.has(key)?'sel':''}" onclick="toggleSub('${e.subject}','${e.level}',this)">
+      <div class="off-board">${e.papers[0].board}</div>
+      <div class="off-name">${e.subject}</div>
+      <div class="off-count">${e.papers.length} paper${e.papers.length>1?'s':''}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleSub(subject,level,card){
+  const key=subject+level;
+  if(selected.has(key)){selected.delete(key);card.classList.remove('sel');}
+  else{selected.add(key);card.classList.add('sel');}
+}
+
+function importSelected(){
+  if(!selected.size){showToast('Select at least one subject!');return;}
+  const all=[...GCSE,...ALEVEL];
+  let added=0;
+  selected.forEach(key=>{
+    const ex=all.find(e=>e.subject+e.level===key);
+    if(!ex)return;
+    ex.papers.forEach(p=>{
+      if(!myExams.find(e=>e.subject===ex.subject&&e.paper===p.name&&e.date===p.date)){
+        myExams.push({id:eid++,subject:ex.subject,paper:p.name,date:p.date,board:p.board,level:ex.level});
+        added++;
+      }
+    });
+  });
+  save();render();selected.clear();buildGrid();
+  if(added)showToast(`Added ${added} exam${added>1?'s':''}!`);
+}
+
+function syncTimetable(){
+  const data=JSON.parse(localStorage.getItem('ea_timetable_exams')||'null');
+  let added=0;
+  if(data&&data.length){
+    data.forEach(e=>{
+      if(!e.subject||!e.date)return;
+      if(!myExams.find(x=>x.subject===e.subject&&x.date===e.date)){
+        myExams.push({id:eid++,subject:e.subject,paper:'',date:e.date,board:'',level:'GCSE'});
+        added++;
+      }
+    });
+    save();render();
+    const ok=document.getElementById('sync-ok');ok.textContent=`Done! Added ${added}`;ok.style.display='inline';
+    setTimeout(()=>ok.style.display='none',3000);
+  } else {showToast('No timetable data found.');}
+}
+
+function addManual(){
+  const subj=document.getElementById('manual-subj').value;
+  const date=document.getElementById('manual-date').value;
+  if(!subj||!date){showToast('Fill in both fields!');return;}
+  const t=new Date();t.setHours(0,0,0,0);
+  if(pd(date)<t){showToast('That date is in the past!');return;}
+  myExams.push({id:eid++,subject:subj,paper:'',date,board:'Custom',level:currentLevel==='gcse'?'GCSE':'A-Level'});
+  save();render();
+  document.getElementById('manual-subj').value='';document.getElementById('manual-date').value='';
+  showToast('Exam added!');
+}
+
+// CALENDAR EXPORT
+function fmtICSDate(d){const x=pd(d);return x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0');}
+function buildGURL(e){const s=fmtICSDate(e.date)+'T090000',en=fmtICSDate(e.date)+'T120000';return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent((e.level||'GCSE')+' '+e.subject+(e.paper?' — '+e.paper:'')+' Exam')}&dates=${s}/${en}&details=${encodeURIComponent('Added via EX by Exam Armour')}`;}
+function buildICS(exams){const l=['BEGIN:VCALENDAR','VERSION:2.0','CALSCALE:GREGORIAN','PRODID:-//EX//Exam Armour//EN'];exams.forEach(e=>{l.push('BEGIN:VEVENT',`UID:${e.id}@ex`,`DTSTART;VALUE=DATE:${fmtICSDate(e.date)}`,`DTEND;VALUE=DATE:${fmtICSDate(e.date)}`,`SUMMARY:${(e.level||'GCSE')+' '+e.subject+(e.paper?' — '+e.paper:'')} Exam`,'STATUS:CONFIRMED','END:VEVENT');});l.push('END:VCALENDAR');return l.join('\r\n');}
+function exportGoogle(){const up=myExams.filter(e=>diff(e.date)>=0);if(!up.length){showToast('No upcoming exams!');return;}up.forEach((e,i)=>setTimeout(()=>window.open(buildGURL(e),'_blank'),i*250));}
+function exportSingleGoogle(id){const e=myExams.find(x=>x.id===id);if(e)window.open(buildGURL(e),'_blank');}
+function exportICS(){const up=myExams.filter(e=>diff(e.date)>=0);if(!up.length){showToast('No upcoming exams!');return;}const blob=new Blob([buildICS(up)],{type:'text/calendar'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ex-exams-2026.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);showToast('Calendar file downloaded!');}
+function exportSingleICS(id){const e=myExams.find(x=>x.id===id);if(!e)return;const blob=new Blob([buildICS([e])],{type:'text/calendar'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=e.subject.toLowerCase().replace(/\s/g,'-')+'.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);}
+
+function render(){
+  const sorted=[...myExams].sort((a,b)=>pd(a.date)-pd(b.date));
+  const upcoming=sorted.filter(e=>diff(e.date)>=0);
+  const past=sorted.filter(e=>diff(e.date)<0);
+  const all=[...upcoming,...past];
+
+  const empty=document.getElementById('empty-state');
+  const hero=document.getElementById('next-hero');
+  const clock=document.getElementById('live-clock');
+  const section=document.getElementById('exams-section');
+  const mot=document.getElementById('motivation');
+  const cta=document.getElementById('tutor-cta');
+
+  if(!all.length){
+    empty.style.display='block';hero.style.display='none';clock.style.display='none';
+    section.style.display='none';mot.style.display='none';cta.style.display='none';return;
+  }
+  empty.style.display='none';section.style.display='block';mot.style.display='block';cta.style.display='flex';
+
+  if(upcoming.length){
+    const next=upcoming[0];
+    document.getElementById('next-level').textContent=next.level||'GCSE';
+    document.getElementById('next-subject').textContent=next.subject;
+    document.getElementById('next-paper').textContent=next.paper||'';
+    document.getElementById('next-date').textContent=fmtDate(next.date);
+    document.getElementById('next-days').textContent=diff(next.date);
+    hero.style.display='block';clock.style.display='grid';
+  } else {hero.style.display='none';clock.style.display='none';}
+
+  const m=MOTIVATIONS[new Date().getDate()%MOTIVATIONS.length];
+  document.getElementById('mot-text').textContent=m.text;
+  document.getElementById('mot-author').textContent=m.author;
+
+  const cols={urgent:'#e53935',soon:'#f57c00',safe:'#00cc70',done:'#ccc'};
+  document.getElementById('exams-grid').innerHTML=all.map((e,i)=>{
+    const d=diff(e.date);const st=status(d);const col=cols[st];
+    const pct=st==='done'?100:Math.max(0,Math.min(100,Math.round((1-d/120)*100)));
+    const lvl=(e.level||'GCSE').toLowerCase().replace('-','').replace(' ','');
+    return `<div class="exam-card ${st}" style="animation-delay:${i*0.04}s">
+      <div class="ec-actions">
+        <button class="ec-btn" title="Google Calendar" onclick="exportSingleGoogle(${e.id})"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button>
+        <button class="ec-btn" title="Download .ics" onclick="exportSingleICS(${e.id})"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+        <button class="ec-btn del" onclick="removeExam(${e.id})"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>
+      </div>
+      <div class="ec-level ${lvl}">${e.level||'GCSE'}</div>
+      <div class="ec-subject">${e.subject}</div>
+      <div class="ec-paper">${e.paper||e.board||'Custom'}</div>
+      <div class="ec-days ${st==='done'?'done':st}">${st==='done'?'Done':d}</div>
+      <div class="ec-days-lbl">${st==='done'?'exam passed':d===1?'day left':'days left'}</div>
+      <div class="ec-date">${fmtDateShort(e.date)}</div>
+      <div class="ec-prog"><div class="ec-prog-fill" data-w="${pct}%" style="width:0%;background:${col}"></div></div>
+    </div>`;
+  }).join('');
+
+  // Apply tilt to exam cards
+  document.querySelectorAll('.exam-card:not(.done)').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const rx2=(e.clientY-r.top-r.height/2)/r.height*8;
+      const ry2=(e.clientX-r.left-r.width/2)/r.width*-8;
+      card.style.transform=`perspective(600px) rotateX(${rx2}deg) rotateY(${ry2}deg) translateY(-5px)`;
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform='';});
+  });
+
+  setTimeout(()=>document.querySelectorAll('.ec-prog-fill').forEach(el=>el.style.width=el.dataset.w),120);
+}
+
+// LIVE CLOCK
+function updateClock(){
+  const upcoming=[...myExams].filter(e=>diff(e.date)>=0).sort((a,b)=>pd(a.date)-pd(b.date));
+  if(!upcoming.length)return;
+  const d=pd(upcoming[0].date);d.setHours(9,0,0,0);
+  const delta=d-new Date();if(delta<=0)return;
+  const pad=n=>String(n).padStart(2,'0');
+  document.getElementById('cl-d').textContent=pad(Math.floor(delta/86400000));
+  document.getElementById('cl-h').textContent=pad(Math.floor((delta%86400000)/3600000));
+  document.getElementById('cl-m').textContent=pad(Math.floor((delta%3600000)/60000));
+  document.getElementById('cl-s').textContent=pad(Math.floor((delta%60000)/1000));
+  const su=document.getElementById('cl-s-unit');
+  su.classList.add('tick');setTimeout(()=>su.classList.remove('tick'),200);
+}
+
+// TOAST
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+buildGrid();render();
+setInterval(updateClock,1000);updateClock();
+
+// SCROLL-REACTIVE BACKGROUND
+const canvas = document.getElementById('scroll-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resizeCanvas() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const blobs = [
+  { x: 0.8, y: 0.1, r: 0.4, color: [0, 230, 118], phase: 0, speed: 0.0008 },
+  { x: 0.1, y: 0.5, r: 0.35, color: [0, 188, 212], phase: 2, speed: 0.0006 },
+  { x: 0.6, y: 0.8, r: 0.3, color: [0, 230, 118], phase: 4, speed: 0.001 },
+  { x: 0.3, y: 0.2, r: 0.25, color: [100, 160, 255], phase: 1, speed: 0.0007 },
+];
+
+let scrollY = 0;
+let targetScrollY = 0;
+window.addEventListener('scroll', () => { targetScrollY = window.scrollY; });
+
+let t = 0;
+function drawScrollBg() {
+  scrollY += (targetScrollY - scrollY) * 0.06;
+  t += 16;
+
+  // Base
+  ctx.clearRect(0, 0, W, H);
+  const base = ctx.createLinearGradient(0, 0, 0, H);
+  base.addColorStop(0, '#fafafa');
+  base.addColorStop(1, '#f4f6fa');
+  ctx.fillStyle = base;
+  ctx.fillRect(0, 0, W, H);
+
+  // Scroll-driven blobs
+  const scrollFraction = scrollY / Math.max(document.body.scrollHeight - H, 1);
+
+  blobs.forEach((b, i) => {
+    const wave = Math.sin(t * b.speed + b.phase) * 0.08;
+    const scrollShift = scrollFraction * (i % 2 === 0 ? -0.3 : 0.3);
+    const cx = (b.x + wave + scrollShift) * W;
+    const cy = (b.y + Math.cos(t * b.speed * 0.7 + b.phase) * 0.06 + scrollFraction * 0.15 * (i % 2 === 0 ? 1 : -1)) * H;
+    const r = b.r * Math.min(W, H) * (1 + scrollFraction * 0.2);
+    const opacity = 0.07 + scrollFraction * 0.04;
+
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    g.addColorStop(0, `rgba(${b.color[0]},${b.color[1]},${b.color[2]},${opacity})`);
+    g.addColorStop(1, 'transparent');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Grid lines — fade in as you scroll
+  const gridOpacity = Math.min(scrollFraction * 0.4, 0.035);
+  if (gridOpacity > 0.005) {
+    ctx.strokeStyle = `rgba(0,0,0,${gridOpacity})`;
+    ctx.lineWidth = 1;
+    const grid = 80;
+    for (let x = 0; x < W; x += grid) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y < H; y += grid) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+  }
+
+  requestAnimationFrame(drawScrollBg);
+}
+drawScrollBg();
+
+// REVEAL ON SCROLL
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+</script>
+
+<!-- DEADLINE MODAL -->
+<div class="modal-overlay" id="deadline-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-bar"></div>
+    <div class="modal-head">
+      <div class="modal-title">Add a deadline</div>
+      <div class="modal-sub">Exam, coursework, mock — anything with a date.</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-type-row">
+        <div class="modal-type sel" onclick="selType(this,'Exam')" id="type-exam">
+          <div class="modal-type-icon">📝</div>
+          <div class="modal-type-label">Exam</div>
+          <div class="modal-type-desc">Official paper</div>
+        </div>
+        <div class="modal-type" onclick="selType(this,'Mock')" id="type-mock">
+          <div class="modal-type-icon">📋</div>
+          <div class="modal-type-label">Mock</div>
+          <div class="modal-type-desc">Practice paper</div>
+        </div>
+        <div class="modal-type" onclick="selType(this,'Coursework')" id="type-cw">
+          <div class="modal-type-icon">📁</div>
+          <div class="modal-type-label">Coursework</div>
+          <div class="modal-type-desc">Submission deadline</div>
+        </div>
+        <div class="modal-type" onclick="selType(this,'Other')" id="type-other">
+          <div class="modal-type-icon">📌</div>
+          <div class="modal-type-label">Other</div>
+          <div class="modal-type-desc">Any deadline</div>
+        </div>
+      </div>
+      <div class="modal-field">
+        <label>Subject / Title</label>
+        <input type="text" id="dl-subj" placeholder="e.g. Biology, Chemistry coursework..."/>
+      </div>
+      <div class="modal-field">
+        <label>Date</label>
+        <input type="date" id="dl-date"/>
+      </div>
+      <div class="modal-field">
+        <label>Notes (optional)</label>
+        <input type="text" id="dl-notes" placeholder="e.g. Paper 1, Unit 4 only..."/>
+      </div>
+      <div class="modal-btns">
+        <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+        <button class="modal-add" onclick="addDeadline()"><span>Add deadline →</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="openModal()">
+  <div class="fab-label">Add deadline</div>
+  <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</button>
+
+</body>
+</html>

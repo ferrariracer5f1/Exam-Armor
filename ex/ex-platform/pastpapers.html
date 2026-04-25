@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Past Papers — EX</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBhMGEwYSIvPgogIDx0ZXh0IHg9IjUiIHk9IjIzIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiMwMEU2NzYiPkVYPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--green:#00E676;--gm:#00cc70;--black:#0a0a0a;--white:#fafafa;--off:#f2f3f5;--muted:#6b7280;--light:#adb5bd;--border:rgba(0,0,0,0.08);}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Manrope',sans-serif;background:var(--white);color:var(--black);min-height:100vh;}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:200;padding:0 48px;height:56px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,250,250,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+
+    .nright{display:flex;gap:8px;align-items:center;}
+    .nback{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;padding:7px 14px;border-radius:100px;transition:all 0.2s;}
+    .nback:hover{background:var(--off);color:var(--black);}
+    .ncta{padding:9px 22px;background:var(--black);color:#fff;border-radius:100px;font-size:13px;font-weight:800;text-decoration:none;position:relative;overflow:hidden;}
+    .ncta::after{content:'';position:absolute;inset:0;background:var(--green);transform:translateY(101%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+    .ncta:hover::after{transform:translateY(0);}
+    .ncta span{position:relative;z-index:1;transition:color 0.3s;}
+    .ncta:hover span{color:var(--black);}
+
+    /* PAGE */
+    .page{max-width:1060px;margin:0 auto;padding:48px 24px 120px;}
+    .ptag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:16px;animation:fu 0.5s ease both;}
+    .tline{width:28px;height:2px;background:var(--green);}
+    .ph1{font-size:clamp(34px,5vw,58px);font-weight:900;letter-spacing:-3px;line-height:0.95;margin-bottom:10px;}
+    .ph1 .ln{display:block;overflow:hidden;}
+    .ph1 .ln span{display:block;animation:wu 0.9s cubic-bezier(0.16,1,0.3,1) both;}
+    .ph1 .ln:nth-child(1) span{animation-delay:0.06s;}
+    .ph1 .ln:nth-child(2) span{animation-delay:0.16s;}
+    .gg{background:linear-gradient(130deg,var(--green),#00bcd4);-webkit-background-clip:text;background-clip:text;color:transparent;}
+    .psub{font-size:15px;color:var(--muted);line-height:1.75;max-width:480px;animation:fu 0.6s ease 0.25s both;margin-bottom:40px;}
+    @keyframes wu{from{transform:translateY(110%)}to{transform:translateY(0)}}
+    @keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    /* STATS ROW */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+
+    .card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:20px 22px;margin-bottom:16px;}
+
+    .stat-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px 20px;transition:all 0.2s;}
+    .stat-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.07);}
+    .stat-ic{width:34px;height:34px;border-radius:9px;background:var(--off);display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+    .stat-ic svg{width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .stat-n{font-size:26px;font-weight:900;letter-spacing:-1px;margin-bottom:2px;}
+    .stat-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);}
+
+    /* TOOLBAR */
+    .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+    .search-inp{flex:1;min-width:160px;padding:9px 14px;background:#fff;border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:'Manrope',sans-serif;color:var(--black);}
+    .search-inp:focus{outline:none;border-color:var(--gm);}
+    .search-inp::placeholder{color:var(--light);}
+    .fchip{padding:7px 14px;border-radius:100px;border:1.5px solid var(--border);background:#fff;font-size:11px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;color:var(--muted);transition:all 0.18s;white-space:nowrap;}
+    .fchip:hover{border-color:rgba(0,0,0,0.2);color:var(--black);}
+    .fchip.act{background:var(--black);border-color:var(--black);color:#fff;}
+    .add-btn{display:flex;align-items:center;gap:7px;padding:9px 20px;background:var(--black);color:#fff;border:none;border-radius:100px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Manrope',sans-serif;position:relative;overflow:hidden;transition:all 0.2s;white-space:nowrap;}
+    .add-btn::after{content:'';position:absolute;inset:0;background:var(--green);transform:translateX(-101%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+    .add-btn:hover::after{transform:translateX(0);}
+    .add-btn span,.add-btn svg{position:relative;z-index:1;transition:color 0.3s,stroke 0.3s;}
+    .add-btn:hover span{color:var(--black);}
+    .add-btn svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+    .add-btn:hover svg{stroke:var(--black);}
+
+    /* PAPER GRID */
+    .paper-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+
+    /* PAPER CARD */
+    .paper-card{background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:all 0.25s;cursor:pointer;}
+    .paper-card:hover{box-shadow:0 8px 28px rgba(0,0,0,0.09);transform:translateY(-2px);}
+    .paper-card.expanded{grid-column:1/-1;cursor:default;transform:none;box-shadow:0 12px 40px rgba(0,0,0,0.1);}
+    .pc-header{padding:20px 22px;display:flex;align-items:flex-start;gap:14px;}
+    .pc-accent{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .pc-accent svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .pc-info{flex:1;min-width:0;}
+    .pc-subject{font-size:15px;font-weight:900;letter-spacing:-0.3px;margin-bottom:2px;}
+    .pc-meta{font-size:11px;color:var(--muted);margin-bottom:10px;}
+    .pc-score-row{display:flex;align-items:center;gap:10px;}
+    .pc-score{font-size:22px;font-weight:900;letter-spacing:-1px;}
+    .pc-grade{font-size:11px;font-weight:800;padding:3px 10px;border-radius:100px;}
+    .pc-bar-wrap{flex:1;height:5px;background:var(--off);border-radius:3px;overflow:hidden;}
+    .pc-bar{height:100%;border-radius:3px;transition:width 0.6s cubic-bezier(0.16,1,0.3,1);}
+    .pc-pct{font-size:11px;font-weight:800;color:var(--muted);white-space:nowrap;}
+    .pc-expand-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;transition:all 0.2s;}
+    .pc-expand-btn:hover{background:var(--off);}
+    .pc-expand-btn svg{width:13px;height:13px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.3s;}
+    .paper-card.expanded .pc-expand-btn svg{transform:rotate(180deg);}
+
+    /* EXPANDED DETAIL */
+    .pc-detail{display:none;border-top:1px solid var(--border);padding:24px 22px;}
+    .paper-card.expanded .pc-detail{display:block;}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px;}
+    .detail-col{}
+    .detail-title{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+    .detail-title svg{width:12px;height:12px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+    /* QUESTION TABLE */
+    .q-table{width:100%;border-collapse:collapse;}
+    .q-table th{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--light);padding:6px 10px;text-align:left;border-bottom:1px solid var(--border);}
+    .q-table td{padding:8px 10px;font-size:12px;font-weight:600;border-bottom:1px solid var(--off);vertical-align:middle;}
+    .q-table tr:last-child td{border-bottom:none;}
+    .q-table tr:hover td{background:var(--off);}
+    .q-mark{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:800;}
+    .q-mark.full{color:var(--gm);}
+    .q-mark.partial{color:#f57c00;}
+    .q-mark.zero{color:#e53935;}
+    .q-dot{width:6px;height:6px;border-radius:50%;}
+
+    /* WEAK/STRONG AREAS */
+    .area-list{display:flex;flex-direction:column;gap:7px;}
+    .area-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;background:var(--off);}
+    .area-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .area-icon svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .area-body{flex:1;}
+    .area-name{font-size:12px;font-weight:800;margin-bottom:1px;}
+    .area-sub{font-size:10px;color:var(--muted);}
+    .area-pct{font-size:12px;font-weight:800;}
+
+    /* NOTES FIELD */
+    .paper-notes{width:100%;padding:10px 13px;background:var(--off);border:1px solid var(--border);border-radius:9px;font-size:12px;font-family:'Manrope',sans-serif;color:var(--black);resize:none;line-height:1.6;margin-top:8px;}
+    .paper-notes:focus{outline:none;border-color:var(--gm);background:#fff;}
+    .paper-notes::placeholder{color:var(--light);}
+
+    /* ADD Q ROW */
+    .add-q-row{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;}
+    .qi{padding:7px 10px;background:var(--off);border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:'Manrope',sans-serif;color:var(--black);}
+    .qi:focus{outline:none;border-color:var(--gm);background:#fff;}
+    .qi::placeholder{color:var(--light);}
+    .qadd{padding:7px 14px;background:var(--black);color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:800;cursor:pointer;font-family:'Manrope',sans-serif;transition:background 0.2s;white-space:nowrap;}
+    .qadd:hover{background:var(--gm);}
+
+    /* DETAIL ACTIONS */
+    .detail-actions{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
+    .dact-btn{padding:8px 16px;border-radius:9px;border:1px solid var(--border);background:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;color:var(--muted);transition:all 0.15s;}
+    .dact-btn:hover{border-color:var(--black);color:var(--black);}
+    .dact-btn.danger:hover{border-color:#e53935;color:#e53935;}
+
+    /* EMPTY */
+    .empty{text-align:center;padding:64px 24px;grid-column:1/-1;}
+    .empty-ic{width:56px;height:56px;border-radius:16px;background:var(--off);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+    .empty-ic svg{width:24px;height:24px;stroke:var(--light);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+
+    /* MODAL */
+    .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:500;display:flex;align-items:flex-end;justify-content:center;animation:fu 0.2s ease both;}
+    .modal{background:#fff;width:100%;max-width:580px;border-radius:24px 24px 0 0;padding:28px 28px 48px;max-height:90vh;overflow-y:auto;}
+    .modal::-webkit-scrollbar{display:none;}
+    .mh{width:40px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 22px;}
+    .mt{font-size:18px;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px;}
+    .ms{font-size:13px;color:var(--muted);margin-bottom:22px;}
+    .ml{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:6px;display:block;}
+    .mi{width:100%;padding:10px 13px;background:var(--off);border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:'Manrope',sans-serif;color:var(--black);margin-bottom:14px;transition:border-color 0.2s;}
+    .mi:focus{outline:none;border-color:var(--gm);background:#fff;}
+    .mi::placeholder{color:var(--light);}
+    .mrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .mfoot{display:flex;gap:10px;margin-top:6px;}
+    .msave{flex:1;padding:13px;background:var(--black);color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Manrope',sans-serif;transition:background 0.2s;}
+    .msave:hover{background:var(--gm);}
+    .mcanc{padding:13px 20px;background:var(--off);color:var(--muted);border:1px solid var(--border);border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;}
+    .section-lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:8px;display:block;}
+
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--black);color:#fff;padding:10px 22px;border-radius:100px;font-size:12px;font-weight:700;z-index:9000;transition:opacity 0.3s;box-shadow:0 4px 20px rgba(0,0,0,0.18);white-space:nowrap;opacity:0;pointer-events:none;}
+    .toast.show{opacity:1;}
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1),transform 0.6s cubic-bezier(0.16,1,0.3,1);}
+    .reveal.in{opacity:1;transform:none;}
+    @media(max-width:700px){nav{padding:0 16px;}.page{padding:32px 16px 100px;}.stats-row{grid-template-columns:repeat(2,1fr);}.detail-grid{grid-template-columns:1fr;}}
+  
+/* SHARED DASHBOARD NAV */
+.nav-logo{font-size:17px;font-weight:900;letter-spacing:-1px;color:#0a0a0a;text-decoration:none;}
+.nav-logo .dot{color:#00E676;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-back{font-size:12px;font-weight:700;color:#6b7280;text-decoration:none;padding:7px 16px;border-radius:100px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.7);transition:all .2s;}
+.nav-back:hover{background:#0a0a0a;color:#fff;border-color:#0a0a0a;}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,0,0,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.022) 1px,transparent 1px);
+  background-size:52px 52px;}
+body{opacity:0;animation:pageIn .4s ease .05s forwards;}
+@keyframes pageIn{to{opacity:1}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+
+// ── SUPABASE SYNC ────────────────────────────────────────────────
+const _sbPP = supabase.createClient('https://ucfavwmylklrnchfsttx.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjZmF2d215bGtscm5jaGZzdHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxOTk5NTIsImV4cCI6MjA4OTc3NTk1Mn0.3Ig9UUfe29LQpUiHImgIaf4qUCcLQSLUBuYvBsPUedI');
+let _ppUserId = null;
+
+async function initPPSync() {
+  const {data:{session}} = await _sbPP.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+  _ppUserId = session.user.id;
+  await loadPapersFromCloud();
+}
+
+async function savePapersToCloud() {
+  if (!_ppUserId) return;
+  try {
+    await _sbPP.from('user_data').upsert({
+      id: _ppUserId,
+      papers: JSON.stringify(papers),
+      updated_at: new Date().toISOString()
+    }, {onConflict:'id'});
+  } catch(e) { console.log('Papers cloud save failed:', e); }
+}
+
+async function loadPapersFromCloud() {
+  if (!_ppUserId) return;
+  try {
+    const {data} = await _sbPP.from('user_data').select('papers').eq('id', _ppUserId).maybeSingle();
+    if (data?.papers) {
+      const loaded = JSON.parse(data.papers);
+      if (loaded?.length) {
+        papers = loaded;
+        localStorage.setItem('ex_papers', JSON.stringify(papers));
+      }
+    }
+  } catch(e) { console.log('Papers cloud load failed:', e); }
+  updateStats();
+  renderPapers();
+  renderChart();
+}
+
+
+initPPSync();
+</script>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<nav>
+  <a href="dashboard.html" class="nav-logo">EX<span class="dot">.</span></a>
+  <div class="nav-right">
+    <a href="dashboard.html" class="nav-back">← Dashboard</a>
+  </div>
+</nav>
+<div class="grid-bg"></div>
+
+<div class="page">
+  <div class="ptag"><div class="tline"></div>Past Papers</div>
+  <h1 class="ph1">
+    <span class="ln"><span>Track every paper,</span></span>
+    <span class="ln"><span class="gg">find every gap.</span></span>
+  </h1>
+  <p class="psub">Log past papers question by question. EX spots your weak topics so you know exactly what to revise next.</p>
+
+  <!-- STATS -->
+  <div class="stats-row reveal">
+    <div class="stat-card">
+      <div class="stat-ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div class="stat-n" id="st-papers">0</div>
+      <div class="stat-l">Papers logged</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ic"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="stat-n" id="st-avg">—</div>
+      <div class="stat-l">Average score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ic"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+      <div class="stat-n" id="st-best">—</div>
+      <div class="stat-l">Best score</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+      <div class="stat-n" id="st-weak">—</div>
+      <div class="stat-l">Weakest topic</div>
+    </div>
+  </div>
+
+  <!-- SCORE CHART -->
+  <div class="card reveal" id="chart-card" style="display:none;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+      <div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)">Score progression</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px;">Your scores over time</div>
+      </div>
+      <select id="chart-subj" onchange="renderChart()" style="padding:6px 12px;border:1px solid var(--border);border-radius:8px;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--black);background:#fff;outline:none;">
+        <option value="all">All subjects</option>
+      </select>
+    </div>
+    <canvas id="score-chart" height="120" style="width:100%;display:block;"></canvas>
+    <div id="chart-legend" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;"></div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar reveal">
+    <input type="text" class="search-inp" id="search" placeholder="Search by subject, board or year..." oninput="renderPapers()"/>
+    <button class="fchip act" data-f="all" onclick="setFilter(this)">All</button>
+    <button class="fchip" data-f="recent" onclick="setFilter(this)">Recent</button>
+    <button class="fchip" data-f="weak" onclick="setFilter(this)">Needs work</button>
+    <button class="fchip" data-f="strong" onclick="setFilter(this)">Strong</button>
+    <button class="add-btn" onclick="openModal()">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span>Log paper</span>
+    </button>
+  </div>
+
+  <!-- PAPER GRID -->
+  <div class="paper-grid reveal" id="paper-grid"></div>
+</div>
+
+<!-- ADD PAPER MODAL -->
+<div id="modal" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal-ov">
+    <div class="modal">
+      <div class="mh"></div>
+      <div class="mt">Log a past paper</div>
+      <div class="ms">Add the basics now — you can log individual questions after.</div>
+      <div class="mrow">
+        <div>
+          <label class="ml">Subject</label>
+          <select class="mi" id="m-subj"></select>
+        </div>
+        <div>
+          <label class="ml">Exam board</label>
+          <select class="mi" id="m-board">
+            <option value="AQA">AQA</option>
+            <option value="Edexcel">Edexcel</option>
+            <option value="OCR">OCR</option>
+            <option value="WJEC">WJEC</option>
+            <option value="CCEA">CCEA</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="mrow">
+        <div>
+          <label class="ml">Year</label>
+          <select class="mi" id="m-year"></select>
+        </div>
+        <div>
+          <label class="ml">Paper</label>
+          <select class="mi" id="m-paper">
+            <option value="Paper 1">Paper 1</option>
+            <option value="Paper 2">Paper 2</option>
+            <option value="Paper 3">Paper 3</option>
+            <option value="Foundation">Foundation</option>
+            <option value="Higher">Higher</option>
+            <option value="Full paper">Full paper</option>
+          </select>
+        </div>
+      </div>
+      <div class="mrow">
+        <div>
+          <label class="ml">Your score</label>
+          <input type="number" class="mi" id="m-score" placeholder="e.g. 68" min="0"/>
+        </div>
+        <div>
+          <label class="ml">Total marks</label>
+          <input type="number" class="mi" id="m-total" placeholder="e.g. 80" min="1"/>
+        </div>
+      </div>
+      <label class="ml">Level</label>
+      <select class="mi" id="m-level">
+        <option value="GCSE">GCSE</option>
+        <option value="A-Level">A-Level</option>
+      </select>
+      <label class="ml">Notes (optional)</label>
+      <textarea class="mi" id="m-notes" rows="2" placeholder="e.g. Ran out of time on Q4, forgot the formula..."></textarea>
+      <div class="mfoot">
+        <button class="mcanc" onclick="closeModal()">Cancel</button>
+        <button class="msave" onclick="savePaper()">Save paper</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in');}),{threshold:0.05});document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// ── STATE ─────────────────────────────────────────────────────────
+let papers = JSON.parse(localStorage.getItem('ex_papers') || '[]');
+let expanded = null;
+let filterMode = 'all';
+
+const SUBJ_COLS = {
+  'Biology':'#2E7D32','Chemistry':'#E65100','Physics':'#1565C0','Maths':'#4A148C',
+  'History':'#BF360C','English Literature':'#880E4F','English Language':'#37474F',
+  'Geography':'#1B5E20','Computer Science':'#0D47A1','Psychology':'#6A1B9A',
+  'Economics':'#1A5C2A','Other':'#455A64'
+};
+
+const QUESTION_TYPES = [
+  'Multiple choice','Short answer','Calculation','6-mark extended','Essay / 12-mark',
+  'Data analysis','Diagram / label','Definitions','Explain question','Evaluate / assess'
+];
+
+// Grade boundaries (approximate)
+function getGrade(pct, level) {
+  if (level === 'A-Level') {
+    if (pct >= 90) return {g:'A*',col:'#1B5E20',bg:'rgba(27,94,32,0.1)'};
+    if (pct >= 80) return {g:'A', col:'#2E7D32',bg:'rgba(46,125,50,0.1)'};
+    if (pct >= 70) return {g:'B', col:'#558B2F',bg:'rgba(85,139,47,0.1)'};
+    if (pct >= 60) return {g:'C', col:'#F57F17',bg:'rgba(245,127,23,0.1)'};
+    if (pct >= 50) return {g:'D', col:'#E65100',bg:'rgba(230,81,0,0.1)'};
+    return {g:'E', col:'#B71C1C',bg:'rgba(183,28,28,0.1)'};
+  } else {
+    if (pct >= 90) return {g:'9',col:'#1B5E20',bg:'rgba(27,94,32,0.1)'};
+    if (pct >= 80) return {g:'8',col:'#2E7D32',bg:'rgba(46,125,50,0.1)'};
+    if (pct >= 70) return {g:'7',col:'#558B2F',bg:'rgba(85,139,47,0.1)'};
+    if (pct >= 60) return {g:'6',col:'#9E9D24',bg:'rgba(158,157,36,0.1)'};
+    if (pct >= 50) return {g:'5',col:'#F57F17',bg:'rgba(245,127,23,0.1)'};
+    if (pct >= 40) return {g:'4',col:'#E65100',bg:'rgba(230,81,0,0.1)'};
+    if (pct >= 30) return {g:'3',col:'#BF360C',bg:'rgba(191,54,12,0.1)'};
+    return {g:'U', col:'#B71C1C',bg:'rgba(183,28,28,0.1)'};
+  }
+}
+
+function getBarCol(pct) {
+  if (pct >= 70) return 'var(--gm)';
+  if (pct >= 50) return '#f57c00';
+  return '#e53935';
+}
+
+// ── FILTER & RENDER ───────────────────────────────────────────────
+function setFilter(btn) {
+  filterMode = btn.dataset.f;
+  document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('act'));
+  btn.classList.add('act');
+  renderPapers();
+}
+
+function renderPapers() {
+  const q = document.getElementById('search').value.toLowerCase();
+  let list = [...papers];
+
+  if (q) list = list.filter(p =>
+    p.subject.toLowerCase().includes(q) ||
+    p.board.toLowerCase().includes(q) ||
+    String(p.year).includes(q)
+  );
+
+  if (filterMode === 'recent') list = list.sort((a,b)=>b.created-a.created).slice(0,6);
+  if (filterMode === 'weak')   list = list.filter(p => (p.score/p.total*100) < 60);
+  if (filterMode === 'strong') list = list.filter(p => (p.score/p.total*100) >= 70);
+
+  const el = document.getElementById('paper-grid');
+  if (!list.length) {
+    el.innerHTML = `<div class="empty">
+      <div class="empty-ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <div style="font-size:15px;font-weight:800;color:var(--muted);margin-bottom:4px">No papers here</div>
+      <div style="font-size:13px">Log your first past paper to get started.</div>
+    </div>`; return;
+  }
+
+  el.innerHTML = list.map(p => buildCard(p)).join('');
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.pc-bar').forEach(b => b.style.width = b.dataset.w);
+  }, 80);
+}
+
+function buildCard(p) {
+  const pct = Math.round((p.score / p.total) * 100);
+  const grade = getGrade(pct, p.level);
+  const col = SUBJ_COLS[p.subject] || '#455A64';
+  const barCol = getBarCol(pct);
+  const isExp = expanded === p.id;
+
+  const weakAreas = getWeakAreas(p);
+  const strongAreas = getStrongAreas(p);
+
+  return `<div class="paper-card ${isExp?'expanded':''}" id="card-${p.id}">
+    <div class="pc-header" onclick="${isExp?'collapseCard()':'expandCard('+p.id+')'}">
+      <div class="pc-accent" style="background:${col}">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div class="pc-info">
+        <div class="pc-subject">${p.subject}</div>
+        <div class="pc-meta">${p.board} · ${p.year} · ${p.paper} · ${p.level}</div>
+        <div class="pc-score-row">
+          <div class="pc-score">${p.score}/${p.total}</div>
+          <div class="pc-grade" style="color:${grade.col};background:${grade.bg}">${grade.g}</div>
+          <div class="pc-bar-wrap"><div class="pc-bar" data-w="${pct}%" style="width:0%;background:${barCol}"></div></div>
+          <div class="pc-pct">${pct}%</div>
+        </div>
+      </div>
+      <div class="pc-expand-btn" onclick="event.stopPropagation();${isExp?'collapseCard()':'expandCard('+p.id+')'}">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+
+    <div class="pc-detail">
+      <div class="detail-grid">
+
+        <!-- QUESTIONS -->
+        <div class="detail-col" style="grid-column:1/3">
+          <div class="detail-title">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Question breakdown
+          </div>
+          ${p.questions && p.questions.length ? `
+          <table class="q-table">
+            <thead><tr><th>Q</th><th>Type</th><th>Topic</th><th>Marks</th><th>Scored</th><th>Notes</th></tr></thead>
+            <tbody>
+              ${p.questions.map((q,i) => {
+                const qpct = q.max > 0 ? q.got/q.max : 0;
+                const cls = qpct >= 0.8 ? 'full' : qpct >= 0.4 ? 'partial' : 'zero';
+                const dotCol = qpct >= 0.8 ? 'var(--gm)' : qpct >= 0.4 ? '#f57c00' : '#e53935';
+                return `<tr>
+                  <td style="font-weight:800;color:var(--muted)">${i+1}</td>
+                  <td>${q.type||'—'}</td>
+                  <td style="font-weight:700">${q.topic||'—'}</td>
+                  <td><span style="font-size:11px;color:var(--muted)">${q.max} marks</span></td>
+                  <td><span class="q-mark ${cls}"><div class="q-dot" style="background:${dotCol}"></div>${q.got}/${q.max}</span></td>
+                  <td style="color:var(--muted);font-size:11px">${q.note||''}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>` : '<div style="font-size:12px;color:var(--light);padding:8px 0">No questions logged yet. Add them below.</div>'}
+
+          <!-- ADD QUESTION -->
+          <div class="add-q-row">
+            <input type="text" class="qi" id="qq-type-${p.id}" placeholder="Type (e.g. 6-mark)" style="flex:1;min-width:100px"/>
+            <input type="text" class="qi" id="qq-topic-${p.id}" placeholder="Topic" style="flex:1.5;min-width:120px"/>
+            <input type="number" class="qi" id="qq-max-${p.id}" placeholder="Max" style="width:60px" min="0"/>
+            <input type="number" class="qi" id="qq-got-${p.id}" placeholder="Got" style="width:60px" min="0"/>
+            <input type="text" class="qi" id="qq-note-${p.id}" placeholder="Note (optional)" style="flex:1.5;min-width:100px"/>
+            <button class="qadd" onclick="addQuestion(${p.id})">Add</button>
+          </div>
+        </div>
+
+        <!-- WEAK AREAS -->
+        <div class="detail-col">
+          <div class="detail-title">
+            <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            Weak areas
+          </div>
+          <div class="area-list">
+            ${weakAreas.length ? weakAreas.map(a => `
+              <div class="area-item">
+                <div class="area-icon" style="background:#e53935"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+                <div class="area-body"><div class="area-name">${a.topic}</div><div class="area-sub">${a.got}/${a.max} marks</div></div>
+                <div class="area-pct" style="color:#e53935">${Math.round(a.got/a.max*100)}%</div>
+              </div>`).join('')
+            : '<div style="font-size:12px;color:var(--light)">Log questions to see weak areas.</div>'}
+          </div>
+        </div>
+
+        <!-- STRONG AREAS -->
+        <div class="detail-col">
+          <div class="detail-title">
+            <svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            Strong areas
+          </div>
+          <div class="area-list">
+            ${strongAreas.length ? strongAreas.map(a => `
+              <div class="area-item">
+                <div class="area-icon" style="background:var(--gm)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <div class="area-body"><div class="area-name">${a.topic}</div><div class="area-sub">${a.got}/${a.max} marks</div></div>
+                <div class="area-pct" style="color:var(--gm)">${Math.round(a.got/a.max*100)}%</div>
+              </div>`).join('')
+            : '<div style="font-size:12px;color:var(--light)">Log questions to see strong areas.</div>'}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- NOTES -->
+      ${p.notes ? `<div style="margin-bottom:8px"><span class="section-lbl">Paper notes</span>
+        <div style="font-size:13px;color:var(--muted);line-height:1.65;background:var(--off);border-radius:9px;padding:10px 13px">${p.notes}</div>
+      </div>` : ''}
+
+      <!-- ACTIONS -->
+      <div class="detail-actions">
+        <button class="dact-btn" onclick="editNotes(${p.id})">Edit notes</button>
+        <button class="dact-btn danger" onclick="deletePaper(${p.id})">Delete paper</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function getWeakAreas(p) {
+  if (!p.questions || !p.questions.length) return [];
+  return p.questions
+    .filter(q => q.topic && q.max > 0 && (q.got/q.max) < 0.6)
+    .sort((a,b) => (a.got/a.max)-(b.got/b.max))
+    .slice(0,3);
+}
+
+function getStrongAreas(p) {
+  if (!p.questions || !p.questions.length) return [];
+  return p.questions
+    .filter(q => q.topic && q.max > 0 && (q.got/q.max) >= 0.8)
+    .sort((a,b) => (b.got/b.max)-(a.got/a.max))
+    .slice(0,3);
+}
+
+// ── EXPAND / COLLAPSE ─────────────────────────────────────────────
+function expandCard(id) {
+  expanded = id;
+  renderPapers();
+  setTimeout(() => {
+    const el = document.getElementById('card-'+id);
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  }, 100);
+}
+
+function collapseCard() {
+  expanded = null;
+  renderPapers();
+}
+
+// ── ADD QUESTION ──────────────────────────────────────────────────
+function addQuestion(paperId) {
+  const p = papers.find(x => x.id === paperId);
+  if (!p) return;
+  const type  = document.getElementById(`qq-type-${paperId}`).value.trim();
+  const topic = document.getElementById(`qq-topic-${paperId}`).value.trim();
+  const max   = parseInt(document.getElementById(`qq-max-${paperId}`).value) || 0;
+  const got   = parseInt(document.getElementById(`qq-got-${paperId}`).value) || 0;
+  const note  = document.getElementById(`qq-note-${paperId}`).value.trim();
+  if (!topic || max === 0) { showToast('Please fill in topic and max marks!'); return; }
+  if (!p.questions) p.questions = [];
+  p.questions.push({ type, topic, max, got, note });
+  // Recalculate score if all marks logged
+  savePapers();
+  expanded = paperId;
+  renderPapers();
+  updateStats();
+  showToast('Question added!');
+  setTimeout(()=>{document.querySelectorAll('.pc-bar').forEach(b=>b.style.width=b.dataset.w);},80);
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────
+function openModal() {
+  // Populate subjects
+  const subjects = (() => { try { return JSON.parse(localStorage.getItem('ex_subjects')||'[]'); } catch(e){return[];} })();
+  const fallback = ['Biology','Chemistry','Physics','Maths','History','English Literature','English Language','Geography','Computer Science','Psychology','Economics'];
+  const all = subjects.length ? subjects : fallback;
+  document.getElementById('m-subj').innerHTML = all.map(s=>`<option>${s}</option>`).join('');
+
+  // Populate years
+  const yr = document.getElementById('m-year');
+  yr.innerHTML = '';
+  for (let y = 2025; y >= 2015; y--) yr.innerHTML += `<option>${y}</option>`;
+
+  document.getElementById('modal').style.display = 'block';
+}
+
+function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+function savePaper() {
+  const score = parseInt(document.getElementById('m-score').value);
+  const total = parseInt(document.getElementById('m-total').value);
+  if (!score && score !== 0) { showToast('Please enter your score!'); return; }
+  if (!total) { showToast('Please enter the total marks!'); return; }
+  if (score > total) { showToast('Score cannot exceed total marks!'); return; }
+  papers.unshift({
+    id: Date.now(),
+    subject: document.getElementById('m-subj').value,
+    board:   document.getElementById('m-board').value,
+    year:    parseInt(document.getElementById('m-year').value),
+    paper:   document.getElementById('m-paper').value,
+    level:   document.getElementById('m-level').value,
+    score, total,
+    notes:   document.getElementById('m-notes').value.trim(),
+    questions: [],
+    created: Date.now(),
+  });
+  savePapers();
+  closeModal();
+  renderPapers();
+  updateStats();
+  showToast('Paper logged!');
+  setTimeout(()=>{document.querySelectorAll('.pc-bar').forEach(b=>b.style.width=b.dataset.w);},80);
+}
+
+function deletePaper(id) {
+  papers = papers.filter(p => p.id !== id);
+  if (expanded === id) expanded = null;
+  savePapers();
+  renderPapers();
+  updateStats();
+  showToast('Paper deleted');
+}
+
+function editNotes(id) {
+  const p = papers.find(x => x.id === id);
+  if (!p) return;
+  const note = prompt('Edit notes:', p.notes || '');
+  if (note === null) return;
+  p.notes = note;
+  savePapers();
+  expanded = id;
+  renderPapers();
+  showToast('Notes saved');
+}
+
+function savePapers() { localStorage.setItem('ex_papers', JSON.stringify(papers)); savePapersToCloud(); }
+
+// ── STATS ─────────────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('st-papers').textContent = papers.length;
+  if (!papers.length) return;
+  const pcts = papers.map(p => Math.round(p.score/p.total*100));
+  const avg = Math.round(pcts.reduce((a,b)=>a+b,0)/pcts.length);
+  const best = Math.max(...pcts);
+  document.getElementById('st-avg').textContent = avg + '%';
+  document.getElementById('st-best').textContent = best + '%';
+
+  // Find weakest topic across all papers
+  const topicScores = {};
+  papers.forEach(p => {
+    (p.questions||[]).forEach(q => {
+      if (!q.topic || q.max === 0) return;
+      if (!topicScores[q.topic]) topicScores[q.topic] = { got:0, max:0 };
+      topicScores[q.topic].got += q.got;
+      topicScores[q.topic].max += q.max;
+    });
+  });
+  const topics = Object.entries(topicScores).map(([k,v])=>({k,pct:v.got/v.max})).sort((a,b)=>a.pct-b.pct);
+  document.getElementById('st-weak').textContent = topics.length ? topics[0].k.split(' ').slice(0,2).join(' ') : '—';
+  renderChart();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+renderPapers();
+updateStats();
+
+// ── SCORE PROGRESSION CHART ────────────────────────────────────────
+function renderChart() {
+  if (!papers.length) { document.getElementById('chart-card').style.display='none'; return; }
+  document.getElementById('chart-card').style.display='block';
+
+  const selSubj = document.getElementById('chart-subj').value;
+
+  // Update subject dropdown
+  const subjects = [...new Set(papers.map(p=>p.subject))].sort();
+  const sel = document.getElementById('chart-subj');
+  sel.innerHTML = '<option value="all">All subjects</option>' + subjects.map(s=>`<option value="${s}">${s}</option>`).join('');
+  sel.value = selSubj; // restore selection
+
+  // Filter papers
+  const filtered = selSubj==='all' ? [...papers] : papers.filter(p=>p.subject===selSubj);
+  if (!filtered.length) return;
+
+  // Sort by date
+  filtered.sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+  const canvas = document.getElementById('score-chart');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth || 600;
+  const H = 120;
+  canvas.width = W * window.devicePixelRatio;
+  canvas.height = H * window.devicePixelRatio;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  ctx.clearRect(0,0,W,H);
+
+  // Grid lines
+  const pad = {l:36,r:16,t:10,b:24};
+  const cW = W - pad.l - pad.r;
+  const cH = H - pad.t - pad.b;
+
+  // Y axis labels + grid
+  [0,25,50,75,100].forEach(pct => {
+    const y = pad.t + cH - (pct/100)*cH;
+    ctx.strokeStyle = 'rgba(0,0,0,0.05)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W-pad.r, y); ctx.stroke();
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.font = '600 9px Manrope, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(pct+'%', pad.l-5, y+3);
+  });
+
+  // Color per subject
+  const subjectColors = {};
+  const colors = ['#00E676','#6366f1','#f97316','#e11d48','#eab308','#06b6d4','#8b5cf6'];
+  subjects.forEach((s,i) => subjectColors[s] = colors[i%colors.length]);
+
+  // Group by subject if showing all
+  const groups = selSubj === 'all'
+    ? subjects.reduce((acc, s) => { acc[s] = filtered.filter(p=>p.subject===s); return acc; }, {})
+    : {[selSubj]: filtered};
+
+  // Plot each subject line
+  Object.entries(groups).forEach(([subj, pts]) => {
+    if (!pts.length) return;
+    const color = subjectColors[subj] || '#00E676';
+    const data = pts.map(p => ({
+      x: pad.l + (pts.indexOf(p)/(Math.max(pts.length-1,1)))*cW,
+      y: pad.t + cH - (p.score/p.total)*cH,
+      pct: Math.round(p.score/p.total*100),
+      label: p.subject + ' ' + new Date(p.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'})
+    }));
+
+    // Gradient fill
+    const grad = ctx.createLinearGradient(0, pad.t, 0, H-pad.b);
+    grad.addColorStop(0, color+'33');
+    grad.addColorStop(1, color+'00');
+    ctx.beginPath();
+    ctx.moveTo(data[0].x, H-pad.b);
+    data.forEach(d => ctx.lineTo(d.x, d.y));
+    ctx.lineTo(data[data.length-1].x, H-pad.b);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Line
+    ctx.beginPath();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    data.forEach((d,i) => i===0 ? ctx.moveTo(d.x,d.y) : ctx.lineTo(d.x,d.y));
+    ctx.stroke();
+
+    // Dots + score labels
+    data.forEach(d => {
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 4, 0, Math.PI*2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.font = '700 9px Manrope, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(d.pct+'%', d.x, d.y-8);
+    });
+  });
+
+  // X axis dates
+  const allPts = selSubj==='all' ? filtered : filtered;
+  if (allPts.length > 1) {
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.font = '600 8px Manrope, sans-serif';
+    ctx.textAlign = 'center';
+    [allPts[0], allPts[allPts.length-1]].forEach((p,i) => {
+      const x = i===0 ? pad.l : W-pad.r;
+      ctx.fillText(new Date(p.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'}), x, H-6);
+    });
+  }
+
+  // Legend
+  const legend = document.getElementById('chart-legend');
+  legend.innerHTML = Object.keys(groups).map(s =>
+    `<div style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--muted)">
+      <div style="width:12px;height:3px;border-radius:2px;background:${subjectColors[s]||'#00E676'}"></div>
+      ${s}
+    </div>`
+  ).join('');
+}
+
+</script>
+</body>
+</html>

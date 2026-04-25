@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EX — Supercurricular</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBhMGEwYSIvPgogIDx0ZXh0IHg9IjUiIHk9IjIzIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiMwMEU2NzYiPkVYPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--g:#00E676;--gd:#00a855;--b:#0a0a0a;--w:#f8f8f6;--m:#6b7280;--border:rgba(0,0,0,0.08);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100%;overflow-x:hidden;}
+body{font-family:'Manrope',sans-serif;background:var(--w);color:var(--b);opacity:0;animation:bIn .4s ease .05s forwards;}
+@keyframes bIn{to{opacity:1}}
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,0,0,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.022) 1px,transparent 1px);
+  background-size:52px 52px;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;height:52px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 32px;
+  background:rgba(248,248,246,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-size:17px;font-weight:900;letter-spacing:-1px;color:var(--b);text-decoration:none;}
+.nav-logo .dot{color:var(--g);}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.nav-back{font-size:12px;font-weight:700;color:var(--m);text-decoration:none;padding:6px 14px;
+  border-radius:100px;border:1px solid var(--border);background:rgba(255,255,255,0.7);transition:all .2s;}
+.nav-back:hover{background:var(--b);color:#fff;border-color:var(--b);}
+.nav-log-btn{padding:7px 16px;background:var(--b);color:#fff;border:none;border-radius:100px;
+  font-family:'Manrope',sans-serif;font-size:12px;font-weight:800;cursor:pointer;
+  display:flex;align-items:center;gap:6px;transition:all .2s;}
+.nav-log-btn:hover{background:var(--gd);box-shadow:0 4px 14px rgba(0,180,80,.2);}
+.nav-log-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;}
+
+/* PAGE */
+.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:28px 28px 80px;}
+.page-head{margin-bottom:24px;}
+.page-title{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-1.5px;}
+.page-title em{font-style:normal;color:var(--g);}
+.page-sub{font-size:13px;color:var(--m);margin-top:5px;line-height:1.6;}
+
+/* STAT STRIP */
+.stat-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px 20px;}
+.stat-n{font-size:28px;font-weight:900;letter-spacing:-1.5px;}
+.stat-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--m);margin-top:3px;}
+.stat-card.g{background:linear-gradient(145deg,#f0faf4,#e4f5ea);border-color:rgba(22,163,74,.15);}
+.stat-card.v{background:linear-gradient(145deg,#f8f0ff,#ede9fe);border-color:rgba(124,58,237,.15);}
+.stat-card.a{background:linear-gradient(145deg,#fffbf0,#fef3c7);border-color:rgba(217,119,6,.15);}
+.stat-card.r{background:linear-gradient(145deg,#fff5f5,#fee2e2);border-color:rgba(225,29,72,.15);}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start;}
+
+/* CARD */
+.card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:22px 24px;margin-bottom:14px;}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.card-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--m);}
+.card-action{padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:none;
+  font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;color:var(--m);
+  cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;}
+.card-action:hover{background:var(--b);color:#fff;border-color:var(--b);}
+.card-action svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+/* TABS */
+.tab-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px;}
+.tbtn{padding:6px 14px;border-radius:100px;border:1px solid var(--border);background:#fff;
+  font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;color:var(--m);
+  cursor:pointer;transition:all .2s;}
+.tbtn:hover{color:var(--b);border-color:rgba(0,0,0,.18);}
+.tbtn.act{background:var(--b);color:#fff;border-color:var(--b);}
+
+/* FILTER */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.sinp{flex:1;min-width:180px;padding:8px 14px;border:1px solid var(--border);border-radius:10px;
+  background:#fafaf8;font-family:'Manrope',sans-serif;font-size:13px;font-weight:500;
+  outline:none;color:var(--b);transition:border-color .2s,box-shadow .2s;}
+.sinp:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(0,230,118,.1);background:#fff;}
+.sinp::placeholder{color:rgba(0,0,0,.2);}
+.fchip{padding:5px 12px;border-radius:100px;border:1px solid var(--border);background:#fff;
+  font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;color:var(--m);
+  cursor:pointer;transition:all .2s;}
+.fchip:hover{color:var(--b);}
+.fchip.act{background:var(--b);color:#fff;border-color:var(--b);}
+
+/* RESOURCE CARDS */
+.res-list{display:flex;flex-direction:column;gap:8px;}
+.res-card{background:#fafaf8;border:1px solid var(--border);border-radius:14px;padding:14px 16px;
+  display:flex;align-items:flex-start;gap:14px;transition:all .22s;text-decoration:none;color:var(--b);}
+.res-card:hover{border-color:rgba(0,0,0,.14);background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.07);transform:translateX(3px);}
+.res-ic{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.res-ic svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.res-body{flex:1;min-width:0;}
+.res-title{font-size:13px;font-weight:800;color:var(--b);margin-bottom:2px;}
+.res-org{font-size:11px;color:var(--m);margin-bottom:6px;}
+.res-tags{display:flex;flex-wrap:wrap;gap:4px;}
+.res-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;background:var(--w);color:var(--m);border:1px solid var(--border);}
+.res-arr{color:var(--m);flex-shrink:0;margin-top:2px;}
+.res-arr svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+
+/* ACTIVITY CARDS */
+.act-list{display:flex;flex-direction:column;gap:10px;}
+.act-card{background:#fafaf8;border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;gap:14px;transition:all .2s;}
+.act-card:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.06);}
+.act-icon{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.act-icon svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.act-body{flex:1;min-width:0;}
+.act-name{font-size:14px;font-weight:800;color:var(--b);margin-bottom:3px;}
+.act-meta{font-size:11px;color:var(--m);margin-bottom:8px;}
+.act-ref{font-size:12px;color:var(--m);line-height:1.55;margin-bottom:8px;padding:8px 10px;background:var(--w);border-radius:8px;border-left:2px solid var(--border);}
+.act-skills{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.act-skill{font-size:10px;font-weight:700;padding:3px 9px;border-radius:100px;}
+.act-foot{display:flex;align-items:center;gap:8px;}
+.act-link{font-size:11px;font-weight:700;color:var(--gd);text-decoration:none;display:flex;align-items:center;gap:3px;}
+.act-link svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;}
+.act-del{margin-left:auto;font-size:11px;font-weight:700;color:rgba(0,0,0,.25);background:none;border:none;cursor:pointer;padding:3px 8px;border-radius:6px;transition:all .2s;font-family:'Manrope',sans-serif;}
+.act-del:hover{background:rgba(225,29,72,.08);color:#e11d48;}
+.act-empty{text-align:center;padding:32px 20px;color:var(--m);}
+.act-empty-icon{width:44px;height:44px;border-radius:12px;background:var(--w);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.act-empty-icon svg{width:20px;height:20px;stroke:var(--m);fill:none;stroke-width:1.8;stroke-linecap:round;}
+.act-empty-title{font-size:14px;font-weight:800;margin-bottom:4px;}
+.act-empty-sub{font-size:12px;line-height:1.6;}
+
+/* SIDE */
+.ucas-card{background:var(--b);border-radius:20px;padding:22px 24px;margin-bottom:14px;}
+.ucas-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:16px;}
+.ucas-ring-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.ucas-pct{font-size:36px;font-weight:900;letter-spacing:-2px;color:#fff;}
+.ucas-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px;}
+.ucas-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);}
+.ustat{text-align:center;}
+.ustat-n{font-size:20px;font-weight:900;color:#fff;letter-spacing:-.5px;}
+.ustat-l{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.3);margin-top:2px;}
+
+/* SKILLS */
+.srow{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);}
+.srow:last-child{border-bottom:none;}
+.srow-name{font-size:12px;font-weight:700;flex:1;color:var(--b);}
+.srow-track{flex:1;height:5px;background:var(--w);border-radius:100px;overflow:hidden;}
+.srow-fill{height:100%;background:linear-gradient(90deg,var(--g),var(--gd));border-radius:100px;transition:width .8s cubic-bezier(.16,1,.3,1);}
+.srow-ct{font-size:11px;font-weight:700;color:var(--m);width:16px;text-align:right;}
+
+/* DEADLINES */
+.dl-card{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;
+  border:1px solid var(--border);background:#fafaf8;margin-bottom:7px;transition:all .2s;}
+.dl-card:hover{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.dl-ic{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dl-ic svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.dl-body{flex:1;min-width:0;}
+.dl-title{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dl-date{font-size:10px;color:var(--m);margin-top:1px;}
+.dl-pill{font-size:10px;font-weight:800;padding:4px 10px;border-radius:100px;white-space:nowrap;}
+.dl-pill.urgent{background:rgba(225,29,72,.1);color:#e11d48;}
+.dl-pill.soon{background:rgba(217,119,6,.1);color:#d97706;}
+.dl-pill.ok{background:rgba(0,230,118,.1);color:var(--gd);}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.45);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:#fff;border-radius:20px;width:100%;max-width:460px;
+  box-shadow:0 24px 64px rgba(0,0,0,.18);overflow:hidden;
+  transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.16,1,.3,1);}
+.modal-overlay.open .modal{transform:none;}
+.mbar{height:3px;background:linear-gradient(90deg,var(--g),var(--gd));}
+.modal-head{padding:20px 24px 16px;border-bottom:1px solid var(--border);}
+.modal-title{font-size:17px;font-weight:900;letter-spacing:-.3px;}
+.modal-sub{font-size:12px;color:var(--m);margin-top:3px;}
+.modal-body{padding:18px 24px 22px;display:flex;flex-direction:column;gap:11px;max-height:70vh;overflow-y:auto;}
+.mf label{display:block;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.3);margin-bottom:5px;}
+.mf input,.mf select,.mf textarea{width:100%;padding:10px 13px;border:1px solid var(--border);border-radius:10px;background:#fafaf8;color:var(--b);font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;outline:none;transition:border-color .2s,box-shadow .2s;}
+.mf input:focus,.mf select:focus,.mf textarea:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(0,230,118,.1);background:#fff;}
+.mf input::placeholder,.mf textarea::placeholder{color:rgba(0,0,0,.18);}
+.mf textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.mfoot{display:flex;gap:8px;}
+.mcanc{flex:1;padding:12px;border:1px solid var(--border);border-radius:10px;background:none;
+  font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;color:var(--m);cursor:pointer;transition:all .2s;}
+.mcanc:hover{background:rgba(0,0,0,.04);}
+.msave{flex:2;padding:12px;background:var(--b);color:#fff;border:none;border-radius:10px;
+  font-family:'Manrope',sans-serif;font-size:13px;font-weight:800;cursor:pointer;
+  position:relative;overflow:hidden;transition:all .3s;}
+.msave::after{content:'';position:absolute;inset:0;background:var(--g);transform:translateY(101%);transition:transform .4s cubic-bezier(.16,1,.3,1);}
+.msave:hover::after{transform:translateY(0);}
+.msave span{position:relative;z-index:1;transition:color .35s;}
+.msave:hover span{color:var(--b);}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--b);color:#fff;padding:10px 20px;border-radius:100px;
+  font-size:12px;font-weight:700;opacity:0;transition:all .3s;z-index:999;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:860px){
+  nav{padding:0 16px;}
+  .page{padding:20px 16px 80px;}
+  .layout{grid-template-columns:1fr;}
+  .stat-strip{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:480px){.stat-strip{grid-template-columns:1fr 1fr;}.mrow{grid-template-columns:1fr;}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+
+const _sbSC = supabase.createClient('https://ucfavwmylklrnchfsttx.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjZmF2d215bGtscm5jaGZzdHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxOTk5NTIsImV4cCI6MjA4OTc3NTk1Mn0.3Ig9UUfe29LQpUiHImgIaf4qUCcLQSLUBuYvBsPUedI');
+let _scUserId = null;
+
+async function initSCSync() {
+  const {data:{session}} = await _sbSC.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+  _scUserId = session.user.id;
+  await loadSCFromCloud();
+}
+
+async function saveSCToCloud() {
+  if (!_scUserId) return;
+  try {
+    await _sbSC.from('user_data').upsert({
+      id: _scUserId,
+      supercurricular: JSON.stringify({acts, dls}),
+      updated_at: new Date().toISOString()
+    }, {onConflict:'id'});
+  } catch(e) { console.log('SC cloud save failed:', e); }
+}
+
+async function loadSCFromCloud() {
+  if (!_scUserId) return;
+  try {
+    const {data} = await _sbSC.from('user_data').select('supercurricular').eq('id', _scUserId).maybeSingle();
+    if (data?.supercurricular) {
+      const d = JSON.parse(data.supercurricular);
+      if (d.acts?.length) acts = d.acts;
+      if (d.dls?.length) dls = d.dls;
+      localStorage.setItem('ex_sc_acts', JSON.stringify(acts));
+      localStorage.setItem('ex_sc_dls', JSON.stringify(dls));
+    }
+  } catch(e) { console.log('SC cloud load failed:', e); }
+  renderActs(); renderDls(); renderSkills(); updateStats(); updateUCAS();
+}
+
+initSCSync();
+</script>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+<div class="grid-bg"></div>
+
+<nav>
+  <a href="dashboard.html" class="nav-logo">EX<span class="dot">.</span></a>
+  <div class="nav-right">
+    <a href="dashboard.html" class="nav-back">← Dashboard</a>
+    <button class="nav-log-btn" onclick="openAM()">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Log activity
+    </button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-head">
+    <div class="page-title">Beyond the classroom<em>.</em></div>
+    <div class="page-sub">Track supercurriculars, discover opportunities from LSE, UCL, Oxford and more, and build a UCAS profile that stands out.</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stat-strip">
+    <div class="stat-card g"><div class="stat-n" id="st-a">0</div><div class="stat-l">Activities</div></div>
+    <div class="stat-card v"><div class="stat-n" id="st-h">0h</div><div class="stat-l">Total hours</div></div>
+    <div class="stat-card a"><div class="stat-n" id="st-sk">0</div><div class="stat-l">Skills</div></div>
+    <div class="stat-card r"><div class="stat-n" id="st-dl">—</div><div class="stat-l">Next deadline</div></div>
+  </div>
+
+  <div class="layout">
+    <div class="main-col">
+
+      <!-- DISCOVER -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Discover opportunities</div>
+        </div>
+        <div class="tab-row">
+          <button class="tbtn act" onclick="setTab('lectures',this)">Lectures</button>
+          <button class="tbtn" onclick="setTab('events',this)">Events</button>
+          <button class="tbtn" onclick="setTab('courses',this)">Courses</button>
+          <button class="tbtn" onclick="setTab('competitions',this)">Competitions</button>
+          <button class="tbtn" onclick="setTab('programmes',this)">Programmes</button>
+        </div>
+        <div class="filter-row">
+          <input class="sinp" type="text" id="disc-q" placeholder="Search by title, org or subject..." oninput="renderDisc()"/>
+          <button class="fchip act" data-s="all" onclick="setSF(this)">All</button>
+          <button class="fchip" data-s="science" onclick="setSF(this)">Sciences</button>
+          <button class="fchip" data-s="humanities" onclick="setSF(this)">Humanities</button>
+          <button class="fchip" data-s="social" onclick="setSF(this)">Social</button>
+          <button class="fchip" data-s="maths" onclick="setSF(this)">Maths & CS</button>
+          <button class="fchip" data-s="arts" onclick="setSF(this)">Arts & Law</button>
+        </div>
+        <div class="res-list" id="res-list"></div>
+      </div>
+
+      <!-- MY ACTIVITIES -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">My activities</div>
+          <button class="card-action" onclick="openAM()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Log activity
+          </button>
+        </div>
+        <div class="act-list" id="act-list"></div>
+      </div>
+
+    </div>
+
+    <div class="side-col">
+
+      <!-- UCAS STRENGTH -->
+      <div class="ucas-card">
+        <div class="ucas-label">UCAS profile strength</div>
+        <div class="ucas-ring-row">
+          <svg width="70" height="70" viewBox="0 0 70 70">
+            <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+            <circle id="ur" cx="35" cy="35" r="28" fill="none" stroke="var(--g)" stroke-width="6"
+              stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="175.9"
+              transform="rotate(-90 35 35)" style="transition:stroke-dashoffset 1s cubic-bezier(.16,1,.3,1)"/>
+          </svg>
+          <div>
+            <div class="ucas-pct" id="upct">0%</div>
+            <div class="ucas-sub">Profile strength</div>
+          </div>
+        </div>
+        <div class="ucas-stats">
+          <div class="ustat"><div class="ustat-n" id="ua">0</div><div class="ustat-l">Activities</div></div>
+          <div class="ustat"><div class="ustat-n" id="uh">0h</div><div class="ustat-l">Hours</div></div>
+          <div class="ustat"><div class="ustat-n" id="uc">0</div><div class="ustat-l">Categories</div></div>
+        </div>
+      </div>
+
+      <!-- SKILLS -->
+      <div class="card">
+        <div class="card-head" style="margin-bottom:14px">
+          <div class="card-title">Skills profile</div>
+        </div>
+        <div id="skill-rows">
+          <div style="font-size:12px;color:var(--m);text-align:center;padding:16px 0">Log activities to build your skills profile.</div>
+        </div>
+      </div>
+
+      <!-- DEADLINES -->
+      <div class="card">
+        <div class="card-head" style="margin-bottom:14px">
+          <div class="card-title">Key deadlines</div>
+          <button class="card-action" onclick="openDM()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add
+          </button>
+        </div>
+        <div id="dl-list"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITY MODAL -->
+<div class="modal-overlay" id="am" onclick="if(event.target===this)closeAM()">
+  <div class="modal">
+    <div class="mbar"></div>
+    <div class="modal-head">
+      <div class="modal-title">Log an activity</div>
+      <div class="modal-sub">Clubs, work experience, volunteering, competitions, courses — everything counts.</div>
+    </div>
+    <div class="modal-body">
+      <div class="mf">
+        <label>Activity name</label>
+        <input type="text" id="an" placeholder="e.g. Duke of Edinburgh, Model UN, NHS Volunteering..."/>
+      </div>
+      <div class="mrow">
+        <div class="mf">
+          <label>Category</label>
+          <select id="ac">
+            <option value="academic">Academic enrichment</option>
+            <option value="leadership">Leadership</option>
+            <option value="community">Community & volunteering</option>
+            <option value="creative">Creative & arts</option>
+            <option value="sport">Sport & physical</option>
+            <option value="work">Work experience</option>
+            <option value="competition">Competition</option>
+            <option value="course">Course / lecture</option>
+          </select>
+        </div>
+        <div class="mf">
+          <label>Hours spent</label>
+          <input type="number" id="ah" placeholder="e.g. 12" min="0"/>
+        </div>
+      </div>
+      <div class="mrow">
+        <div class="mf"><label>Start date</label><input type="date" id="as"/></div>
+        <div class="mf"><label>End date</label><input type="date" id="ae"/></div>
+      </div>
+      <div class="mf">
+        <label>What you did and learned</label>
+        <textarea id="ar" placeholder="Be specific — what skills did you develop? What impact did you have?"></textarea>
+      </div>
+      <div class="mf">
+        <label>Link (optional)</label>
+        <input type="url" id="al" placeholder="https://..."/>
+      </div>
+      <div class="mfoot">
+        <button class="mcanc" onclick="closeAM()">Cancel</button>
+        <button class="msave" onclick="saveAct()"><span>Save activity</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DEADLINE MODAL -->
+<div class="modal-overlay" id="dm" onclick="if(event.target===this)closeDM()">
+  <div class="modal">
+    <div class="mbar"></div>
+    <div class="modal-head">
+      <div class="modal-title">Add a deadline</div>
+      <div class="modal-sub">UCAS, Oxbridge, medicine, scholarships, summer schools.</div>
+    </div>
+    <div class="modal-body">
+      <div class="mf">
+        <label>Deadline name</label>
+        <input type="text" id="dn" placeholder="e.g. UCAS main deadline, Oxford HAT..."/>
+      </div>
+      <div class="mrow">
+        <div class="mf"><label>Date</label><input type="date" id="dd"/></div>
+        <div class="mf">
+          <label>Type</label>
+          <select id="dt">
+            <option value="ucas">UCAS</option>
+            <option value="oxbridge">Oxbridge</option>
+            <option value="medicine">Medicine</option>
+            <option value="scholarship">Scholarship</option>
+            <option value="summer">Summer school</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="mfoot">
+        <button class="mcanc" onclick="closeDM()">Cancel</button>
+        <button class="msave" onclick="saveDl()"><span>Add deadline</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let acts=JSON.parse(localStorage.getItem('ex_sc_acts')||'[]');
+let dls=JSON.parse(localStorage.getItem('ex_sc_dls')||'[]');
+let discTab='lectures',sf='all';
+
+const IC={
+  lectures:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  events:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+  courses:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+  competitions:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>',
+  programmes:'<svg viewBox="0 0 24 24" width="16" height="16" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
+  academic:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+  leadership:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  community:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+  creative:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  sport:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l4.24 4.24"/><path d="M14.83 9.17l4.24-4.24"/><path d="M14.83 14.83l4.24 4.24"/><path d="M9.17 14.83l-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>',
+  work:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+  competition:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>',
+  course:'<svg viewBox="0 0 24 24" width="15" height="15" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  ucas:'<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+  oxbridge:'<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>',
+  medicine:'<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+  scholarship:'<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  summer:'<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>',
+  other:'<svg viewBox="0 0 24 24" width="14" height="14" stroke="#fff" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  arr:'<svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>',
+};
+
+const CAT_COL={academic:'#1976D2',leadership:'#7B1FA2',community:'#388E3C',creative:'#E91E63',sport:'#F57C00',work:'#0097A7',competition:'#FBC02D',course:'#558B2F'};
+const CAT_BG={academic:'#E3F2FD',leadership:'#F3E5F5',community:'#E8F5E9',creative:'#FCE4EC',sport:'#FFF3E0',work:'#E0F7FA',competition:'#FFF9C4',course:'#F1F8E9'};
+const CAT_SK={academic:['Critical thinking','Research skills','Subject knowledge','Independent learning'],leadership:['Leadership','Communication','Decision-making','Team management'],community:['Empathy','Initiative','Communication','Social responsibility'],creative:['Creativity','Attention to detail','Resilience','Expression'],sport:['Teamwork','Resilience','Discipline','Leadership'],work:['Professionalism','Communication','Time management','Problem-solving'],competition:['Analytical thinking','Resilience','Problem-solving','Critical thinking'],course:['Independent learning','Subject knowledge','Curiosity','Research skills']};
+const DL_COL={ucas:'#1565C0',oxbridge:'#4A148C',medicine:'#B71C1C',scholarship:'#1B5E20',summer:'#E65100',other:'#37474F'};
+
+const RES={
+  lectures:[
+    {t:'LSE Public Lectures',org:'London School of Economics',u:'https://www.lse.ac.uk/events',s:['social','humanities'],tags:['Free','Online & in-person','Economics, Politics, Sociology'],col:'#1565C0'},
+    {t:'UCL Lunch Hour Lectures',org:'University College London',u:'https://www.ucl.ac.uk/lunch-hour-lectures',s:['science','humanities','social'],tags:['Free','Weekly','All subjects'],col:'#1B5E20'},
+    {t:'Oxford Podcasts',org:'University of Oxford',u:'https://podcasts.ox.ac.uk',s:['science','humanities','social','maths'],tags:['Free','Audio & video','All subjects'],col:'#4A148C'},
+    {t:'Gresham College Lectures',org:'Gresham College London',u:'https://www.gresham.ac.uk/watch-now',s:['science','humanities','maths','social'],tags:['Free','Full archive','Science, Maths, History'],col:'#880E4F'},
+    {t:'Cambridge Talks',org:'University of Cambridge',u:'https://talks.cam.ac.uk',s:['science','humanities','maths','social','arts'],tags:['Free','All subjects'],col:'#006064'},
+    {t:'TED-Ed',org:'TED',u:'https://ed.ted.com',s:['science','humanities','social','maths','arts'],tags:['Free','Short talks','All subjects'],col:'#BF360C'},
+    {t:'The Royal Institution',org:'Royal Institution',u:'https://www.rigb.org/explore-science/explore',s:['science','maths'],tags:['Free','Science focus'],col:'#1A237E'},
+    {t:'RSA Events',org:'Royal Society of Arts',u:'https://www.thersa.org/events',s:['social','humanities','arts'],tags:['Free','Society & ideas'],col:'#33691E'},
+    {t:"King's College London Events",org:"King's College London",u:'https://www.kcl.ac.uk/events',s:['science','humanities','social','arts'],tags:['Free','Medicine, Law, Arts'],col:'#B71C1C'},
+  ],
+  events:[
+    {t:'Sutton Trust Summer Schools',org:'Sutton Trust',u:'https://www.suttontrust.com/our-programmes/summer-schools',s:['all'],tags:['Free','Residential','Year 12'],col:'#1B5E20'},
+    {t:'IntoUniversity Programmes',org:'IntoUniversity',u:'https://intouniversity.org/our-programmes',s:['all'],tags:['Free','Multiple locations'],col:'#0D47A1'},
+    {t:'Villiers Park Programmes',org:'Villiers Park',u:'https://villierspark.org.uk/student-programmes',s:['science','humanities','social','maths'],tags:['Selective','Residential','Subject-specific'],col:'#E65100'},
+    {t:'Smallpeice Trust STEM',org:'Smallpeice Trust',u:'https://www.smallpeicetrust.org.uk/courses',s:['science','maths'],tags:['STEM','Residential','Engineering'],col:'#4527A0'},
+    {t:'Nuffield Research Placements',org:'Nuffield Foundation',u:'https://www.nuffieldfoundation.org/students-teachers/nuffield-research-placements',s:['science','maths'],tags:['Free','6-week placement','Year 12'],col:'#1A237E'},
+    {t:'Model United Nations',org:'Various',u:'https://www.mun.co.uk',s:['social','humanities','arts'],tags:['Conferences','Leadership'],col:'#006064'},
+    {t:'National Citizen Service',org:'NCS',u:'https://wearencs.com',s:['all'],tags:['Free','Leadership','Summer'],col:'#1B5E20'},
+    {t:'Jack Petchey Speak Out Challenge',org:'Jack Petchey Foundation',u:'https://www.jackpetcheyfoundation.org.uk/speak-out-challenge',s:['arts','humanities'],tags:['Public speaking','London & Essex'],col:'#37474F'},
+  ],
+  courses:[
+    {t:'FutureLearn Free Courses',org:'FutureLearn',u:'https://www.futurelearn.com/courses?filter_category=free',s:['science','humanities','social','maths','arts'],tags:['Free','Certificate available','Wide range'],col:'#1565C0'},
+    {t:'Coursera University Courses',org:'Coursera',u:'https://www.coursera.org/courses?query=free',s:['science','humanities','social','maths'],tags:['Free to audit','University partners'],col:'#0277BD'},
+    {t:'edX Free Courses',org:'edX',u:'https://www.edx.org/search?price=Free',s:['science','humanities','social','maths'],tags:['Free to audit','MIT, Harvard & more'],col:'#C62828'},
+    {t:'Khan Academy',org:'Khan Academy',u:'https://www.khanacademy.org',s:['maths','science'],tags:['Free','Self-paced','Maths & Sciences'],col:'#2E7D32'},
+    {t:'Open Learn',org:'The Open University',u:'https://www.open.edu/openlearn/free-courses',s:['science','humanities','social','maths','arts'],tags:['Free','Certificate available'],col:'#6A1B9A'},
+    {t:'Brilliant.org',org:'Brilliant',u:'https://brilliant.org',s:['maths','science'],tags:['Free trial','Problem-solving','STEM'],col:'#EF6C00'},
+    {t:'Codecademy',org:'Codecademy',u:'https://www.codecademy.com',s:['maths'],tags:['Free tier','Coding','CS'],col:'#1565C0'},
+  ],
+  competitions:[
+    {t:'UKMT Maths Challenges',org:'UK Mathematics Trust',u:'https://www.ukmt.org.uk/competitions',s:['maths'],tags:['Free','Annual','All years'],col:'#1565C0'},
+    {t:'Biology Olympiad',org:'Royal Society of Biology',u:'https://www.rsb.org.uk/education/competitions/biology-olympiad',s:['science'],tags:['Year 12-13','Annual'],col:'#2E7D32'},
+    {t:'Chemistry Olympiad',org:'Royal Society of Chemistry',u:'https://www.rsc.org/awards-funding/awards/chemistry-olympiad',s:['science'],tags:['Year 12-13','Annual'],col:'#E65100'},
+    {t:'Physics Olympiad (BPhO)',org:'British Physics Olympiad',u:'https://www.bpho.org.uk/competitions',s:['science','maths'],tags:['Selective','Gold/Silver/Bronze'],col:'#1A237E'},
+    {t:'Royal Commonwealth Essay',org:'Royal Commonwealth Society',u:'https://www.thercs.org/competition',s:['humanities','arts','social'],tags:['Writing','Open to all'],col:'#4A148C'},
+    {t:'UKMT Senior Maths Challenge',org:'UKMT',u:'https://www.ukmt.org.uk/competitions/senior',s:['maths'],tags:['Year 12-13','Nov each year'],col:'#0277BD'},
+    {t:'Oxford Computing Challenge',org:'University of Oxford',u:'https://www.olympiad.org.uk',s:['maths'],tags:['CS focus','Olympiad pathway'],col:'#880E4F'},
+    {t:'Economics Challenge',org:'Institute of Economic Affairs',u:'https://iea.org.uk',s:['social','humanities'],tags:['Year 12-13','National'],col:'#33691E'},
+  ],
+  programmes:[
+    {t:'Springpod Virtual Work Experience',org:'Springpod',u:'https://www.springpod.com/virtual-work-experience',s:['all'],tags:['Free','Virtual','Wide range'],col:'#1B5E20'},
+    {t:'NHS Work Experience',org:'NHS',u:'https://www.healthcareers.nhs.uk/i-am/considering-my-options/work-experience',s:['science'],tags:['Healthcare','Apply locally'],col:'#005EB8'},
+    {t:'Pathways to Law',org:'Sutton Trust',u:'https://www.suttontrust.com/our-programmes/pathways-to-law',s:['arts','social','humanities'],tags:['Selective','Law focus','Year 12'],col:'#37474F'},
+    {t:'Pathways to Banking & Finance',org:'Sutton Trust',u:'https://www.suttontrust.com/our-programmes/pathways-to-banking-and-finance',s:['maths','social'],tags:['Selective','Finance','Year 12'],col:'#1A5C2A'},
+    {t:'Arkwright Engineering Scholarships',org:'Arkwright Scholarships Trust',u:'https://www.arkwright.org.uk',s:['science','maths'],tags:['Selective','Engineering','Yr 12'],col:'#BF360C'},
+    {t:'Teach First Insight',org:'Teach First',u:'https://www.teachfirst.org.uk',s:['all'],tags:['Education sector','Free'],col:'#E65100'},
+  ],
+};
+
+const DEF_DL=[
+  {id:1,name:'UCAS main deadline',date:'2026-01-29',type:'ucas'},
+  {id:2,name:'Oxford / Cambridge application',date:'2025-10-15',type:'oxbridge'},
+  {id:3,name:'Medicine UCAS deadline',date:'2025-10-15',type:'medicine'},
+  {id:4,name:'Sutton Trust applications open',date:'2026-01-01',type:'summer'},
+];
+if(!dls.length){dls=[...DEF_DL];saveDls();}
+
+// DISCOVER
+function setTab(tab,btn){discTab=tab;document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('act'));btn.classList.add('act');renderDisc();}
+function setSF(btn){sf=btn.dataset.s;document.querySelectorAll('.fchip').forEach(b=>b.classList.remove('act'));btn.classList.add('act');renderDisc();}
+function renderDisc(){
+  const q=document.getElementById('disc-q').value.toLowerCase();
+  let items=RES[discTab]||[];
+  if(sf!=='all')items=items.filter(r=>r.s.includes(sf)||r.s.includes('all'));
+  if(q)items=items.filter(r=>r.t.toLowerCase().includes(q)||r.org.toLowerCase().includes(q)||r.tags.some(t=>t.toLowerCase().includes(q)));
+  const icon=IC[discTab]||IC.lectures;
+  document.getElementById('res-list').innerHTML=items.length
+    ?items.map(r=>`<a class="res-card" href="${r.u}" target="_blank" rel="noopener">
+        <div class="res-ic" style="background:${r.col}">${icon}</div>
+        <div class="res-body">
+          <div class="res-title">${r.t}</div>
+          <div class="res-org">${r.org}</div>
+          <div class="res-tags">${r.tags.map(t=>`<span class="res-tag">${t}</span>`).join('')}</div>
+        </div>
+        <div class="res-arr">${IC.arr}</div>
+      </a>`).join('')
+    :'<div style="text-align:center;padding:28px;font-size:13px;color:var(--m)">No results for this filter.</div>';
+}
+
+// ACTIVITIES
+function renderActs(){
+  const el=document.getElementById('act-list');
+  if(!acts.length){
+    el.innerHTML=`<div class="act-empty">
+      <div class="act-empty-icon"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+      <div class="act-empty-title">Nothing logged yet</div>
+      <div class="act-empty-sub">Start adding your clubs, work experience, courses and competitions.</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML=acts.map((a,i)=>{
+    const col=CAT_COL[a.category]||'#888';
+    const bg=CAT_BG[a.category]||'#f5f5f5';
+    const skills=CAT_SK[a.category]||[];
+    const icon=IC[a.category]||IC.course;
+    const dateStr=a.startDate?new Date(a.startDate).toLocaleDateString('en-GB',{month:'short',year:'numeric'}):'';
+    return `<div class="act-card">
+      <div class="act-icon" style="background:${col}">${icon}</div>
+      <div class="act-body">
+        <div class="act-name">${a.name}</div>
+        <div class="act-meta">${a.category.charAt(0).toUpperCase()+a.category.slice(1)}${a.hours?' · '+a.hours+'h':''}${dateStr?' · '+dateStr:''}</div>
+        ${a.reflection?`<div class="act-ref">${a.reflection}</div>`:''}
+        <div class="act-skills">${skills.slice(0,3).map(s=>`<span class="act-skill" style="background:${bg};color:${col}">${s}</span>`).join('')}</div>
+        <div class="act-foot">
+          ${a.link?`<a class="act-link" href="${a.link}" target="_blank" rel="noopener">View link ${IC.arr}</a>`:''}
+          <button class="act-del" onclick="delAct(${i})">Delete</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function delAct(i){acts.splice(i,1);localStorage.setItem('ex_sc_acts',JSON.stringify(acts));renderActs();updateStats();renderSkills();updateUCAS();}
+
+function openAM(){['an','ah','as','ae','ar','al'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});document.getElementById('am').classList.add('open');}
+function closeAM(){document.getElementById('am').classList.remove('open');}
+function saveAct(){
+  const name=document.getElementById('an').value.trim();
+  if(!name){showToast('Please add a name!');return;}
+  acts.unshift({name,category:document.getElementById('ac').value,hours:parseInt(document.getElementById('ah').value)||0,startDate:document.getElementById('as').value,endDate:document.getElementById('ae').value,reflection:document.getElementById('ar').value.trim(),link:document.getElementById('al').value.trim()});
+  localStorage.setItem('ex_sc_acts',JSON.stringify(acts));
+  saveSCToCloud();
+  closeAM();renderActs();updateStats();renderSkills();updateUCAS();showToast('Activity logged!');
+}
+
+// DEADLINES
+function saveDls(){localStorage.setItem('ex_sc_dls',JSON.stringify(dls));}
+function openDM(){document.getElementById('dm').classList.add('open');}
+function closeDM(){document.getElementById('dm').classList.remove('open');}
+function saveDl(){
+  const name=document.getElementById('dn').value.trim();const date=document.getElementById('dd').value;
+  if(!name||!date){showToast('Please fill in both fields!');return;}
+  dls.push({id:Date.now(),name,date,type:document.getElementById('dt').value});
+  saveDls();saveSCToCloud();closeDM();renderDls();updateStats();showToast('Deadline added!');
+}
+function renderDls(){
+  const today=new Date();today.setHours(0,0,0,0);
+  const sorted=[...dls].map(d=>({...d,diff:Math.ceil((new Date(d.date)-today)/86400000)})).filter(d=>d.diff>=0).sort((a,b)=>a.diff-b.diff);
+  document.getElementById('dl-list').innerHTML=sorted.slice(0,7).map(d=>{
+    const cls=d.diff<=14?'urgent':d.diff<=60?'soon':'ok';
+    const lbl=d.diff===0?'Today':d.diff===1?'Tomorrow':d.diff+'d';
+    const col=DL_COL[d.type]||'#37474F';const icon=IC[d.type]||IC.other;
+    return `<div class="dl-card">
+      <div class="dl-ic" style="background:${col}">${icon}</div>
+      <div class="dl-body">
+        <div class="dl-title">${d.name}</div>
+        <div class="dl-date">${new Date(d.date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</div>
+      </div>
+      <div class="dl-pill ${cls}">${lbl}</div>
+    </div>`;
+  }).join('')||'<div style="font-size:12px;color:var(--m);text-align:center;padding:12px 0">No upcoming deadlines.</div>';
+}
+
+// SKILLS
+function renderSkills(){
+  const counts={};acts.forEach(a=>(CAT_SK[a.category]||[]).forEach(s=>{counts[s]=(counts[s]||0)+1;}));
+  const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);const max=Math.max(...sorted.map(s=>s[1]),1);
+  const el=document.getElementById('skill-rows');
+  if(!sorted.length){el.innerHTML='<div style="font-size:12px;color:var(--m);text-align:center;padding:16px 0">Log activities to build your skills profile.</div>';return;}
+  el.innerHTML=sorted.slice(0,8).map(([name,count])=>`
+    <div class="srow">
+      <div class="srow-name">${name}</div>
+      <div class="srow-track"><div class="srow-fill" data-w="${Math.round((count/max)*100)}%" style="width:0%"></div></div>
+      <div class="srow-ct">${count}</div>
+    </div>`).join('');
+  setTimeout(()=>document.querySelectorAll('.srow-fill').forEach(el=>el.style.width=el.dataset.w),100);
+  document.getElementById('st-sk').textContent=sorted.length;
+}
+
+// UCAS
+function updateUCAS(){
+  const total=acts.length,hours=acts.reduce((s,a)=>s+a.hours,0),cats=new Set(acts.map(a=>a.category)).size;
+  const score=Math.min(100,Math.round((Math.min(total,5)*10+Math.min(hours,30)+Math.min(cats,6)*5)/80*100));
+  document.getElementById('upct').textContent=score+'%';
+  document.getElementById('ua').textContent=total;
+  document.getElementById('uh').textContent=hours+'h';
+  document.getElementById('uc').textContent=cats;
+  document.getElementById('ur').style.strokeDashoffset=175.9-(score/100)*175.9;
+}
+
+function updateStats(){
+  document.getElementById('st-a').textContent=acts.length;
+  document.getElementById('st-h').textContent=acts.reduce((s,a)=>s+a.hours,0)+'h';
+  const today=new Date();today.setHours(0,0,0,0);
+  const next=dls.map(d=>({...d,diff:Math.ceil((new Date(d.date)-today)/86400000)})).filter(d=>d.diff>=0).sort((a,b)=>a.diff-b.diff)[0];
+  document.getElementById('st-dl').textContent=next?(next.diff===0?'Today':next.diff+'d'):'—';
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAM();closeDM();}});
+
+renderDisc();renderActs();renderDls();renderSkills();updateStats();updateUCAS();
+</script>
+</body>
+</html>

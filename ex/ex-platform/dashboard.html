@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EX — Dashboard</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBhMGEwYSIvPgogIDx0ZXh0IHg9IjUiIHk9IjIzIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiMwMEU2NzYiPkVYPC90ZXh0Pgo8L3N2Zz4="/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--g:#00E676;--gd:#00a855;--b:#0a0a0a;--w:#f8f8f6;--m:#6b7280;--border:rgba(0,0,0,0.08);}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;min-height:100%;overflow-x:hidden;}
+body{font-family:'Manrope',sans-serif;background:var(--w);color:var(--b);opacity:0;transition:opacity .35s ease;}
+@keyframes bIn{to{opacity:1}}
+
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,0,0,0.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.022) 1px,transparent 1px);
+  background-size:52px 52px;}
+
+
+/* STREAK */
+.streak-card{background:var(--b);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:14px;margin-bottom:20px;opacity:0;animation:up .6s cubic-bezier(.16,1,.3,1) .25s forwards;}
+.streak-flame{font-size:28px;line-height:1;}
+.streak-body{flex:1;}
+.streak-num{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px;}
+.streak-label{font-size:11px;color:rgba(255,255,255,.4);font-weight:600;margin-top:1px;}
+.streak-best{font-size:10px;font-weight:700;color:rgba(255,255,255,.25);margin-left:8px;}
+.streak-dots{display:flex;gap:3px;margin-top:8px;}
+.streak-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.1);}
+.streak-dot.on{background:var(--g);}
+.streak-dot.today{background:var(--g);box-shadow:0 0 6px rgba(0,230,118,.5);}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;height:52px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 32px;
+  background:rgba(248,248,246,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-size:17px;font-weight:900;letter-spacing:-1px;color:var(--b);text-decoration:none;}
+.nav-logo .dot{color:var(--g);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-date{font-size:11px;font-weight:600;color:var(--m);}
+.nav-pill{padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;
+  background:rgba(0,230,118,0.1);color:var(--gd);border:1px solid rgba(0,230,118,0.2);
+  display:flex;align-items:center;gap:5px;}
+.nav-pill::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--g);animation:pd 2s ease infinite;}
+@keyframes pd{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* MAIN */
+.main{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:32px 28px 80px;}
+
+/* GREETING */
+.greeting{margin-bottom:22px;opacity:0;animation:up .6s cubic-bezier(.16,1,.3,1) .1s forwards;}
+
+/* ONBOARDING TOUR */
+.tour-tip{position:fixed;bottom:28px;right:28px;z-index:300;
+  background:var(--b);color:#fff;border-radius:16px;padding:16px 20px;
+  max-width:280px;box-shadow:0 8px 32px rgba(0,0,0,0.2);
+  animation:up .5s cubic-bezier(.16,1,.3,1) 1.5s both;}
+.tour-tip-title{font-size:13px;font-weight:800;margin-bottom:4px;}
+.tour-tip-sub{font-size:11px;color:rgba(255,255,255,.5);line-height:1.55;margin-bottom:12px;}
+.tour-tip-btns{display:flex;gap:8px;}
+.tour-tip-btn{padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;
+  font-family:'Manrope',sans-serif;cursor:pointer;border:none;}
+.tour-tip-btn.p{background:var(--g);color:var(--b);}
+.tour-tip-btn.s{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);}
+
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.greeting h1{font-size:clamp(24px,3vw,36px);font-weight:900;letter-spacing:-1.5px;color:var(--b);}
+.greeting h1 em{font-style:normal;color:var(--g);}
+.greeting-sub{font-size:13px;color:var(--m);margin-top:5px;font-weight:500;}
+
+/* CHIPS */
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px;
+  opacity:0;animation:up .6s cubic-bezier(.16,1,.3,1) .2s forwards;}
+.chip{padding:5px 12px;border-radius:100px;border:1px solid var(--border);background:#fff;
+  font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px;transition:all .2s;}
+.chip:hover{border-color:rgba(0,230,118,.3);}
+.chip .n{font-weight:900;color:var(--g);}
+.chip .n.s{color:#f97316;}
+.chip .l{color:var(--m);}
+
+/* ── GRID ──────────────────────────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  align-items:start;
+  /* When a card is hovered, dim siblings */
+  --dim:1;
+}
+/* Dim all cards when grid has an active hover */
+.grid.has-hover .card{
+  opacity:.45;
+  filter:blur(1px) saturate(0.6);
+  transform:scale(0.98);
+}
+/* But keep hovered card fully bright */
+.grid.has-hover .card.active{
+  opacity:1;
+  filter:none;
+  transform:none;
+}
+
+/* ── BASE CARD ──────────────────────────────────────────── */
+.card{
+  border-radius:20px;
+  overflow:hidden;
+  text-decoration:none;
+  color:var(--b);
+  position:relative;
+  height:148px;
+  /* Height transition has a SHORT DELAY on enter, instant on leave */
+  transition:
+    height .6s cubic-bezier(.16,1,.3,1) var(--hd,0s),
+    box-shadow .4s cubic-bezier(.16,1,.3,1) var(--hd,0s),
+    transform .4s cubic-bezier(.16,1,.3,1),
+    opacity .35s ease,
+    filter .35s ease;
+  opacity:0;
+  border:1px solid transparent;
+  z-index:1;
+}
+.card.in{animation:cIn .5s cubic-bezier(.16,1,.3,1) forwards;}
+@keyframes cIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* Hover state — applied via JS after delay */
+.card.expanded{
+  height:var(--eh,380px);
+  box-shadow:0 24px 64px var(--shadow,rgba(0,0,0,0.12)),0 4px 20px rgba(0,0,0,0.06);
+  border-color:var(--ab,rgba(0,0,0,0.1));
+  z-index:50;
+}
+
+/* Bottom bar sweeps in */
+.card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent,var(--gd)),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s cubic-bezier(.16,1,.3,1) .18s;
+}
+.card.expanded::after{transform:scaleX(1);}
+
+/* Canvas layer */
+.card-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;
+  transition:opacity .4s ease;}
+.card-canvas.dim{opacity:.3!important;}
+.card-canvas.bright{opacity:.8!important;}
+
+/* Inner */
+.card-inner{position:relative;z-index:1;padding:22px 22px 18px;height:100%;display:flex;flex-direction:column;}
+
+/* Top row */
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-shrink:0;}
+.card-icon{width:38px;height:38px;border-radius:11px;background:var(--ib,rgba(0,0,0,0.06));
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:transform .3s cubic-bezier(.16,1,.3,1);}
+.card.expanded .card-icon{transform:scale(1.1) rotate(-5deg);}
+.card-icon svg{width:18px;height:18px;}
+.card-eye{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent,var(--gd));margin-bottom:5px;}
+.card-title{font-size:16px;font-weight:900;letter-spacing:-.4px;line-height:1.2;}
+.card-hint{font-size:11px;color:var(--m);margin-top:3px;font-weight:500;}
+
+/* Body — slides up into view */
+.card-body{
+  margin-top:16px;flex:1;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .3s ease .22s,transform .35s cubic-bezier(.16,1,.3,1) .2s;
+  pointer-events:none;overflow:hidden;
+}
+.card.expanded .card-body{opacity:1;transform:translateY(0);pointer-events:all;}
+
+/* Go */
+.card-go{font-size:11px;font-weight:700;color:var(--accent,var(--gd));
+  margin-top:auto;padding-top:10px;display:flex;align-items:center;gap:5px;flex-shrink:0;
+  opacity:0;transition:opacity .2s ease .38s,gap .2s;}
+.card.expanded .card-go{opacity:1;}
+
+/* ── COLOURS ────────────────────────────────────────────── */
+.c-tt{background:linear-gradient(145deg,#f0faf4,#e4f5ea);
+  --accent:#16a34a;--ab:rgba(22,163,74,.25);--ib:rgba(22,163,74,.12);
+  --shadow:rgba(22,163,74,.15);--eh:400px;}
+.c-tt .card-icon svg{stroke:#16a34a;}
+
+.c-ws{background:linear-gradient(145deg,#fffbf0,#fef3c7);
+  --accent:#d97706;--ab:rgba(217,119,6,.25);--ib:rgba(217,119,6,.12);
+  --shadow:rgba(217,119,6,.15);--eh:400px;}
+.c-ws .card-icon svg{stroke:#d97706;}
+
+.c-pp{background:linear-gradient(145deg,#f0f4ff,#e5ecff);
+  --accent:#4f6ef7;--ab:rgba(79,110,247,.25);--ib:rgba(79,110,247,.12);
+  --shadow:rgba(79,110,247,.15);--eh:380px;}
+.c-pp .card-icon svg{stroke:#4f6ef7;}
+
+.c-sc{background:linear-gradient(145deg,#f8f0ff,#ede9fe);
+  --accent:#7c3aed;--ab:rgba(124,58,237,.25);--ib:rgba(124,58,237,.12);
+  --shadow:rgba(124,58,237,.15);--eh:380px;}
+.c-sc .card-icon svg{stroke:#7c3aed;}
+
+.c-cd{background:linear-gradient(145deg,#fff5f5,#fee2e2);
+  --accent:#e11d48;--ab:rgba(225,29,72,.25);--ib:rgba(225,29,72,.12);
+  --shadow:rgba(225,29,72,.15);--eh:380px;}
+.c-cd .card-icon svg{stroke:#e11d48;}
+
+.c-qa{background:linear-gradient(145deg,#f8fafc,#f0f4f8);
+  --accent:#475569;--ab:rgba(71,85,105,.2);--ib:rgba(71,85,105,.1);
+  --shadow:rgba(71,85,105,.1);--eh:380px;}
+.c-qa .card-icon svg{stroke:#475569;}
+
+/* Grid positions */
+.c-tt{grid-column:1/3;}
+.c-ws{grid-column:3/5;}
+.c-pp{grid-column:1/2;}
+.c-sc{grid-column:2/3;}
+.c-cd{grid-column:3/4;}
+.c-qa{grid-column:4/5;}
+
+/* ── INNER COMPONENTS ──────────────────────────────────── */
+.rows{display:flex;flex-direction:column;gap:6px;}
+.row{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:9px;
+  background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8);transition:background .2s;}
+.row:hover{background:rgba(255,255,255,.85);}
+.rdot{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.15);flex-shrink:0;}
+.rdot.g{background:var(--g);}
+.rname{font-size:12px;font-weight:700;flex:1;}
+.rval{font-size:11px;font-weight:600;color:var(--m);}
+.row-empty{font-size:12px;color:var(--m);padding:12px;text-align:center;
+  border:1px dashed rgba(0,0,0,.1);border-radius:9px;line-height:1.5;}
+
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+.stat-box{padding:10px;border-radius:9px;background:rgba(255,255,255,.55);text-align:center;border:1px solid rgba(255,255,255,.8);}
+.stat-n{font-size:20px;font-weight:900;letter-spacing:-1px;}
+.stat-l{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m);}
+
+.pp-item{padding:9px 10px;border-radius:9px;background:rgba(255,255,255,.55);margin-bottom:6px;border:1px solid rgba(255,255,255,.8);}
+.pp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;}
+.pp-name{font-size:12px;font-weight:800;}
+.pp-pct{font-size:15px;font-weight:900;letter-spacing:-1px;}
+.pp-bar{height:4px;border-radius:100px;background:rgba(0,0,0,.06);}
+.pp-fill{height:4px;border-radius:100px;transition:width .8s cubic-bezier(.16,1,.3,1) .2s;}
+
+.sc-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;}
+.sc-ring{position:relative;width:72px;height:72px;}
+.sc-ring svg{transform:rotate(-90deg);}
+.sc-rn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;}
+.sc-big{font-size:26px;font-weight:900;letter-spacing:-1px;}
+.sc-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--m);}
+.sc-tags{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;}
+.sc-tag{padding:3px 9px;border-radius:100px;font-size:10px;font-weight:700;background:rgba(255,255,255,.7);color:var(--m);}
+
+.cd-centre{text-align:center;}
+.cd-big{font-size:52px;font-weight:900;letter-spacing:-3px;line-height:1;}
+.cd-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--m);}
+.cd-name{font-size:13px;font-weight:800;margin-top:8px;}
+.cd-dt{font-size:11px;color:var(--m);margin-top:2px;}
+.cd-list{margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,.07);display:flex;flex-direction:column;gap:6px;}
+.cd-row{display:flex;justify-content:space-between;}
+.cd-rn{font-size:11px;font-weight:700;}
+.cd-rd{font-size:11px;font-weight:900;color:var(--accent);}
+
+.qa-list{display:flex;flex-direction:column;gap:6px;}
+.qa-btn{display:flex;align-items:center;gap:9px;padding:10px 12px;border-radius:10px;
+  background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);
+  font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;color:var(--b);
+  text-decoration:none;transition:all .2s;}
+.qa-btn:hover{background:rgba(255,255,255,.95);transform:translateX(3px);}
+.qa-ico{width:15px;height:15px;flex-shrink:0;stroke:currentColor;}
+
+.tap-hint{display:none;text-align:center;font-size:11px;font-weight:600;color:var(--m);margin-top:14px;letter-spacing:.04em;}
+@media(hover:none) and (pointer:coarse){.tap-hint{display:block;}}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr 1fr;}
+  .c-tt,.c-ws{grid-column:1/-1;}
+  .c-pp,.c-sc,.c-cd,.c-qa{grid-column:span 1;}
+}
+@media(max-width:540px){
+  .grid{grid-template-columns:1fr;}
+  .c-tt,.c-ws,.c-pp,.c-sc,.c-cd,.c-qa{grid-column:1/-1;}
+  .main{padding:16px 14px 60px;}
+  .chips{display:none;}
+  .nav-date{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<nav class="nav">
+  <a href="#" class="nav-logo">EX<span class="dot">.</span></a>
+  <div class="nav-right">
+    <span class="nav-date" id="nav-date"></span>
+    <div class="nav-pill" id="nav-pill">Loading...</div>
+    <button onclick="signOut()" style="padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;border:1px solid var(--border);background:none;cursor:pointer;color:var(--m);font-family:'Manrope',sans-serif;transition:all .2s;" onmouseover="this.style.background='var(--b)';this.style.color='#fff'" onmouseout="this.style.background='none';this.style.color='var(--m)'">Sign out</button>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="greeting">
+    <h1 id="g-text">Good morning<em>.</em></h1>
+    <div class="greeting-sub" id="g-sub">Here's where you are today.</div>
+  </div>
+
+  <!-- FIRST TIME BANNER — only shows if no timetable built -->
+  <div id="first-time-banner" style="display:none;margin-bottom:20px;opacity:0;animation:up .6s cubic-bezier(.16,1,.3,1) .15s forwards;">
+    <a href="timetable.html" style="text-decoration:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;background:linear-gradient(135deg,#0a0a0a,#1a1a1a);border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.15);transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 8px 32px rgba(0,230,118,0.2)'" onmouseout="this.style.boxShadow='0 4px 20px rgba(0,0,0,0.15)'">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:6px;display:flex;align-items:center;gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--g);display:inline-block;animation:pd 2s ease infinite;"></span>
+          Start here
+        </div>
+        <div style="font-size:17px;font-weight:900;letter-spacing:-.5px;color:#fff;margin-bottom:4px;">Build your revision timetable</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.4);">EX will build a personalised plan around your subjects, goals and available time.</div>
+      </div>
+      <div style="flex-shrink:0;width:40px;height:40px;border-radius:12px;background:rgba(0,230,118,.15);display:flex;align-items:center;justify-content:center;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </a>
+  </div>
+
+  <!-- STREAK CARD -->
+  <div class="streak-card" id="streak-card" style="display:none">
+    <div class="streak-flame" id="streak-flame">🔥</div>
+    <div class="streak-body">
+      <div>
+        <span class="streak-num" id="streak-num">0</span>
+        <span style="font-size:13px;font-weight:700;color:rgba(255,255,255,.5)"> day streak</span>
+        <span class="streak-best" id="streak-best"></span>
+      </div>
+      <div class="streak-label" id="streak-label">Keep revising daily to build your streak</div>
+      <div class="streak-dots" id="streak-dots"></div>
+    </div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="grid" id="grid">
+
+    <!-- TIMETABLE -->
+    <a href="timetable.html" class="card c-tt" data-card="tt">
+      <canvas class="card-canvas" id="cv-tt"></canvas>
+      <div class="card-inner">
+        <div class="card-top">
+          <div>
+            <div class="card-eye">Timetable</div>
+            <div class="card-title">Today's sessions</div>
+            <div class="card-hint" id="tt-hint">Your plan for today</div>
+          </div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+              <line x1="8" y1="14" x2="12" y2="14"/><line x1="8" y1="18" x2="14" y2="18"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body"><div class="rows" id="tt-rows"></div></div>
+        <div class="card-go">Open timetable →</div>
+      </div>
+    </a>
+
+    <!-- WORKSPACE -->
+    <a href="workspace.html" class="card c-ws" data-card="ws">
+      <canvas class="card-canvas" id="cv-ws"></canvas>
+      <div class="card-inner">
+        <div class="card-top">
+          <div>
+            <div class="card-eye">Workspace</div>
+            <div class="card-title">Study hub</div>
+            <div class="card-hint">Notes · Flashcards · Timer</div>
+          </div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-n" id="ws-tn">—</div><div class="stat-l">Tasks left</div></div>
+            <div class="stat-box"><div class="stat-n" id="ws-fn">—</div><div class="stat-l">Flashcards</div></div>
+          </div>
+          <div class="rows" id="ws-tasks"></div>
+        </div>
+        <div class="card-go">Open workspace →</div>
+      </div>
+    </a>
+
+    <!-- PAST PAPERS -->
+    <a href="pastpapers.html" class="card c-pp" data-card="pp">
+      <canvas class="card-canvas" id="cv-pp"></canvas>
+      <div class="card-inner">
+        <div class="card-top">
+          <div>
+            <div class="card-eye">Past Papers</div>
+            <div class="card-title">Performance</div>
+            <div class="card-hint" id="pp-hint">Log your scores</div>
+          </div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body"><div id="pp-content"></div></div>
+        <div class="card-go">Log a paper →</div>
+      </div>
+    </a>
+
+    <!-- SUPERCURRICULAR -->
+    <a href="supercurricular.html" class="card c-sc" data-card="sc">
+      <canvas class="card-canvas" id="cv-sc"></canvas>
+      <div class="card-inner">
+        <div class="card-top">
+          <div>
+            <div class="card-eye">Supercurricular</div>
+            <div class="card-title">Beyond the grade</div>
+            <div class="card-hint" id="sc-hint">Build your profile</div>
+          </div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body"><div id="sc-content"></div></div>
+        <div class="card-go">Explore →</div>
+      </div>
+    </a>
+
+    <!-- COUNTDOWN -->
+    <a href="countdown.html" class="card c-cd" data-card="cd">
+      <canvas class="card-canvas" id="cv-cd"></canvas>
+      <div class="card-inner">
+        <div class="card-top">
+          <div>
+            <div class="card-eye">Countdown</div>
+            <div class="card-title">Next exam</div>
+            <div class="card-hint" id="cd-hint">Loading...</div>
+          </div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body"><div id="cd-content"></div></div>
+        <div class="card-go">All exams →</div>
+      </div>
+    </a>
+
+    <!-- QUICK ACTIONS -->
+    <div class="card c-qa" data-card="qa">
+      <canvas class="card-canvas" id="cv-qa"></canvas>
+      <div class="card-inner">
+        <div class="card-top">
+          <div>
+            <div class="card-eye">Quick Actions</div>
+            <div class="card-title">Jump in</div>
+            <div class="card-hint">One tap, anywhere</div>
+          </div>
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="13 17 18 12 13 7"/>
+              <polyline points="6 17 11 12 6 7"/>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="qa-list">
+            <a href="workspace.html" class="qa-btn"><svg class="qa-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4z"/></svg>Start a session</a>
+            <a href="timetable.html" class="qa-btn"><svg class="qa-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Build timetable</a>
+            <a href="pastpapers.html" class="qa-btn"><svg class="qa-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Log a paper</a>
+            <a href="supercurricular.html" class="qa-btn"><svg class="qa-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>Add activity</a>
+            <a href="countdown.html" class="qa-btn"><svg class="qa-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Exam dates</a>
+          </div>
+        </div>
+        <div class="card-go" style="opacity:0;pointer-events:none;"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="tap-hint">Tap a card to expand it</div>
+</div>
+
+<script>
+// SUPABASE AUTH CHECK
+const _sb = supabase.createClient(
+  'https://ucfavwmylklrnchfsttx.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjZmF2d215bGtscm5jaGZzdHR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxOTk5NTIsImV4cCI6MjA4OTc3NTk1Mn0.3Ig9UUfe29LQpUiHImgIaf4qUCcLQSLUBuYvBsPUedI'
+);
+(async()=>{
+  const {data:{session}} = await _sb.auth.getSession();
+  if(!session) { window.location.href = 'login.html'; return; }
+  // Pull name from Supabase metadata if not already stored
+  if(!localStorage.getItem('ex_name') && session.user.user_metadata?.name) {
+    localStorage.setItem('ex_name', session.user.user_metadata.name);
+  }
+  // If still no name, try profiles table
+  if(!localStorage.getItem('ex_name')) {
+    const {data:profile} = await _sb.from('profiles').select('name').eq('id', session.user.id).maybeSingle();
+    if(profile?.name) localStorage.setItem('ex_name', profile.name);
+  }
+  // Update greeting with name now that we have it
+  const name = localStorage.getItem('ex_name') || '';
+  const h2 = new Date().getHours();
+  const greeting = h2<12?'Good morning':h2<17?'Good afternoon':'Good evening';
+  document.getElementById('g-text').innerHTML = greeting + (name ? ', '+name : '') + '<em>.</em>';
+})();
+async function signOut(){
+  await _sb.auth.signOut();
+  window.location.href = 'login.html';
+}
+// ── DATE & GREETING ───────────────────────────────────────────────
+const now=new Date();
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const h=now.getHours();
+const exName = localStorage.getItem('ex_name') || '';
+const greetName = exName ? ', ' + exName : '';
+document.getElementById('g-text').innerHTML=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+greetName+'<em>.</em>';
+// g-text will be updated again by async auth check if name loads from Supabase
+document.getElementById('nav-date').textContent=DAYS[now.getDay()]+' · '+now.getDate()+' '+MONTHS[now.getMonth()];
+
+// ── EXAMS ─────────────────────────────────────────────────────────
+const EXAMS=[
+  {n:'English Lit',d:'2026-05-11'},{n:'Biology P1',d:'2026-05-12'},
+  {n:'Maths P1',d:'2026-05-14'},{n:'Chemistry P1',d:'2026-05-18'},
+  {n:'Physics P1',d:'2026-06-02'},{n:'Maths P2',d:'2026-06-03'},
+  {n:'Biology P2',d:'2026-06-08'},{n:'Chemistry P2',d:'2026-06-12'},
+];
+function daysTo(ds){const d=new Date(ds);d.setHours(0,0,0,0);const t=new Date();t.setHours(0,0,0,0);return Math.round((d-t)/864e5);}
+const upcoming=EXAMS.map(e=>({...e,days:daysTo(e.d)})).filter(e=>e.days>=0).sort((a,b)=>a.days-b.days);
+if(upcoming.length){
+  const nx=upcoming[0];
+  document.getElementById('nav-pill').textContent=nx.days+'d — '+nx.n;
+  document.getElementById('g-sub').textContent=nx.days===0?nx.n+' is TODAY.':nx.days===1?nx.n+' is tomorrow.':nx.days+' days until '+nx.n+'.';
+}
+const chEl=document.getElementById('chips');
+upcoming.slice(0,6).forEach(e=>{
+  const c=document.createElement('div');c.className='chip';
+  c.innerHTML=`<span class="n${e.days<14?' s':''}">${e.days}</span><span class="l">${e.n}</span>`;
+  chEl.appendChild(c);
+});
+
+// ── TIMETABLE ─────────────────────────────────────────────────────
+const plan=JSON.parse(localStorage.getItem('ex_plan')||'[]');
+// Show first-time banner if no plan built yet
+if(!plan.length){
+  document.getElementById('first-time-banner').style.display='block';
+  showTourIfNeeded();
+} else {
+  computeStreak();
+}
+const todayIdx=now.getDay()===0?6:now.getDay()-1;
+const todaySess=plan.filter(s=>s&&s.day===todayIdx);
+const ttRows=document.getElementById('tt-rows');
+if(todaySess.length){
+  document.getElementById('tt-hint').textContent=todaySess.length+' session'+(todaySess.length>1?'s':'')+' today';
+  todaySess.slice(0,5).forEach(s=>{
+    const r=document.createElement('div');r.className='row';
+    r.innerHTML=`<div class="rdot g"></div><span class="rname">${s.subject||s.topic||'Revision'}</span><span class="rval">${s.time||''}</span>`;
+    ttRows.appendChild(r);
+  });
+}else{ttRows.innerHTML='<div class="row-empty">No sessions today<br/><strong>→ Build your timetable</strong></div>';}
+
+// ── WORKSPACE ─────────────────────────────────────────────────────
+const tasks=JSON.parse(localStorage.getItem('ex_ws_tasks')||'[]');
+const fcs=JSON.parse(localStorage.getItem('ex_ws_fc')||'[]');
+document.getElementById('ws-tn').textContent=tasks.filter(t=>!t.done).length||'0';
+document.getElementById('ws-fn').textContent=fcs.length||'0';
+const tEl=document.getElementById('ws-tasks');
+if(tasks.length){
+  tasks.slice(0,4).forEach(t=>{
+    const r=document.createElement('div');r.className='row';
+    r.innerHTML=`<div class="rdot${t.done?' g':''}"></div><span class="rname" style="${t.done?'text-decoration:line-through;color:var(--m)':''}">${t.text||'Task'}</span>`;
+    tEl.appendChild(r);
+  });
+}else{tEl.innerHTML='<div class="row-empty">No tasks yet</div>';}
+
+// ── PAST PAPERS ───────────────────────────────────────────────────
+const papers=JSON.parse(localStorage.getItem('ex_papers')||'[]');
+const ppEl=document.getElementById('pp-content');
+if(papers.length){
+  document.getElementById('pp-hint').textContent=papers.length+' paper'+(papers.length>1?'s':'')+' logged';
+  papers.slice(-3).reverse().forEach(p=>{
+    const sc=p.score||p.percentage||0;
+    const col=sc>=70?'#16a34a':sc>=50?'#d97706':'#e11d48';
+    const d=document.createElement('div');d.className='pp-item';
+    d.innerHTML=`<div class="pp-top"><span class="pp-name">${p.subject||'Paper'}</span><span class="pp-pct" style="color:${col}">${sc}%</span></div><div class="pp-bar"><div class="pp-fill" style="width:${sc}%;background:${col}"></div></div>`;
+    ppEl.appendChild(d);
+  });
+}else{ppEl.innerHTML='<div class="row-empty">No papers logged yet</div>';}
+
+// ── SUPERCURRICULAR ───────────────────────────────────────────────
+const acts=JSON.parse(localStorage.getItem('ex_sc_acts')||'[]');
+const ucas=Math.min(100,Math.round(acts.length/10*100));
+const C=2*Math.PI*28,fill=C*(ucas/100);
+document.getElementById('sc-hint').textContent=acts.length+' activit'+(acts.length===1?'y':'ies')+' logged';
+document.getElementById('sc-content').innerHTML=`
+  <div class="sc-wrap">
+    <div class="sc-ring">
+      <svg width="72" height="72" viewBox="0 0 72 72">
+        <circle cx="36" cy="36" r="28" fill="none" stroke="rgba(0,0,0,.08)" stroke-width="4"/>
+        <circle cx="36" cy="36" r="28" fill="none" stroke="#7c3aed" stroke-width="4"
+          stroke-dasharray="${fill} ${C}" stroke-linecap="round"/>
+      </svg>
+      <div class="sc-rn">${ucas}%</div>
+    </div>
+    <div><div class="sc-big">${acts.length}</div><div class="sc-lbl">Activities</div></div>
+    <div class="sc-tags">${acts.slice(-4).map(a=>`<div class="sc-tag">${a.name||a.title||'Activity'}</div>`).join('')||'<div style="font-size:11px;color:var(--m)">No activities yet</div>'}</div>
+  </div>`;
+
+// ── COUNTDOWN ─────────────────────────────────────────────────────
+if(upcoming.length){
+  const nx=upcoming[0];const nd=new Date(nx.d);
+  document.getElementById('cd-hint').textContent=nd.getDate()+' '+MONTHS[nd.getMonth()]+' 2026';
+  document.getElementById('cd-content').innerHTML=`
+    <div class="cd-centre">
+      <div class="cd-big">${nx.days}</div>
+      <div class="cd-lbl">days to go</div>
+      <div class="cd-name">${nx.n}</div>
+      <div class="cd-dt">${nd.getDate()} ${MONTHS[nd.getMonth()]} 2026</div>
+    </div>
+    <div class="cd-list">
+      ${upcoming.slice(1,5).map(e=>`<div class="cd-row"><span class="cd-rn">${e.n}</span><span class="cd-rd">${e.days}d</span></div>`).join('')}
+    </div>`;
+}
+
+// ── CARD STAGGER IN ───────────────────────────────────────────────
+document.querySelectorAll('.card').forEach((c,i)=>{
+  setTimeout(()=>c.classList.add('in'),150+i*70);
+});
+
+// ── HOVER WITH DELAY + SPOTLIGHT EFFECT ──────────────────────────
+const HOVER_DELAY = 220;
+const grid = document.getElementById('grid');
+const allCards = document.querySelectorAll('.card');
+const isMobile = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+function expandCard(card) {
+  grid.classList.add('has-hover');
+  allCards.forEach(c => {
+    c.classList.remove('active', 'expanded');
+    const cv = c.querySelector('.card-canvas');
+    if (cv) { cv.classList.remove('bright'); cv.classList.add('dim'); }
+  });
+  card.classList.add('active', 'expanded');
+  const cv = card.querySelector('.card-canvas');
+  if (cv) { cv.classList.remove('dim'); cv.classList.add('bright'); }
+}
+
+function collapseCard(card) {
+  card.classList.remove('expanded', 'active');
+  grid.classList.remove('has-hover');
+  allCards.forEach(c => {
+    const cv = c.querySelector('.card-canvas');
+    if (cv) { cv.classList.remove('dim', 'bright'); }
+  });
+}
+
+allCards.forEach(card => {
+  let enterTimer = null, leaveTimer = null;
+
+  // DESKTOP — hover with delay
+  card.addEventListener('mouseenter', () => {
+    if (isMobile()) return;
+    clearTimeout(leaveTimer);
+    enterTimer = setTimeout(() => expandCard(card), HOVER_DELAY);
+  });
+  card.addEventListener('mouseleave', () => {
+    if (isMobile()) return;
+    clearTimeout(enterTimer);
+    leaveTimer = setTimeout(() => collapseCard(card), 80);
+  });
+
+  // MOBILE — tap to expand, tap again to collapse
+  card.addEventListener('touchend', e => {
+    if (!isMobile()) return;
+    const isExpanded = card.classList.contains('expanded');
+    if (isExpanded) {
+      // Tapping an expanded card — follow the link
+      return;
+    }
+    // Tapping a collapsed card — expand it, don't follow link
+    e.preventDefault();
+    allCards.forEach(c => {
+      if (c !== card) collapseCard(c);
+    });
+    expandCard(card);
+  });
+});
+
+// Tap outside any card on mobile to collapse all
+document.addEventListener('touchend', e => {
+  if (!isMobile()) return;
+  if (![...allCards].some(c => c.contains(e.target))) {
+    allCards.forEach(c => collapseCard(c));
+  }
+});
+
+// ── CANVAS ANIMATIONS ─────────────────────────────────────────────
+// Each canvas has an `intensity` value (0→1) that ramps up/down
+// based on whether its card is active. This makes the animation
+// visibly react when you hover — it wakes up.
+
+function makeCanvas(id, color, style){
+  const cv=document.getElementById(id);
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const card=cv.closest('.card');
+  let intensity=0.4; // resting intensity
+  let target=0.4;
+
+  // Watch for bright/dim class changes
+  new MutationObserver(()=>{
+    if(cv.classList.contains('bright')) target=1.0;
+    else if(cv.classList.contains('dim')) target=0.0;
+    else target=0.4;
+  }).observe(cv,{attributes:true,attributeFilter:['class']});
+
+  function resize(){cv.width=card.offsetWidth;cv.height=card.offsetHeight;}
+  resize();
+  new ResizeObserver(resize).observe(card);
+
+  if(style==='waves'){
+    let t=0;
+    (function loop(){
+      intensity+=(target-intensity)*0.05;
+      ctx.clearRect(0,0,cv.width,cv.height);
+      const speed=0.008+intensity*0.022;
+      for(let i=0;i<5;i++){
+        ctx.beginPath();
+        ctx.strokeStyle=color;
+        ctx.lineWidth=1+intensity*.5;
+        ctx.globalAlpha=(0.08+intensity*0.18)*(1-i*0.15);
+        const amp=12+intensity*18;
+        for(let x=0;x<=cv.width;x+=2){
+          const y=cv.height*(0.35+i*.12)+Math.sin(x*0.016+t+i*.9)*amp+Math.sin(x*0.032+t*1.4+i)*(amp*.4);
+          x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      }
+      t+=speed*60/60;
+      requestAnimationFrame(loop);
+    })();
+
+  } else if(style==='dots'){
+    const pts=Array.from({length:22},()=>({
+      x:Math.random()*800,y:Math.random()*400,
+      vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.4,
+      r:1+Math.random()*2.5
+    }));
+    (function loop(){
+      intensity+=(target-intensity)*0.05;
+      ctx.clearRect(0,0,cv.width,cv.height);
+      const spd=0.5+intensity*1.5;
+      pts.forEach(p=>{
+        p.x+=p.vx*spd;p.y+=p.vy*spd;
+        if(p.x<0||p.x>cv.width)p.vx*=-1;
+        if(p.y<0||p.y>cv.height)p.vy*=-1;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r*(0.6+intensity*.6),0,Math.PI*2);
+        ctx.fillStyle=color;ctx.globalAlpha=0.1+intensity*0.2;ctx.fill();
+      });
+      // Draw connecting lines between close points when active
+      if(intensity>0.5){
+        pts.forEach((p,i)=>{
+          pts.slice(i+1).forEach(q=>{
+            const d=Math.hypot(p.x-q.x,p.y-q.y);
+            if(d<60){
+              ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);
+              ctx.strokeStyle=color;ctx.lineWidth=.5;
+              ctx.globalAlpha=(1-d/60)*intensity*0.12;ctx.stroke();
+            }
+          });
+        });
+      }
+      requestAnimationFrame(loop);
+    })();
+
+  } else if(style==='bars'){
+    const bars=Array.from({length:14},()=>({h:.1+Math.random()*.5,v:(Math.random()-.5)*.015}));
+    (function loop(){
+      intensity+=(target-intensity)*0.05;
+      ctx.clearRect(0,0,cv.width,cv.height);
+      const bw=cv.width/bars.length;
+      const spd=0.4+intensity*1.8;
+      bars.forEach((b,i)=>{
+        b.h+=b.v*spd;
+        if(b.h>0.8||b.h<0.05){b.v*=-1;if(intensity>.5)b.v+=(Math.random()-.5)*.01;}
+        const bh=b.h*cv.height*(0.4+intensity*.3);
+        ctx.fillStyle=color;ctx.globalAlpha=0.08+intensity*0.18;
+        ctx.fillRect(i*bw+2,cv.height-bh,bw-4,bh);
+        // Glowing top line when active
+        if(intensity>.3){
+          ctx.fillStyle=color;ctx.globalAlpha=intensity*0.3;
+          ctx.fillRect(i*bw+2,cv.height-bh,bw-4,2);
+        }
+      });
+      requestAnimationFrame(loop);
+    })();
+
+  } else if(style==='rings'){
+    const rings=Array.from({length:4},(_,i)=>({r:10+i*28,speed:.4+i*.15}));
+    let mx2=cv.width/2,my2=cv.height/2;
+    card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();mx2=e.clientX-r.left;my2=e.clientY-r.top;});
+    (function loop(){
+      intensity+=(target-intensity)*0.05;
+      ctx.clearRect(0,0,cv.width,cv.height);
+      const tx=intensity>.5?mx2:cv.width*.5;
+      const ty=intensity>.5?my2:cv.height*.5;
+      rings.forEach(ring=>{
+        ring.r+=ring.speed*(0.5+intensity*.8);
+        if(ring.r>Math.max(cv.width,cv.height)*0.8)ring.r=5+Math.random()*20;
+        ctx.beginPath();ctx.arc(tx,ty,ring.r,0,Math.PI*2);
+        ctx.strokeStyle=color;ctx.lineWidth=1+intensity*.5;
+        ctx.globalAlpha=Math.max(0,(0.12+intensity*0.2)*(1-ring.r/(Math.max(cv.width,cv.height)*.8)));
+        ctx.stroke();
+      });
+      requestAnimationFrame(loop);
+    })();
+
+  } else if(style==='sweep'){
+    let angle=0;
+    (function loop(){
+      intensity+=(target-intensity)*0.05;
+      ctx.clearRect(0,0,cv.width,cv.height);
+      const spd=(0.005+intensity*0.025)*60/60;
+      angle+=spd;
+      const ox=cv.width*.82,oy=cv.height*.5;
+      for(let i=0;i<4;i++){
+        ctx.beginPath();
+        const r=22+i*20;
+        ctx.arc(ox,oy,r,angle+i*.6,angle+i*.6+Math.PI*(.4+intensity*.3));
+        ctx.strokeStyle=color;ctx.lineWidth=1.5+intensity*.5;
+        ctx.globalAlpha=(0.1+intensity*0.2)*(1-i*.18);ctx.stroke();
+      }
+      requestAnimationFrame(loop);
+    })();
+
+  } else if(style==='shimmer'){
+    let t=0;
+    (function loop(){
+      intensity+=(target-intensity)*0.05;
+      ctx.clearRect(0,0,cv.width,cv.height);
+      const gs=28;
+      for(let x=0;x<cv.width;x+=gs){
+        for(let y=0;y<cv.height;y+=gs){
+          const wave=Math.sin(x*.04+t)*Math.cos(y*.05+t*.8);
+          const a=Math.max(0,wave*(0.04+intensity*0.1));
+          ctx.fillStyle=color;ctx.globalAlpha=a;
+          ctx.fillRect(x,y,gs-1,gs-1);
+        }
+      }
+      t+=0.015*(0.5+intensity*.8);
+      requestAnimationFrame(loop);
+    })();
+  }
+}
+
+makeCanvas('cv-tt','#16a34a','waves');
+makeCanvas('cv-ws','#d97706','dots');
+makeCanvas('cv-pp','#4f6ef7','bars');
+makeCanvas('cv-sc','#7c3aed','rings');
+makeCanvas('cv-cd','#e11d48','sweep');
+makeCanvas('cv-qa','#475569','shimmer');
+</script>
+
+<!-- ONBOARDING TOUR TIP -->
+<div class="tour-tip" id="tour-tip" style="display:none">
+  <div class="tour-tip-title">👋 Welcome to EX!</div>
+  <div class="tour-tip-sub">Start by building your revision timetable — it takes about 2 minutes and personalises everything.</div>
+  <div class="tour-tip-btns">
+    <button class="tour-tip-btn p" onclick="window.location.href='timetable.html'">Build timetable</button>
+    <button class="tour-tip-btn s" onclick="dismissTour()">Dismiss</button>
+  </div>
+</div>
+
+</body>
+</html>
