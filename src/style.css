@@ -61,7 +61,6 @@ h1, h2, h3,
 
 .menu {
   width: 90%;
-  max-width: calc(1400 * var(--scale-16-9));
   background-color: var(--menu-debug-bg);
   border-bottom: 2px solid black;
   margin: 0 auto;
@@ -181,7 +180,7 @@ h1, h2, h3,
 
 .bottom-curve {
   position: relative;
-  margin-top: calc(950 * var(--scale-16-9));
+  margin-top: calc(900 * var(--scale-16-9));
   width: calc(4000 * var(--scale-16-9));
   transform: rotate(180deg);
   z-index: 2;
@@ -240,10 +239,11 @@ h1, h2, h3,
 }
 
 .wrapper i {
-  height: calc(30 * var(--scale-16-9)); 
-  width: calc(30 * var(--scale-16-9));
+  height: calc(50 * var(--scale-16-9)); 
+  width: calc(50 * var(--scale-16-9));
   background: white;
   text-align: center;
+  align-content: center;
   line-height: calc(30 * var(--scale-16-9));
   border-radius: 20%;
   cursor: pointer;
@@ -563,7 +563,7 @@ h1, h2, h3,
 }
 
 .footer-section { 
-  margin-top: calc(50 * var(--scale-16-9)); 
+  bottom: calc(50 * var(--scale-16-9)); 
 }
 
 .site-footer {
@@ -591,15 +591,15 @@ h1, h2, h3,
 }
 
 @media screen and (max-aspect-ratio: 16/10) {
-  .menu {
+  /*.menu {
     background-color: #ffe082;
-  }
+  } */
 
+  .menu ul li { font-size: calc(25 * var(--scale-16-9)); }
   .circle-container { top: calc(200 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
-  .bottom-curve { margin-top: calc(1300 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(1500 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
-  .info { bottom: calc(0 * var(--scale-16-9)); }
-
+  .info { bottom: 0; }
   .tutorCarousel { bottom: calc(100 * var(--scale-16-9)); }
 
   .locations { bottom: 0; }
@@ -610,14 +610,15 @@ h1, h2, h3,
       "safeguarding-image safeguarding-text"
       "extra-image extra-text";
   }
+  .locationImg { height: calc(400 * var(--scale-16-9));}
   .locationImg--map { grid-area: map; }
   .locationsText--collective { grid-area: collective-text; }
   .locationImg--safeguarding { grid-area: safeguarding-image; }
   .locationsText--safeguarding { grid-area: safeguarding-text; }
   .locationImg--extra { grid-area: extra-image; }
   .locationsText--extra { grid-area: extra-text; }
-  .locationsText p { font-size: calc(30 * var(--scale-16-9)); }
-  .locationsHeading { font-size: calc(30 * var(--scale-16-9)); }
+  .locationsHeading { font-size: calc(45 * var(--scale-16-9)); }
+  .locationsText p { font-size: calc(35 * var(--scale-16-9)); }
 
   .forewordFrame::before { bottom: calc(-75 * var(--scale-16-9)); }
   .foreword .heading { font-size: calc(125 * var(--scale-16-9)); top: calc(75 * var(--scale-16-9)); }
@@ -627,11 +628,14 @@ h1, h2, h3,
 }
 
 @media screen and (max-aspect-ratio: 4/3) {
-  .menu {
+  /*.menu {
     background-color: #80deea;
-  }
+  } */
+  .menu ul { height: calc(110 * var(--scale-16-9)); }
+  .ExamArmourLogo img { height: calc(110 * var(--scale-16-9)); }
+  .menu ul li { font-size: calc(27 * var(--scale-16-9)); }
 
-  .bottom-curve { margin-top: calc(1200 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(1450 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
   .foreword .forewordContent { top: calc(75 * var(--scale-16-9));}
   .foreword .forewordContent p { font-size: calc(40 * var(--scale-16-9)); }
@@ -639,26 +643,94 @@ h1, h2, h3,
 }
 
 @media screen and (max-aspect-ratio: 1/1) {
-  .menu {
+  /*.menu {
     background-color: #a5d6a7;
-  }
+  } */
+  .menu ul { height: calc(150 * var(--scale-16-9)); }
+  .ExamArmourLogo img { height: calc(150 * var(--scale-16-9)); }
+  .menu ul li { font-size: calc(32 * var(--scale-16-9)); }
 
   .SEOSauce { font-size: calc(60 * var(--scale-16-9)) }
+  .bottom-curve { margin-top: calc(1800 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+
+  .wrapper i { height: calc(75 * var(--scale-16-9)); width: calc(75 * var(--scale-16-9)); }
   .wrapper .carousel {
     grid-auto-columns: calc((100% - 1.2vw) / 2);
+    height: auto;
+    padding-bottom: calc(200 * var(--scale-16-9));
+    align-items: start;
   }
+  .bio { font-size: calc(50 * var(--scale-16-9)); }
+
+  .locationsText p { font-size: calc(36 * var(--scale-16-9)); }
 }
 
 @media screen and (max-aspect-ratio: 4/5) {
-  .menu {
+  /*.menu {
     background-color: #ffab91;
+  } */
+  .nav-links { gap: calc(110 * var(--scale-16-9)); }
+  .menu ul li { font-size: calc(40 * var(--scale-16-9)); white-space: normal; }
+  .menu ul li a {
+    display: inline-flex;
+    max-width: calc(140 * var(--scale-16-9));
+    word-break: keep-all;
+    text-align: center;
+    line-height: 1.1;
   }
+
+  .SEOSauce { font-size: calc(75 * var(--scale-16-9)) }
+  .circle-container { top: calc(300 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .circle-background { top: calc(2400 * var(--scale-16-9)); height: calc(3500 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(4100 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+
+  .info { top: calc(100 * var(--scale-16-9)); }
+  .subtext { font-size: calc(60 * var(--scale-16-9)); }
+  .shadow { font-size: calc(200 * var(--scale-16-9)); }
+  .tutorCarousel { bottom: calc(-60 * var(--scale-16-9)); }
+
+  .locations { top: calc(150 * var(--scale-16-9)); }
+  .locationsGrid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-template-areas:
+      "map"
+      "collective-text"
+      "safeguarding-image"
+      "safeguarding-text"
+      "extra-image"
+      "extra-text";
+  }
+  .locationImg { height: calc(800 * var(--scale-16-9));}
+  .locationsHeading { font-size: calc(70 * var(--scale-16-9)); }
+  .locationsText p { font-size: calc(55 * var(--scale-16-9)); }
+
+  .forewordFrame::before { bottom: calc(-200 * var(--scale-16-9)); }
+  .foreword .heading { font-size: calc(125 * var(--scale-16-9)); top: calc(200 * var(--scale-16-9)); }
+  .foreword .forewordContent { top: calc(200 * var(--scale-16-9));}
+  .foreword .forewordContent p { font-size: calc(40 * var(--scale-16-9)); }
+  .foreword .forewordContent h1 { font-size: calc(53 * var(--scale-16-9)); }
 
 }
 
 @media screen and (max-aspect-ratio: 9/16) {
-  .menu {
+  /*.menu {
     background-color: #ce93d8;
-  }
+  } */
+  .menu ul { height: calc(200 * var(--scale-16-9)); }
+  .ExamArmourLogo img { height: calc(200 * var(--scale-16-9)); }
+  .nav-links { gap: calc(140 * var(--scale-16-9)); }
+  .menu ul li { font-size: calc(50 * var(--scale-16-9)); }
+
+  .wrapper i { height: calc(100 * var(--scale-16-9)); width: calc(100 * var(--scale-16-9)); }
+
+  .forewordFrame::before { bottom: calc(-250 * var(--scale-16-9)); }
+  .foreword .heading { font-size: calc(125 * var(--scale-16-9)); top: calc(220 * var(--scale-16-9)); }
+  .foreword .forewordContent { top: calc(250 * var(--scale-16-9));}
+  .foreword .forewordContent img { width: 100%; }
+  .foreword .forewordText { margin-left: 0; }
+  .foreword .forewordContent p { font-size: calc(46 * var(--scale-16-9)); }
+  .foreword .forewordContent h1 { font-size: calc(50 * var(--scale-16-9)); }
+
+  .footer-section { margin-top: calc(500 * var(--scale-16-9)); }
 
 }
