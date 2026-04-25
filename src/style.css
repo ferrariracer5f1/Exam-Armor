@@ -140,7 +140,7 @@ h1, h2, h3,
 }
 
 .SEOSauce {
-  font-size: calc(60 * var(--scale-16-9));
+  font-size: calc(75 * var(--scale-16-9));
   font-weight: 900;
   z-index: 5;
   text-align: center;
@@ -161,7 +161,7 @@ h1, h2, h3,
 .circle-container {
   position: absolute;
   top: calc(154 * var(--scale-16-9));
-  width: calc(3072 * var(--scale-16-9));
+  width: calc(4000 * var(--scale-16-9));
   max-width: none;
 }
 
@@ -181,8 +181,8 @@ h1, h2, h3,
 
 .bottom-curve {
   position: relative;
-  margin-top: calc(1400 * var(--scale-16-9));
-  width: calc(3072 * var(--scale-16-9));
+  margin-top: calc(950 * var(--scale-16-9));
+  width: calc(4000 * var(--scale-16-9));
   transform: rotate(180deg);
   z-index: 2;
 }
@@ -315,7 +315,7 @@ h1, h2, h3,
   justify-content: flex-start;
   text-align: center;
   transition: transform 0.2s;
-  z-index: 10;
+  z-index: 8;
   cursor: pointer;
 }
 
@@ -353,7 +353,7 @@ h1, h2, h3,
   left: 10%;
   z-index: 9;
   width: 80%; 
-  height: 30%;
+  height: 20%;
   overflow: hidden;
   max-height: 60svh;
   transform: scaleY(0);
@@ -418,7 +418,7 @@ h1, h2, h3,
   line-height: 0.9;
   letter-spacing: 0.01em;
   margin-bottom: calc(48 * var(--scale-16-9));
-  font-size: calc(175 * var(--scale-16-9));
+  font-size: calc(200 * var(--scale-16-9));
   text-align: center;
 }
 
@@ -507,7 +507,6 @@ h1, h2, h3,
   inset: 0;
   border: calc(10 * var(--scale-16-9)) solid #000;
   pointer-events: none;
-  bottom: calc(-75 * var(--scale-16-9));
 }
 
 .foreword .heading {
@@ -520,7 +519,6 @@ h1, h2, h3,
   font-size: calc(125 * var(--scale-16-9));
   text-align: center; 
   position: relative;
-  top: calc(100 * var(--scale-16-9));
 }
 
 .foreword .forewordContent {
@@ -532,7 +530,6 @@ h1, h2, h3,
   justify-items: center;
   align-items: center;
   height: auto;
-  bottom: calc(-75 * var(--scale-16-9));
 }
 
 .foreword .forewordContent img {
@@ -593,211 +590,66 @@ h1, h2, h3,
   height: auto; 
 }
 
-/* Responsive Aspect Ratios */
-
-@media screen and (max-aspect-ratio: 16/10) and (min-aspect-ratio: 4/3) {
+@media screen and (max-aspect-ratio: 16/10) {
   .menu {
     background-color: #ffe082;
   }
 
-  .menu ul { gap: 1.4vw; }
-  .ExamArmourLogo img { margin-right: 0; }
+  .circle-container { top: calc(200 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(1300 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
-  .circle-container { top: 11svh; width: 125vw; }
-  .bottom-curve { bottom: -157svh; width: 125vw; }
+  .info { bottom: calc(0 * var(--scale-16-9)); }
 
-  .subtext { font-size: min(3.5vw, 3.75svh); }
-  .shadow { font-size: min(12vw, 15.75svh); }
+  .tutorCarousel { bottom: calc(100 * var(--scale-16-9)); }
 
-  .wrapper { margin-top: -65svh; }
+  .locations { bottom: 0; }
+  .locationsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "map collective-text"
+      "safeguarding-image safeguarding-text"
+      "extra-image extra-text";
+  }
+  .locationImg--map { grid-area: map; }
+  .locationsText--collective { grid-area: collective-text; }
+  .locationImg--safeguarding { grid-area: safeguarding-image; }
+  .locationsText--safeguarding { grid-area: safeguarding-text; }
+  .locationImg--extra { grid-area: extra-image; }
+  .locationsText--extra { grid-area: extra-text; }
+  .locationsText p { font-size: calc(30 * var(--scale-16-9)); }
+  .locationsHeading { font-size: calc(30 * var(--scale-16-9)); }
 
-  .locations { margin-top: -24svh; bottom: 24svh; padding: 6svh 2.5vw 9svh; }
-  .locationsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .locations .heading { font-size: min(10vw, 13.9svh); }
-
-  .foreword { height: auto; padding-bottom: 6svh; }
-  .foreword .heading { font-size: min(8vw, 8.9svh); }
-  .foreword .forewordContent img { width: 60%; transform: scale(1.2); }
+  .forewordFrame::before { bottom: calc(-75 * var(--scale-16-9)); }
+  .foreword .heading { font-size: calc(125 * var(--scale-16-9)); top: calc(75 * var(--scale-16-9)); }
+  .foreword .forewordContent { top: calc(75 * var(--scale-16-9));}
+  .foreword .forewordContent p { font-size: calc(35 * var(--scale-16-9)); }
+  .foreword .forewordContent h1 { font-size: calc(47 * var(--scale-16-9)); }
 }
 
-@media screen and (max-aspect-ratio: 4/3) and (min-aspect-ratio: 1/1) {
+@media screen and (max-aspect-ratio: 4/3) {
   .menu {
     background-color: #80deea;
   }
 
-  .logoSect { 
-    height: auto; 
-    min-height: 60svh; 
-    padding-top: 7.5svh;
-    padding-bottom: 5.5svh;
-  }
+  .bottom-curve { margin-top: calc(1200 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
-  .circle-container { top: 11svh; width: 200vw; }
-  .bottom-curve { bottom: -56svh; width: 200vw; }
-
-  /* Removes overlapping sections */
-  .info { 
-    min-height: auto; 
-    bottom: 0 !important; 
-    padding: 5.5svh 2vw; 
-    margin-top: -14svh;  
-    background-color: transparent;
-    position: relative;
-    z-index: 5;
-  }
-
-  .tutorCarousel { 
-    bottom: 0 !important;  
-    margin-top: 0;
-  }
-  
-  .flexContainer { 
-    min-height: auto; 
-    padding: 4svh 2vw; 
-  }
-  
-  .wrapper { 
-    margin-top: 0 !important; 
-  }
-
-
-  .carousel .tutorCard .img { 
-    height: min(31vw, 39svh);
-  }
-  
-  .bio { 
-    font-size: max(1rem, 1.7svh); 
-    padding: 1.4svh 1vw;
-  }
-
-  /* Removes location overlapping */
-  .locations { 
-    margin-top: 0 !important; 
-    bottom: 0 !important; 
-    padding: 5.5svh 2.5vw 7.5svh; 
-  }
-  
-  .locationsGrid { 
-    grid-template-columns: 1fr; 
-  }
-  
-  .locations .heading { 
-    font-size: min(12vw, 6.25rem); 
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-  
-  .locationsText p { 
-    font-size: max(1rem, 1.7svh); 
-  }
-  
-  .locationsHeading { 
-    font-size: max(1rem, 1.7svh); 
-    word-break: break-word;
-  }
-
-  /* CRITICAL: Remove foreword overlapping */
-  .foreword { 
-    bottom: 0 !important;  /* Remove negative positioning */
-    height: auto; 
-    padding: 5.5svh 2vw 7.5svh; 
-    margin-top: 0;
-  }
-  
-  .foreword::before { 
-    left: 2vw; 
-    right: 2vw; 
-    top: -7.5svh; 
-    bottom: 2svh; 
-    border-width: 0.55svh; 
-  }
-  
-  .foreword .heading {
-    font-size: min(10vw, 5rem);
-    word-break: break-word;
-  }
-  
-  .foreword .forewordContent { 
-    grid-template-columns: 1fr; 
-    gap: 2.8svh; 
-  }
-  
-  .foreword .forewordContent img { 
-    width: 70vw; 
-    max-width: 30svh;
-    transform: scale(1); 
-    margin-top: 0; 
-  }
-  
-  .foreword .forewordText { 
-    margin-left: 0; 
-    padding-inline: 8%; 
-  }
-  
-  .forewordText p { 
-    font-size: max(1rem, 1.7svh); 
-    word-break: break-word;
-  }
-  
-  .forewordText h1 { 
-    font-size: max(1.25rem, 2.25svh); 
-  }
-
-  .footer-content { 
-    flex-wrap: wrap; 
-    justify-content: center; 
-    text-align: center; 
-  }
+  .foreword .forewordContent { top: calc(75 * var(--scale-16-9));}
+  .foreword .forewordContent p { font-size: calc(40 * var(--scale-16-9)); }
+  .foreword .forewordContent h1 { font-size: calc(53 * var(--scale-16-9)); }
 }
 
-@media screen and (max-aspect-ratio: 1/1) and (min-aspect-ratio: 4/5) {
+@media screen and (max-aspect-ratio: 1/1) {
   .menu {
     background-color: #a5d6a7;
   }
 
-  .menu { 
-    width: 100%; 
-    padding: 0 2vw; 
-  }
-
-  .logoSect { 
-    min-height: 56svh; 
-    padding-top: 8.5svh;
-    padding-bottom: 4svh;
-  }
-  
-  .SEOSauce { 
-    font-size: min(6vw, 2rem);
-    padding: 3svh 1.5vw;
-    line-height: 1.3;
-  }
-
-  .circle-container { top: 13svh; }
-  .bottom-curve { bottom: -46svh; }
-
-  .subtext { 
-    font-size: min(5vw, 1.75rem); 
-  }
-  
-  .shadow { 
-    font-size: min(14vw, 6.25rem);
-    word-break: break-word;
-  }
-
-  .wrapper i { 
-    top: 35%; 
-  }
-  
-  .carousel .tutorCard .img { 
-    height: min(85vw, 33svh); 
-  }
-
-  .locations .heading {
-    font-size: min(12vw, 5rem);
+  .SEOSauce { font-size: calc(60 * var(--scale-16-9)) }
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% - 1.2vw) / 2);
   }
 }
 
-@media screen and (max-aspect-ratio: 4/5) and (min-aspect-ratio: 9/16) {
+@media screen and (max-aspect-ratio: 4/5) {
   .menu {
     background-color: #ffab91;
   }
