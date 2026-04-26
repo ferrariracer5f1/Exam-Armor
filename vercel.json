@@ -1,1 +1,8 @@
-
+{
+  "redirects": [
+    { "source": "/ex", "destination": "/ex/", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/ex/", "destination": "/ex/index.html" }
+  ]
+}
