@@ -180,7 +180,7 @@ h1, h2, h3,
 
 .bottom-curve {
   position: relative;
-  margin-top: calc(1050 * var(--scale-16-9));
+  margin-top: calc(960 * var(--scale-16-9));
   width: calc(4000 * var(--scale-16-9));
   transform: rotate(180deg);
   z-index: 2;
@@ -570,8 +570,7 @@ h1, h2, h3,
 }
 
 .videoContainer {
-  width: 100%;
-  max-width: calc(1200 * var(--scale-16-9));
+  max-width: 80%;
   margin: 0 auto; 
   aspect-ratio: 16 / 9; 
   border-radius: calc(18 * var(--scale-16-9)); 
@@ -605,6 +604,7 @@ h1, h2, h3,
 
 .footer-content {
   max-width: calc(1200 * var(--scale-16-9));
+  font-size: calc(20 * var(--scale-16-9)); 
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -638,23 +638,49 @@ h1, h2, h3,
 
 .social-icons a:hover {
   transform: scale(1.1);
-  opacity: 0.8;
 }
 
-.social-icons a img {
-  width: calc(40 * var(--scale-16-9));
-  height: calc(40 * var(--scale-16-9));
-  object-fit: contain;
+.social-icons a:hover span {
+  background-color: var(--green);
+}
+
+.social-icons a span {
+  width: calc(70 * var(--scale-16-9));
+  height: calc(70 * var(--scale-16-9));
+  display: block;
+  background-color: #ffffff;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  transition: background-color 0.3s ease;
+}
+
+.social-icon--instagram span {
+  -webkit-mask-image: url("/public/instagram.svg");
+  mask-image: url("/public/instagram.svg");
+}
+
+.social-icon--facebook span {
+  -webkit-mask-image: url("/public/facebook.svg");
+  mask-image: url("/public/facebook.svg");
+}
+
+.social-icon--tiktok span {
+  -webkit-mask-image: url("/public/tiktok.svg");
+  mask-image: url("/public/tiktok.svg");
 }
 
 @media screen and (max-aspect-ratio: 16/10) {
   /*.menu {
     background-color: #ffe082;
-  } */
+  }*/
 
   .menu ul li { font-size: calc(25 * var(--scale-16-9)); }
   .circle-container { top: calc(200 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
-  .bottom-curve { margin-top: calc(1500 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(1600 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
   .info { bottom: 0; }
   .tutorCarousel { bottom: calc(100 * var(--scale-16-9)); }
@@ -675,7 +701,7 @@ h1, h2, h3,
   .locationImg--extra { grid-area: extra-image; }
   .locationsText--extra { grid-area: extra-text; }
   .locationsHeading { font-size: calc(45 * var(--scale-16-9)); }
-  .locationsText p { font-size: calc(35 * var(--scale-16-9)); }
+  .locationsText p { font-size: calc(29 * var(--scale-16-9)); }
 
   .forewordFrame::before { bottom: calc(-75 * var(--scale-16-9)); }
   .foreword .heading { font-size: calc(125 * var(--scale-16-9)); top: calc(75 * var(--scale-16-9)); }
@@ -687,12 +713,10 @@ h1, h2, h3,
 @media screen and (max-aspect-ratio: 4/3) {
   /*.menu {
     background-color: #80deea;
-  } */
+  }*/
   .menu ul { height: calc(110 * var(--scale-16-9)); }
   .ExamArmourLogo img { height: calc(110 * var(--scale-16-9)); }
   .menu ul li { font-size: calc(27 * var(--scale-16-9)); }
-
-  .bottom-curve { margin-top: calc(1450 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
   .foreword .forewordContent { top: calc(75 * var(--scale-16-9));}
   .foreword .forewordContent p { font-size: calc(40 * var(--scale-16-9)); }
@@ -702,13 +726,14 @@ h1, h2, h3,
 @media screen and (max-aspect-ratio: 1/1) {
   /*.menu {
     background-color: #a5d6a7;
-  } */
+  }*/
   .menu ul { height: calc(150 * var(--scale-16-9)); }
   .ExamArmourLogo img { height: calc(150 * var(--scale-16-9)); }
   .menu ul li { font-size: calc(32 * var(--scale-16-9)); }
 
   .SEOSauce { font-size: calc(60 * var(--scale-16-9)) }
-  .bottom-curve { margin-top: calc(1800 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(2200 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .circle-background { top: calc(2000 * var(--scale-16-9)); height: calc(3500 * var(--scale-16-9)); }
 
   .wrapper i { height: calc(75 * var(--scale-16-9)); width: calc(75 * var(--scale-16-9)); }
   .wrapper .carousel {
@@ -719,18 +744,14 @@ h1, h2, h3,
   }
   .bio { font-size: calc(50 * var(--scale-16-9)); }
 
-  .locationsText p { font-size: calc(36 * var(--scale-16-9)); }
+  .locationsText p { font-size: calc(34 * var(--scale-16-9)); }
 
-  .social-icons a img {
-    width: calc(40 * var(--scale-16-9));
-    height: calc(40 * var(--scale-16-9));
-  }
 }
 
 @media screen and (max-aspect-ratio: 4/5) {
   /*.menu {
     background-color: #ffab91;
-  } */
+  }*/
   .nav-links { gap: calc(110 * var(--scale-16-9)); }
   .menu ul li { font-size: calc(40 * var(--scale-16-9)); white-space: normal; }
   .menu ul li a {
@@ -744,7 +765,7 @@ h1, h2, h3,
   .SEOSauce { font-size: calc(75 * var(--scale-16-9)) }
   .circle-container { top: calc(300 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
   .circle-background { top: calc(2400 * var(--scale-16-9)); height: calc(3500 * var(--scale-16-9)); }
-  .bottom-curve { margin-top: calc(4100 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(4900 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
   .info { top: calc(100 * var(--scale-16-9)); }
   .subtext { font-size: calc(60 * var(--scale-16-9)); }
@@ -772,20 +793,20 @@ h1, h2, h3,
   .foreword .forewordContent p { font-size: calc(40 * var(--scale-16-9)); }
   .foreword .forewordContent h1 { font-size: calc(53 * var(--scale-16-9)); }
 
-  .social-icons {
-    gap: calc(25 * var(--scale-16-9));
+  .videoFrame .heading { font-size: calc(70 * var(--scale-16-9)); }
+  .videoContainer { max-width: 100%; }
+
+  .social-icons a span {
+    width: calc(100 * var(--scale-16-9));
+    height: calc(100 * var(--scale-16-9));
   }
 
-  .social-icons a img {
-    width: calc(45 * var(--scale-16-9));
-    height: calc(45 * var(--scale-16-9));
-  }
 }
 
 @media screen and (max-aspect-ratio: 9/16) {
   /*.menu {
     background-color: #ce93d8;
-  } */
+  }*/
   .menu ul { height: calc(200 * var(--scale-16-9)); }
   .ExamArmourLogo img { height: calc(200 * var(--scale-16-9)); }
   .nav-links { gap: calc(140 * var(--scale-16-9)); }
@@ -801,14 +822,16 @@ h1, h2, h3,
   .foreword .forewordContent p { font-size: calc(46 * var(--scale-16-9)); }
   .foreword .forewordContent h1 { font-size: calc(50 * var(--scale-16-9)); }
 
+  .video-section { top: calc(350 * var(--scale-16-9)); }
+
   .footer-section { margin-top: calc(500 * var(--scale-16-9)); }
 
   .social-icons {
     gap: calc(30 * var(--scale-16-9));
   }
 
-  .social-icons a img {
-    width: calc(50 * var(--scale-16-9));
-    height: calc(50 * var(--scale-16-9));
+  .social-icons a span {
+    width: calc(110 * var(--scale-16-9));
+    height: calc(110 * var(--scale-16-9));
   }
 }
