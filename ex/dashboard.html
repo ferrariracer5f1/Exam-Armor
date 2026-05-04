@@ -869,6 +869,10 @@ makeCanvas('cv-pp','#4f6ef7','bars');
 makeCanvas('cv-sc','#7c3aed','rings');
 makeCanvas('cv-cd','#e11d48','sweep');
 makeCanvas('cv-qa','#475569','shimmer');
+  // ── CARD STAGGER IN ───────────────────────────────────────────────
+document.querySelectorAll('.card').forEach((c,i)=>{
+  setTimeout(()=>c.classList.add('in'),150+i*70);
+});
 </script>
 
 <!-- ONBOARDING TOUR TIP -->
