@@ -17,9 +17,31 @@ document.addEventListener("DOMContentLoaded", () => {
   camera.position.z = 5;
 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   container.appendChild(renderer.domElement);
+
+  function resizeRenderer() {
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    if (!width || !height) return;
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height, false);
+  }
+
+  resizeRenderer();
+
+  let layoutThreeSymbols = () => {};
+
+  const handleResize = () => {
+    resizeRenderer();
+    layoutThreeSymbols();
+  };
+
+  const resizeObserver = new ResizeObserver(handleResize);
+  resizeObserver.observe(container);
+  window.addEventListener("resize", handleResize);
 
   // === Lights ===
   const particleLight = new THREE.Object3D();
@@ -52,12 +74,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const presetPositions = [
-      new THREE.Vector3(-6.0, 1, 0),
-      new THREE.Vector3(1.0, -0.5, 0),
-      new THREE.Vector3(5.0, 2.0, 0),
+      { x: -0.38, y: 0.15 },
+      { x: 0.05, y: -0.08 },
+      { x: 0.34, y: 0.25 },
     ];
 
     const rotatingMeshes = [];
+    const symbolPairs = [];
+
+    function layoutSymbols() {
+      const distance = camera.position.z;
+      const visibleHeight =
+        2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * distance;
+      const visibleWidth = visibleHeight * camera.aspect;
+
+      symbolPairs.forEach(({ mesh, outline, anchor }) => {
+        const x = visibleWidth * anchor.x;
+        const y = visibleHeight * anchor.y;
+
+        mesh.position.set(x, y, 0);
+        outline.position.copy(mesh.position);
+      });
+    }
+
+    layoutThreeSymbols = layoutSymbols;
 
     chosenSymbols.forEach((sym, i) => {
       const textGeo = new TextGeometry(sym, {
@@ -78,7 +118,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const mesh = new THREE.Mesh(textGeo, toonMaterial);
-      mesh.position.copy(presetPositions[i]);
       mesh.rotation.x = Math.random() * Math.PI;
       mesh.rotation.y = Math.random() * Math.PI;
       scene.add(mesh);
@@ -88,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
         side: THREE.BackSide,
       });
       const outline = new THREE.Mesh(textGeo.clone(), outlineMat);
-      outline.position.copy(mesh.position);
       outline.rotation.copy(mesh.rotation);
       outline.scale.copy(mesh.scale).multiplyScalar(1.05);
       scene.add(outline);
@@ -100,7 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
       outline.userData = mesh.userData;
 
       rotatingMeshes.push(mesh, outline);
+      symbolPairs.push({ mesh, outline, anchor: presetPositions[i] });
     });
+
+    layoutSymbols();
 
     let isVisible = true;
     const observer = new IntersectionObserver(([entry]) => {
@@ -124,12 +165,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }, undefined, (error) => {
     console.error("Error loading font:", error);
     console.log("Make sure manrope.json exists in your public folder");
-  });
-
-  window.addEventListener("resize", () => {
-    camera.aspect = container.clientWidth / container.clientHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.clientWidth, container.clientHeight);
   });
 
   // === Tutor Data ===
