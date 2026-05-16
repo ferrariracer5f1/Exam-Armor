@@ -161,7 +161,23 @@ h1, h2, h3,
   font-weight: inherit;
   font-family: var(--font-heading);
   -webkit-text-stroke: 0;
-  background-color: #00ff8c;
+  background: linear-gradient(#00ff8c, #00ff8c) no-repeat; /*this is a gradient for a reason. dont make it a solid color. i have no idea why this works */
+  background-size: 100% 90%;
+  background-position: 0 0%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.SEOSub {
+  font-family: "Manrope", sans-serif;
+  font-size: calc(45 * var(--scale-16-9));
+  font-weight: 500;
+  z-index: 5;
+  text-align: left;
+  margin-top: calc(20 * var(--scale-16-9));
+  width: 100%;
+  padding: calc(10 * var(--scale-16-9)) calc(300 * var(--scale-16-9)) 0 calc(80 * var(--scale-16-9));
+  color: black;
 }
 
 /* Circle decorations */
@@ -692,9 +708,9 @@ h1, h2, h3,
 }
 
 @media screen and (max-aspect-ratio: 16/10) {
-  .menu {
+  /*.menu {
     background-color: #ffe082;
-  }
+  }*/
 
   .menu ul li { font-size: calc(25 * var(--scale-16-9)); }
   .logoSect { height: calc(1009 * var(--scale-16-9)); }
@@ -734,9 +750,9 @@ h1, h2, h3,
 }
 
 @media screen and (max-aspect-ratio: 4/3) {
-  .menu {
+  /*.menu {
     background-color: #80deea;
-  }
+  }*/
   .menu ul { height: calc(110 * var(--scale-16-9)); }
   .ExamArmourLogo img { height: calc(110 * var(--scale-16-9)); }
   .menu ul li { font-size: calc(27 * var(--scale-16-9)); }
@@ -756,23 +772,25 @@ h1, h2, h3,
 }
 
 @media screen and (max-aspect-ratio: 1/1) {
-  .menu {
+  /*.menu {
     background-color: #a5d6a7;
-  }
+  }*/
   .menu ul { height: calc(150 * var(--scale-16-9)); }
   .ExamArmourLogo img { height: calc(150 * var(--scale-16-9)); }
   .menu ul li { font-size: calc(32 * var(--scale-16-9)); }
 
+  .logoSect { height: calc(1600 * var(--scale-16-9)); }
   .SEOSauce { font-size: calc(125 * var(--scale-16-9)); padding: calc(160 * var(--scale-16-9)) calc(640 * var(--scale-16-9)) 0 calc(160 * var(--scale-16-9)); }
+  .SEOSub { font-size: calc(60 * var(--scale-16-9)); padding: calc(10 * var(--scale-16-9)) calc(150 * var(--scale-16-9)) 0 calc(160 * var(--scale-16-9)); }
   .circle-container { top: calc(1200 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
   .bottom-curve { top: calc(4300 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
   .circle-background { top: calc(2000 * var(--scale-16-9)); height: calc(3000 * var(--scale-16-9)); }
 
-  .info { top: calc(800 * var(--scale-16-9)); }
+  .info { top: calc(400 * var(--scale-16-9)); }
   .subtext { font-size: calc(75 * var(--scale-16-9)); }
   .shadow { font-size: calc(225 * var(--scale-16-9)); }
 
-  .tutorCarousel { top: calc(500 * var(--scale-16-9)); }
+  .tutorCarousel { top: calc(200 * var(--scale-16-9)); }
   .wrapper i { height: calc(75 * var(--scale-16-9)); width: calc(75 * var(--scale-16-9)); }
   .wrapper { --tutor-card-width: calc((100% - var(--carousel-gap)) / 2); }
   .wrapper .carousel {
@@ -782,17 +800,17 @@ h1, h2, h3,
   }
   .bio { font-size: calc(50 * var(--scale-16-9)); }
 
-  .locations { top: calc(600 * var(--scale-16-9)); }
+  .locations { top: calc(300 * var(--scale-16-9)); }
   .locationsText p { font-size: calc(34 * var(--scale-16-9)); }
 
-  .forewordFrame { top: calc(200 * var(--scale-16-9));}
-  .video-section { top: calc(450 * var(--scale-16-9)); margin-bottom: calc(600 * var(--scale-16-9));}
+  .forewordFrame { bottom: calc(150 * var(--scale-16-9));}
+  .video-section { top: calc(100 * var(--scale-16-9)); margin-bottom: calc(200 * var(--scale-16-9));}
 }
 
 @media screen and (max-aspect-ratio: 4/5) {
-  .menu {
+  /*.menu {
     background-color: #ffab91;
-  }
+  }*/
   .nav-links { gap: calc(110 * var(--scale-16-9)); }
   .menu ul li { font-size: calc(40 * var(--scale-16-9)); white-space: normal; }
   .menu ul li a {
@@ -803,15 +821,17 @@ h1, h2, h3,
     line-height: 1.1;
   }
 
+  .logoSect { height: calc(2000 * var(--scale-16-9)); }
   .SEOSauce { font-size: calc(150 * var(--scale-16-9)); padding: calc(240 * var(--scale-16-9)) calc(640 * var(--scale-16-9)) 0 calc(160 * var(--scale-16-9)); }
+  .SEOSub { font-size: calc(80 * var(--scale-16-9)); padding: calc(20 * var(--scale-16-9)) calc(150 * var(--scale-16-9)) 0 calc(160 * var(--scale-16-9)); }
   .circle-container { top: calc(1700 * var(--scale-16-9)); }
   .circle-background { top: calc(2400 * var(--scale-16-9)); height: calc(5500 * var(--scale-16-9)); }
-  .bottom-curve { margin-top: calc(5800 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(5900 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
 
-  .info { top: calc(1300 * var(--scale-16-9)); }
-  .tutorCarousel { top: calc(1000 * var(--scale-16-9)); }
+  .info { top: calc(600 * var(--scale-16-9)); }
+  .tutorCarousel { top: calc(400 * var(--scale-16-9)); }
 
-  .locations { top: calc(1100 * var(--scale-16-9)); }
+  .locations { top: calc(500 * var(--scale-16-9)); }
   .locationsGrid {
     grid-template-columns: repeat(1, minmax(0, 1fr));
     grid-template-areas:
@@ -826,14 +846,14 @@ h1, h2, h3,
   .locationsHeading { font-size: calc(70 * var(--scale-16-9)); }
   .locationsText p { font-size: calc(55 * var(--scale-16-9)); }
 
-  .forewordFrame { top: calc(600 * var(--scale-16-9)); }
+  .forewordFrame { bottom: calc(100 * var(--scale-16-9)); }
   .forewordFrame::before { bottom: calc(-200 * var(--scale-16-9)); }
   .foreword .heading { font-size: calc(125 * var(--scale-16-9)); top: calc(200 * var(--scale-16-9)); }
   .foreword .forewordContent { top: calc(200 * var(--scale-16-9));}
   .foreword .forewordContent p { font-size: calc(40 * var(--scale-16-9)); }
   .foreword .forewordContent h1 { font-size: calc(53 * var(--scale-16-9)); }
 
-  .video-section { top: calc(1000 * var(--scale-16-9)); margin-bottom: calc(1100 * var(--scale-16-9));}
+  .video-section { top: calc(300 * var(--scale-16-9)); margin-bottom: calc(400 * var(--scale-16-9));}
   .videoFrame .heading { font-size: calc(70 * var(--scale-16-9)); }
   .videoContainer { max-width: 100%; }
 
@@ -845,27 +865,43 @@ h1, h2, h3,
 }
 
 @media screen and (max-aspect-ratio: 9/16) {
-  .menu {
+  /*.menu {
     background-color: #ce93d8;
-  }
+  }*/
   .menu ul { height: calc(200 * var(--scale-16-9)); }
   .ExamArmourLogo img { height: calc(200 * var(--scale-16-9)); }
   .nav-links { gap: calc(140 * var(--scale-16-9)); }
   .menu ul li { font-size: calc(50 * var(--scale-16-9)); }
 
+  .logoSect { height: calc(2100 * var(--scale-16-9)); }
+  .SEOSauce { font-size: calc(160 * var(--scale-16-9)); padding: calc(300 * var(--scale-16-9)) calc(640 * var(--scale-16-9)) 0 calc(160 * var(--scale-16-9)); }
+  .circle-container { top: calc(1800 * var(--scale-16-9)); }
+  .circle-background { top: calc(3000 * var(--scale-16-9)); height: calc(5500 * var(--scale-16-9)); }
+  .bottom-curve { margin-top: calc(5800 * var(--scale-16-9)); width: calc(4000 * var(--scale-16-9)); }
+
+  .info { top: calc(500 * var(--scale-16-9)); }
+  .tutorCarousel { top: calc(200 * var(--scale-16-9)); }
   .wrapper i { height: calc(100 * var(--scale-16-9)); width: calc(100 * var(--scale-16-9)); }
 
+  .locations { top: calc(400 * var(--scale-16-9)); }
+
+  .forewordFrame { bottom: calc(200 * var(--scale-16-9)); }
   .forewordFrame::before { bottom: calc(-250 * var(--scale-16-9)); }
   .foreword .heading { font-size: calc(125 * var(--scale-16-9)); top: calc(220 * var(--scale-16-9)); }
-  .foreword .forewordContent { top: calc(250 * var(--scale-16-9));}
-  .foreword .forewordContent img { width: 100%; }
-  .foreword .forewordText { margin-left: 0; }
-  .foreword .forewordContent p { font-size: calc(46 * var(--scale-16-9)); }
-  .foreword .forewordContent h1 { font-size: calc(50 * var(--scale-16-9)); }
+  .foreword .forewordContent {
+    grid-template-columns: 1fr;
+    top: calc(250 * var(--scale-16-9));
+  }
+  .foreword .forewordText { padding: calc(60 * var(--scale-16-9)) 0 0 0; }
+  .foreword .forewordContent p { font-size: calc(60 * var(--scale-16-9)); }
+  .foreword .forewordContent h1 { font-size: calc(75 * var(--scale-16-9)); }
+  .foreword .forewordContent img { width: 50%; }
+  .foreword .forewordText {
+    order: -1;
+    margin-left: 0;
+  }
 
-  .video-section { top: calc(350 * var(--scale-16-9)); }
-
-  .footer-section { margin-top: calc(500 * var(--scale-16-9)); }
+  .video-section { top: calc(1400 * var(--scale-16-9)); margin-bottom: calc(1500 * var(--scale-16-9));}
 
   .social-icons {
     gap: calc(30 * var(--scale-16-9));
